@@ -700,6 +700,7 @@ export const MENU_CATEGORIES = [
 ];
 
 export const MENU_ITEMS: MenuItem[] = [
+  // 1. Chef's Signatures
   {
     id: "sig-1",
     name: "Madara Volcano Mongolian Wok",
@@ -731,6 +732,7 @@ export const MENU_ITEMS: MenuItem[] = [
   {
     id: "sig-3",
     name: "Smoked Butter Chicken Masala & Naan",
+    sinhalaName: "බටර් චිකන් මසාලා සහ නාන්",
     category: "signatures",
     priceLKR: 2450,
     description: "Velvety tandoor-roasted boneless chicken simmered in rich cashew cream and sun-ripened tomato gravy, served with dual garlic butter naan.",
@@ -740,6 +742,8 @@ export const MENU_ITEMS: MenuItem[] = [
     image: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=800&q=80",
     tags: ["Indian", "Tandoor", "Chef Special"],
   },
+
+  // 2. Action Wok & Noodles
   {
     id: "wok-1",
     name: "Live Action Cheese Kottu — Mixed Meat",
@@ -756,6 +760,7 @@ export const MENU_ITEMS: MenuItem[] = [
   {
     id: "wok-2",
     name: "Seafood Dragon Noodles",
+    sinhalaName: "සීෆුඩ් ඩ්‍රැගන් නූඩ්ල්ස්",
     category: "action_wok",
     priceLKR: 2150,
     description: "High-heat wok-tossed egg noodles with cuttlefish rings, lagoon prawns, bean sprouts, bok choy, and fiery chili garlic sauce.",
@@ -765,6 +770,22 @@ export const MENU_ITEMS: MenuItem[] = [
     image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=800&q=80",
     tags: ["Spicy Wok", "Seafood", "Action Wok"],
   },
+  {
+    id: "wok-3",
+    name: "Crispy Egg Hopper Fiesta (Set of 4)",
+    sinhalaName: "බිත්තර ආප්ප සංග්‍රහය",
+    category: "action_wok",
+    priceLKR: 1200,
+    description: "Crispy laced traditional hoppers prepared on live clay pans: 2 runny-yolk egg hoppers and 2 plain hoppers with seeni sambal and lunu miris.",
+    portion: "Set of 4 + Sambals",
+    spicyLevel: 1,
+    isActionKitchen: true,
+    isVegetarian: false,
+    image: "https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?auto=format&fit=crop&w=800&q=80",
+    tags: ["Hoppers", "Traditional", "Live Action"],
+  },
+
+  // 3. Rice & Biryani
   {
     id: "rice-1",
     name: "Royal Dum Biryani (Mutton / Chicken)",
@@ -778,6 +799,33 @@ export const MENU_ITEMS: MenuItem[] = [
     image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80",
     tags: ["Dum Biryani", "Clay Handi", "Royal"],
   },
+  {
+    id: "rice-2",
+    name: "Madara Special Mixed Fried Rice",
+    sinhalaName: "මදාරා ස්පෙෂල් මික්ස්ඩ් ෆ්‍රයිඩ් රයිස්",
+    category: "rice_biryani",
+    priceLKR: 2200,
+    description: "Wok-charred basmati rice tossed with shredded roast chicken, prawns, pork bits, egg ribbons, and scallions, served with spicy chili paste and chop suey gravy.",
+    portion: "Serves 1-2 Persons",
+    spicyLevel: 1,
+    image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=800&q=80",
+    tags: ["Fried Rice", "Chinese Fusion", "Best Seller"],
+  },
+  {
+    id: "rice-3",
+    name: "Authentic Dutch Burgher Lamprais",
+    sinhalaName: "ලම්ප්‍රයිස් (කෙසෙල් කොළයේ ඔතා පිළියෙළ කළ)",
+    category: "rice_biryani",
+    priceLKR: 2350,
+    description: "Short-grain samba rice cooked in rich meat stock, paired with four-meat curry, frikkadels (meatballs), blachan, brinjal pahe, and seeni sambol wrapped and baked in a fresh banana leaf.",
+    portion: "Individual Banana Leaf Pack",
+    spicyLevel: 2,
+    isChefsSpecial: true,
+    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
+    tags: ["Lamprais", "Banana Leaf", "Heritage"],
+  },
+
+  // 4. Sri Lankan Heritage
   {
     id: "sl-1",
     name: "Jaffna Style Fiery Crab Curry",
@@ -805,6 +853,77 @@ export const MENU_ITEMS: MenuItem[] = [
     tags: ["Village Heritage", "Spicy", "BYOB Classic"],
   },
   {
+    id: "sl-3",
+    name: "Creamy Cashew & Green Pea Curry",
+    sinhalaName: "කජු කරිය",
+    category: "sri_lankan",
+    priceLKR: 1950,
+    description: "Whole whole plump raw cashews gently stewed in fragrant first-press coconut milk, cardamom, curry leaves, and green peas.",
+    portion: "Medium Bowl",
+    spicyLevel: 1,
+    isVegetarian: true,
+    image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=800&q=80",
+    tags: ["Vegetarian", "Royal Curry", "Mild Spice"],
+  },
+
+  // 5. Grills & Sizzlers
+  {
+    id: "grill-1",
+    name: "Madara Grand Mixed Meat Sizzler",
+    sinhalaName: "මදාරා ග්‍රෑන්ඩ් සිස්ලර් ප්ලැටර්",
+    category: "grills_sizzlers",
+    priceLKR: 3600,
+    description: "Combination of grilled tenderloin steak medallions, barbecue chicken drumsticks, grilled sausages, butter-glazed veggies, and crispy wedges with mushroom pepper sauce.",
+    portion: "Sizzling Hot Iron Platter (1-2 Pax)",
+    spicyLevel: 2,
+    isChefsSpecial: true,
+    isByobPairing: true,
+    image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",
+    tags: ["Sizzler", "Grill", "BYOB Feast"],
+  },
+  {
+    id: "grill-2",
+    name: "Charcoal Grilled Whole BBQ Snapper",
+    sinhalaName: "BBQ ගල් මාළු ග්‍රිල් එක",
+    category: "grills_sizzlers",
+    priceLKR: 3200,
+    description: "Whole fresh red snapper marinated in lemon garlic chili butter, wrapped and grilled over coconut charcoal embers. Served with garlic dip and salad.",
+    portion: "Whole Fish (Approx 700g)",
+    spicyLevel: 2,
+    image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80",
+    tags: ["Charcoal Grill", "Fresh Catch", "Seafood BBQ"],
+  },
+
+  // 6. Seafood Delights
+  {
+    id: "sea-1",
+    name: "Garlic Butter Glazed Lagoon Prawns",
+    sinhalaName: "ගාලික් බටර් ඉස්සෝ",
+    category: "seafood",
+    priceLKR: 2800,
+    description: "Freshwater lagoon prawns pan-seared with creamy French butter, roasted garlic flakes, lemon zest, and fresh parsley.",
+    portion: "Large Platter",
+    spicyLevel: 1,
+    isByobPairing: true,
+    image: "https://images.unsplash.com/photo-1559742811-822873691df8?auto=format&fit=crop&w=800&q=80",
+    tags: ["Seafood", "Garlic Butter", "Gourmet"],
+  },
+  {
+    id: "sea-2",
+    name: "Devilled Spicy Cuttlefish Rings",
+    sinhalaName: "දැල්ලෝ ඩෙවල්",
+    category: "seafood",
+    priceLKR: 2300,
+    description: "Tender cuttlefish tossed with ripe tomatoes, banana peppers, scallions, chili flakes, and a savory sweet-sour reduction.",
+    portion: "Full Platter",
+    spicyLevel: 3,
+    isByobPairing: true,
+    image: "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=800&q=80",
+    tags: ["Devilled", "Spicy Chaser", "BYOB Favorite"],
+  },
+
+  // 7. BYOB Bites & Chasers
+  {
     id: "byob-1",
     name: "Crispy Hot Butter Cuttlefish (HBC)",
     sinhalaName: "හොට් බටර් දැල්ලෝ",
@@ -819,8 +938,37 @@ export const MENU_ITEMS: MenuItem[] = [
     tags: ["BYOB #1 Favorite", "Hot Butter", "Crowd Magnet"],
   },
   {
+    id: "byob-2",
+    name: "Spicy Pepper Beef Chaser Bites",
+    sinhalaName: "ස්පයිසි පෙපර් බීෆ් බයිට්ස්",
+    category: "byob_bites",
+    priceLKR: 2350,
+    description: "Thinly sliced tender beef stir-fried with crushed black pepper, caramelized red onions, curry leaves, and green chilies.",
+    portion: "Platter",
+    spicyLevel: 3,
+    isByobPairing: true,
+    image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",
+    tags: ["Beef Chaser", "Pepper Fry", "BYOB Essential"],
+  },
+  {
+    id: "byob-3",
+    name: "Fried Handalla / Silver Fish Chaser",
+    sinhalaName: "බැදපු හාල්මැස්සෝ / හඳැල්ලෝ බයිට් එක",
+    category: "byob_bites",
+    priceLKR: 1650,
+    description: "Crispy whole silver fish tempered with fried curry leaves, red chili flakes, roasted peanuts, and lime wedges.",
+    portion: "Crunchy Bowl",
+    spicyLevel: 2,
+    isByobPairing: true,
+    image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80",
+    tags: ["Crunchy", "Local Favorite", "BYOB Bite"],
+  },
+
+  // 8. Desserts & Drinks
+  {
     id: "des-1",
     name: "Madara Sizzling Brownie with Vanilla Ice Cream",
+    sinhalaName: "සිස්ලින් බ්‍රව්නී සහ අයිස්ක්‍රීම්",
     category: "desserts_drinks",
     priceLKR: 1250,
     description: "Fudge walnut brownie served on a sizzling hot plate, smothered in warm Belgian chocolate ganache and crowned with Madagascar vanilla bean gelato.",
@@ -829,6 +977,32 @@ export const MENU_ITEMS: MenuItem[] = [
     isChefsSpecial: true,
     image: "https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&w=800&q=80",
     tags: ["Dessert", "Sizzling", "Sweet"],
+  },
+  {
+    id: "des-2",
+    name: "Traditional Watalappam with Roasted Cashews",
+    sinhalaName: "සාම්ප්‍රදායික වටලප්පන්",
+    category: "desserts_drinks",
+    priceLKR: 750,
+    description: "Steamed coconut jaggery custard enriched with ground nutmeg, cardamom, and topped with generous toasted cashews.",
+    portion: "Dessert Bowl",
+    spicyLevel: 0,
+    isVegetarian: true,
+    image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80",
+    tags: ["Traditional Sweet", "Jaggery Custard", "Dessert"],
+  },
+  {
+    id: "des-3",
+    name: "Fresh Passion Fruit Mint Cooler",
+    sinhalaName: "නැවුම් පැෂන් ෆෘට් කූලර්",
+    category: "desserts_drinks",
+    priceLKR: 650,
+    description: "Chilled fresh passion fruit pulp blended with lime juice, garden mint, cane syrup, and sparkling soda.",
+    portion: "Tall Glass (350ml)",
+    spicyLevel: 0,
+    isVegetarian: true,
+    image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=800&q=80",
+    tags: ["Beverage", "Refreshing", "Mocktail"],
   },
 ];
 

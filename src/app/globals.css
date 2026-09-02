@@ -232,3 +232,13 @@ input[type="range"]::-webkit-slider-thumb:hover {
   width: max-content;
   animation: marquee 22s linear infinite;
 }
+
+/* Hero Slide Progress Bar */
+@keyframes progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}

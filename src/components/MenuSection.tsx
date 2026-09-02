@@ -22,12 +22,15 @@ import {
   MessageCircle, 
   Tag, 
   CheckCircle,
-  Clock
+  Clock,
+  ChevronRight,
+  Info,
+  ArrowUpRight
 } from "lucide-react";
 
 export default function MenuSection() {
   const { language, t } = useLanguage();
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [activeCategoryTab, setActiveCategoryTab] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
   const [activeModalDish, setActiveModalDish] = useState<MenuItem | null>(null);
@@ -46,13 +49,9 @@ export default function MenuSection() {
     }
   };
 
-  // Filtered menu logic
+  // Filter dishes based on search query and dietary/feature pills
   const filteredDishes = useMemo(() => {
     return MENU_ITEMS.filter((dish) => {
-      // Category check
-      const matchesCategory =
-        selectedCategory === "all" || dish.category === selectedCategory;
-
       // Search query check
       const q = searchQuery.toLowerCase().trim();
       const matchesSearch =
@@ -60,7 +59,7 @@ export default function MenuSection() {
         dish.name.toLowerCase().includes(q) ||
         dish.description.toLowerCase().includes(q) ||
         (dish.sinhalaName && dish.sinhalaName.toLowerCase().includes(q)) ||
-        dish.tags.some((t) => t.toLowerCase().includes(q));
+        dish.tags.some((tag) => tag.toLowerCase().includes(q));
 
       // Dietary / Feature pill check
       let matchesFilter = true;
@@ -76,19 +75,62 @@ export default function MenuSection() {
         matchesFilter = (dish.spicyLevel ?? 0) >= 2;
       }
 
-      return matchesCategory && matchesSearch && matchesFilter;
+      return matchesSearch && matchesFilter;
     });
-  }, [selectedCategory, searchQuery, selectedFilter]);
+  }, [searchQuery, selectedFilter]);
+
+  // Group filtered dishes by category
+  const categoriesWithDishes = useMemo(() => {
+    const validCategories = MENU_CATEGORIES.filter((c) => c.id !== "all");
+
+    // If a specific category tab is clicked (other than 'all'), filter to that category
+    const relevantCategories = activeCategoryTab === "all" 
+      ? validCategories 
+      : validCategories.filter((c) => c.id === activeCategoryTab);
+
+    return relevantCategories
+      .map((cat) => {
+        const dishes = filteredDishes.filter((d) => d.category === cat.id);
+        return {
+          ...cat,
+          dishes,
+        };
+      })
+      .filter((group) => group.dishes.length > 0);
+  }, [filteredDishes, activeCategoryTab]);
+
+  // Smooth scroll to category anchor
+  const scrollToCategory = (catId: string) => {
+    setActiveCategoryTab(catId);
+    if (catId === "all") {
+      const el = document.getElementById("menu-list-container");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    } else {
+      const el = document.getElementById(`category-group-${catId}`);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  };
+
+  // Helper to generate WhatsApp order URL
+  const generateWhatsAppDishUrl = (dish: MenuItem) => {
+    const text = `Hi Madara Restaurant! 🍽️\n\nI would like to order / inquire about:\n- *Dish:* ${dish.name} ${dish.sinhalaName ? `(${dish.sinhalaName})` : ""}\n- *Portion:* ${dish.portion}\n- *Price:* LKR ${dish.priceLKR.toLocaleString()}\n\nPlease confirm availability and delivery / takeaway timings. Thank you!`;
+    return `https://wa.me/${RESTAURANT_INFO.whatsappNumber}?text=${encodeURIComponent(text)}`;
+  };
 
   return (
     <section id="menu" className="py-24 relative bg-madara-dark">
       {/* Background ambient lighting */}
-      <div className="ambient-glow w-[500px] h-[500px] bg-madara-orange/5 top-1/4 left-1/3" />
+      <div className="ambient-glow w-[600px] h-[600px] bg-madara-orange/5 top-1/4 left-1/3" />
+      <div className="ambient-glow w-[400px] h-[400px] bg-amber-500/4 bottom-1/4 right-1/4" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
+        <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-madara-orange/10 border border-madara-orange/30 text-madara-orange text-xs font-bold uppercase tracking-wider mb-4 shadow-glow-orange-sm">
             <Sparkles className="w-3.5 h-3.5" />
             <span>{t("menu.badge")}</span>
@@ -101,32 +143,35 @@ export default function MenuSection() {
           </p>
         </div>
 
-        {/* Search & Quick Filters Bar */}
-        <div className="glass-panel p-4 sm:p-6 rounded-2xl border border-white/10 mb-8 max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-4">
+        {/* ============================================================ */}
+        {/* SEARCH & DIETARY ATTRIBUTE FILTERS BAR */}
+        {/* ============================================================ */}
+        <div className="glass-panel p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-white/10 mb-8 max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-4 shadow-xl">
           
           {/* Search Input */}
-          <div className="relative w-full md:w-1/2">
+          <div className="relative w-full md:w-5/12">
             <Search className="w-4 h-4 text-madara-textMuted absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={t("menu.searchPlaceholder")}
-              className="w-full bg-black/40 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-xs sm:text-sm text-white placeholder-madara-textMuted focus:outline-none focus:border-madara-orange transition-colors"
+              className="w-full bg-black/50 border border-white/10 rounded-xl pl-10 pr-9 py-2.5 text-xs sm:text-sm text-white placeholder-madara-textMuted focus:outline-none focus:border-madara-orange transition-colors"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
+                aria-label="Clear Search"
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-madara-textMuted hover:text-white"
               >
-                <X className="w-3.5 h-3.5" />
+                <X className="w-4 h-4" />
               </button>
             )}
           </div>
 
-          {/* Quick Dietary / Attribute Filter Pills */}
-          <div className="w-full md:w-1/2 overflow-x-auto pb-2 md:pb-0 scrollbar-orange">
-            <div className="flex items-center gap-1.5 w-max px-1">
+          {/* Quick Feature Filter Pills */}
+          <div className="w-full md:w-7/12 overflow-x-auto pb-1 md:pb-0 scrollbar-orange">
+            <div className="flex items-center gap-2 w-max px-1">
               {[
                 { id: "all", label: t("menu.all") },
                 { id: "chefs_special", label: `⭐ ${t("menu.chefsPicks")}` },
@@ -138,10 +183,10 @@ export default function MenuSection() {
                 <button
                   key={f.id}
                   onClick={() => setSelectedFilter(f.id)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                     selectedFilter === f.id
-                      ? "bg-madara-orange text-white shadow-glow-orange-sm"
-                      : "bg-white/5 text-madara-textSecondary hover:bg-white/10"
+                      ? "bg-madara-orange text-white shadow-glow-orange-sm scale-105"
+                      : "bg-white/5 text-madara-textSecondary hover:bg-white/10 border border-white/10"
                   }`}
                 >
                   {f.label}
@@ -152,136 +197,247 @@ export default function MenuSection() {
 
         </div>
 
-        {/* Category Navigation Pills */}
-        <div className="w-full overflow-x-auto pb-4 mb-10 scrollbar-orange">
-          <div className="flex items-center gap-2 w-max min-w-full justify-start md:justify-center px-4">
-            {MENU_CATEGORIES.map((cat) => {
-              const Icon = getCategoryIcon(cat.icon);
-              const isSelected = selectedCategory === cat.id;
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 whitespace-nowrap transition-all cursor-pointer ${
-                    isSelected
-                      ? "bg-gradient-to-r from-madara-orange to-red-600 text-white shadow-glow-orange scale-105"
-                      : "bg-white/5 text-madara-textSecondary border border-white/10 hover:border-white/20 hover:text-white"
-                  }`}
-                >
-                  <Icon className="w-4 h-4 text-madara-orange" />
-                  <span>{language === "si" && cat.sinhalaName ? cat.sinhalaName : cat.name}</span>
-                </button>
-              );
-            })}
+        {/* ============================================================ */}
+        {/* STICKY / HORIZONTAL CATEGORY JUMP NAVIGATION STRIP */}
+        {/* ============================================================ */}
+        <div className="sticky top-20 z-30 mb-10 py-3 bg-madara-dark/95 backdrop-blur-xl border-y border-white/10 -mx-4 px-4 sm:mx-0 sm:px-0 sm:rounded-2xl sm:border">
+          <div className="overflow-x-auto scrollbar-orange">
+            <div className="flex items-center gap-2 w-max px-2 py-1">
+              <button
+                onClick={() => scrollToCategory("all")}
+                className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
+                  activeCategoryTab === "all"
+                    ? "bg-gradient-to-r from-madara-orange to-red-600 text-white shadow-glow-orange"
+                    : "bg-white/5 text-madara-textSecondary hover:bg-white/10 border border-white/10"
+                }`}
+              >
+                <UtensilsCrossed className="w-3.5 h-3.5" />
+                <span>{language === "si" ? "සියලුම කාණ්ඩ (All)" : "All Categories"}</span>
+                <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-black/40 ml-1">
+                  {filteredDishes.length}
+                </span>
+              </button>
+
+              {MENU_CATEGORIES.filter((c) => c.id !== "all").map((cat) => {
+                const Icon = getCategoryIcon(cat.icon);
+                const isSelected = activeCategoryTab === cat.id;
+                const count = filteredDishes.filter((d) => d.category === cat.id).length;
+
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => scrollToCategory(cat.id)}
+                    className={`px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
+                      isSelected
+                        ? "bg-madara-orange text-white shadow-glow-orange"
+                        : "bg-white/5 text-madara-textSecondary hover:bg-white/10 border border-white/10"
+                    }`}
+                  >
+                    <Icon className="w-3.5 h-3.5 text-madara-orange" />
+                    <span>{language === "si" && cat.sinhalaName ? cat.sinhalaName : cat.name}</span>
+                    <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${isSelected ? "bg-black/40 text-white" : "bg-white/10 text-madara-textMuted"}`}>
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 
-        {/* Menu Items Grid */}
-        {filteredDishes.length > 0 ? (
-          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-            {filteredDishes.map((dish) => (
-              <div
-                key={dish.id}
-                onClick={() => setActiveModalDish(dish)}
-                className="glass-card rounded-2xl sm:rounded-3xl overflow-hidden flex flex-col justify-between group cursor-pointer border border-white/10 hover:border-madara-orange/50 transition-all duration-300"
+        {/* ============================================================ */}
+        {/* SINGLE COMPREHENSIVE LIST GROUPED BY DISH TYPE / CATEGORY */}
+        {/* ============================================================ */}
+        <div id="menu-list-container" className="space-y-12">
+          {categoriesWithDishes.length > 0 ? (
+            categoriesWithDishes.map((group) => {
+              const CategoryIcon = getCategoryIcon(group.icon);
+
+              return (
+                <div 
+                  key={group.id} 
+                  id={`category-group-${group.id}`}
+                  className="scroll-mt-36"
+                >
+                  {/* Group Header Banner */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-4 border-b border-madara-orange/30">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-madara-orange/20 border border-madara-orange/40 flex items-center justify-center text-madara-orange flex-shrink-0">
+                        <CategoryIcon className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <h3 className="text-xl sm:text-2xl font-bold text-white font-serif">
+                            {language === "si" && group.sinhalaName ? group.sinhalaName : group.name}
+                          </h3>
+                          {group.sinhalaName && language !== "si" && (
+                            <span className="text-xs text-madara-orange font-semibold hidden sm:inline">
+                              ({group.sinhalaName})
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-xs text-madara-textMuted mt-0.5">
+                          {group.dishes.length} {group.dishes.length === 1 ? "Dish" : "Dishes"} available
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="text-right">
+                      <span className="text-[11px] font-bold text-madara-orange uppercase tracking-wider bg-madara-orange/10 px-3 py-1 rounded-full border border-madara-orange/30">
+                        {group.id === "signatures" ? "Master Specialties" : "Freshly Prepared"}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Responsive Dishes List (Horizontal Sleek Rows) */}
+                  <div className="space-y-3 sm:space-y-4">
+                    {group.dishes.map((dish) => (
+                      <div
+                        key={dish.id}
+                        className="glass-card rounded-2xl p-3 sm:p-5 border border-white/10 hover:border-madara-orange/40 transition-all duration-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 group"
+                      >
+                        {/* Left: Thumbnail & Badges */}
+                        <div 
+                          onClick={() => setActiveModalDish(dish)}
+                          className="flex items-start sm:items-center gap-3.5 sm:gap-4 w-full sm:w-auto cursor-pointer"
+                        >
+                          {/* Dish Image Thumbnail */}
+                          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl sm:rounded-2xl overflow-hidden bg-black/40 flex-shrink-0 relative border border-white/10 group-hover:border-madara-orange/50 transition-colors">
+                            <img
+                              src={dish.image}
+                              alt={dish.name}
+                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                              loading="lazy"
+                            />
+                            {dish.spicyLevel !== undefined && dish.spicyLevel > 0 && (
+                              <div className="absolute bottom-1 right-1 px-1 py-0.2 rounded bg-black/80 backdrop-blur-md text-[9px] text-red-400 font-bold border border-red-500/20">
+                                {"🌶️".repeat(dish.spicyLevel)}
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Titles, Portions, Tags & Description */}
+                          <div className="min-w-0 flex-grow">
+                            {/* Badges Bar */}
+                            <div className="flex flex-wrap items-center gap-1.5 mb-1">
+                              {dish.isChefsSpecial && (
+                                <span className="px-2 py-0.5 rounded-full bg-amber-500 text-black text-[10px] font-extrabold flex items-center gap-1">
+                                  ⭐ {language === "si" ? "විශේෂ තේරීම" : "Chef's Signature"}
+                                </span>
+                              )}
+                              {dish.isActionKitchen && (
+                                <span className="px-2 py-0.5 rounded-full bg-red-600 text-white text-[10px] font-extrabold flex items-center gap-1">
+                                  🔥 {language === "si" ? "සජීවී කුටිය" : "Live Action"}
+                                </span>
+                              )}
+                              {dish.isByobPairing && (
+                                <span className="px-2 py-0.5 rounded-full bg-purple-600 text-white text-[10px] font-extrabold flex items-center gap-1">
+                                  🍾 BYOB Favorite
+                                </span>
+                              )}
+                              {dish.isVegetarian && (
+                                <span className="px-2 py-0.5 rounded-full bg-emerald-600 text-white text-[10px] font-extrabold">
+                                  🌿 Veg
+                                </span>
+                              )}
+                            </div>
+
+                            {/* Dish Main Title */}
+                            <h4 className="text-sm sm:text-base font-bold text-white group-hover:text-madara-orange transition-colors">
+                              {language === "si" && dish.sinhalaName ? dish.sinhalaName : dish.name}
+                            </h4>
+
+                            {dish.sinhalaName && language !== "si" && (
+                              <span className="text-xs text-madara-orange font-medium block">
+                                {dish.sinhalaName}
+                              </span>
+                            )}
+
+                            {/* Description */}
+                            <p className="text-xs text-madara-textSecondary mt-1 line-clamp-2 sm:line-clamp-1 leading-relaxed">
+                              {dish.description}
+                            </p>
+
+                            {/* Tags & Portion Meta */}
+                            <div className="flex flex-wrap items-center gap-2 mt-2">
+                              <span className="text-[11px] font-semibold text-white/70 bg-white/5 px-2 py-0.5 rounded-md border border-white/10">
+                                {dish.portion}
+                              </span>
+                              {dish.tags.slice(0, 3).map((t, idx) => (
+                                <span key={idx} className="text-[10px] text-madara-textMuted hidden md:inline">
+                                  #{t}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Right: Price & Direct Actions */}
+                        <div className="flex items-center justify-between sm:flex-col sm:items-end sm:justify-center gap-2 sm:gap-3 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-white/10 flex-shrink-0">
+                          <div className="sm:text-right">
+                            <span className="text-[10px] text-madara-textMuted uppercase font-bold block sm:hidden">
+                              {t("menu.priceLabel")}
+                            </span>
+                            <span className="text-base sm:text-lg font-extrabold text-madara-orange whitespace-nowrap">
+                              LKR {dish.priceLKR.toLocaleString()}
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={() => setActiveModalDish(dish)}
+                              aria-label={`View details for ${dish.name}`}
+                              className="btn-outline-dark px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1 cursor-pointer"
+                            >
+                              <Info className="w-3.5 h-3.5 text-madara-orange" />
+                              <span className="hidden xs:inline">{t("menu.detailsBtn")}</span>
+                            </button>
+
+                            <a
+                              href={generateWhatsAppDishUrl(dish)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label={`Order ${dish.name} on WhatsApp`}
+                              className="btn-whatsapp px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-md"
+                            >
+                              <MessageCircle className="w-3.5 h-3.5" />
+                              <span>Order</span>
+                            </a>
+                          </div>
+                        </div>
+
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <div className="text-center py-16 glass-panel rounded-3xl border border-white/10 max-w-2xl mx-auto">
+              <UtensilsCrossed className="w-12 h-12 text-madara-textMuted mx-auto mb-3" />
+              <h3 className="text-lg font-bold text-white">{t("menu.noDishes")}</h3>
+              <p className="text-xs text-madara-textSecondary mt-1">
+                {t("menu.noDishesSub")}
+              </p>
+              <button
+                onClick={() => {
+                  setSearchQuery("");
+                  setSelectedFilter("all");
+                  setActiveCategoryTab("all");
+                }}
+                className="mt-4 px-5 py-2.5 rounded-xl bg-madara-orange text-white text-xs font-bold shadow-glow-orange-sm cursor-pointer"
               >
-                {/* Dish Photo */}
-                <div className="aspect-[4/3] relative overflow-hidden bg-black/40">
-                  <img
-                    src={dish.image}
-                    alt={dish.name}
-                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-madara-dark/90 via-transparent to-black/30" />
-
-                  {/* Top Badges */}
-                  <div className="absolute top-2 left-2 sm:top-3 sm:left-3 flex flex-wrap gap-1">
-                    {dish.isChefsSpecial && (
-                      <span className="px-1.5 sm:px-2.5 py-0.5 rounded-full bg-amber-500 text-black text-[10px] sm:text-[11px] font-extrabold flex items-center gap-0.5 sm:gap-1 shadow-md">
-                        <Sparkles className="w-2.5 h-2.5" /> <span className="hidden xs:inline">{language === "si" ? "විශේෂ තේරීම" : "Chef Pick"}</span>
-                      </span>
-                    )}
-                    {dish.isActionKitchen && (
-                      <span className="px-1.5 sm:px-2.5 py-0.5 rounded-full bg-red-600 text-white text-[10px] sm:text-[11px] font-extrabold flex items-center gap-0.5 sm:gap-1 shadow-md">
-                        <Flame className="w-2.5 h-2.5" /> <span className="hidden xs:inline">{language === "si" ? "සජීවී" : "Live"}</span>
-                      </span>
-                    )}
-                    {dish.isVegetarian && (
-                      <span className="px-1.5 sm:px-2.5 py-0.5 rounded-full bg-emerald-600 text-white text-[10px] sm:text-[11px] font-extrabold flex items-center gap-0.5 sm:gap-1 shadow-md">
-                        🌿 <span className="hidden xs:inline">{language === "si" ? "නිර්මාංශ" : "Veg"}</span>
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Spice Level Indicator */}
-                  {dish.spicyLevel !== undefined && dish.spicyLevel > 0 && (
-                    <div className="absolute top-2 right-2 sm:top-3 sm:right-3 px-1.5 py-0.5 rounded-full bg-black/70 backdrop-blur-md text-[10px] font-bold text-red-400 border border-red-500/20">
-                      {"🌶️".repeat(dish.spicyLevel)}
-                    </div>
-                  )}
-
-                  {/* Portion Tag */}
-                  <div className="absolute bottom-2 left-2 sm:bottom-3 sm:left-3 px-1.5 sm:px-2.5 py-0.5 rounded-md bg-black/70 backdrop-blur-md text-[11px] text-madara-textSecondary border border-white/10">
-                    {dish.portion}
-                  </div>
-                </div>
-
-                {/* Dish Info */}
-                <div className="p-3.5 sm:p-5 flex flex-col justify-between flex-grow">
-                  <div>
-                    {dish.sinhalaName && language !== "si" && (
-                      <span className="text-[11px] text-madara-orange/90 font-medium block truncate">
-                        {dish.sinhalaName}
-                      </span>
-                    )}
-                    <h3 className="text-sm sm:text-base font-bold text-white font-serif group-hover:text-madara-orange transition-colors truncate">
-                      {language === "si" && dish.sinhalaName ? dish.sinhalaName : dish.name}
-                    </h3>
-                    <p className="text-xs text-madara-textSecondary mt-1 sm:mt-2 line-clamp-2 leading-relaxed">
-                      {dish.description}
-                    </p>
-                  </div>
-
-                  {/* Price & Action */}
-                  <div className="mt-4 sm:mt-5 pt-2 sm:pt-3 border-t border-white/10 flex items-center justify-between gap-1.5">
-                    <div>
-                      <span className="text-[10px] text-madara-textMuted block">{t("menu.priceLabel")}</span>
-                      <span className="text-sm sm:text-base font-extrabold text-madara-orange whitespace-nowrap">
-                        LKR {dish.priceLKR.toLocaleString()}
-                      </span>
-                    </div>
-                    <span className="text-[10px] sm:text-xs font-semibold text-white/80 group-hover:text-madara-orange transition-colors flex items-center gap-0.5 sm:gap-1 bg-white/5 px-1.5 sm:px-2.5 py-1 rounded-lg">
-                      {t("menu.detailsBtn")} <span className="hidden xs:inline">→</span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-16 glass-panel rounded-3xl border border-white/10">
-            <UtensilsCrossed className="w-12 h-12 text-madara-textMuted mx-auto mb-3" />
-            <h3 className="text-lg font-bold text-white">{t("menu.noDishes")}</h3>
-            <p className="text-xs text-madara-textSecondary mt-1">
-              {t("menu.noDishesSub")}
-            </p>
-            <button
-              onClick={() => {
-                setSearchQuery("");
-                setSelectedCategory("all");
-                setSelectedFilter("all");
-              }}
-              className="mt-4 px-4 py-2 rounded-xl bg-madara-orange text-white text-xs font-bold"
-            >
-              {language === "si" ? "පෙරහන් නැවත සකසන්න" : "Reset Filters"}
-            </button>
-          </div>
-        )}
+                {language === "si" ? "පෙරහන් නැවත සකසන්න" : "Reset Filters"}
+              </button>
+            </div>
+          )}
+        </div>
 
       </div>
 
-      {/* Dish Details Modal */}
+      {/* ============================================================ */}
+      {/* DISH DETAILS MODAL POPUP */}
+      {/* ============================================================ */}
       {activeModalDish && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
           <div className="relative w-full max-w-xl bg-madara-surfaceElevated border border-madara-orange/30 rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200">
@@ -298,6 +454,7 @@ export default function MenuSection() {
               {/* Close Button */}
               <button
                 onClick={() => setActiveModalDish(null)}
+                aria-label="Close modal"
                 className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-madara-orange flex items-center justify-center transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
@@ -322,6 +479,11 @@ export default function MenuSection() {
                     🍾 {language === "si" ? "BYOB ගැලපෙන" : "BYOB Top Pairing"}
                   </span>
                 )}
+                {activeModalDish.isVegetarian && (
+                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-600 text-white text-xs font-bold">
+                    🌿 Vegetarian
+                  </span>
+                )}
               </div>
 
               {activeModalDish.sinhalaName && language !== "si" && (
@@ -336,7 +498,9 @@ export default function MenuSection() {
               <div className="flex items-center gap-4 my-3 text-xs text-madara-textSecondary">
                 <span>{t("menu.portionLabel")}: <strong>{activeModalDish.portion}</strong></span>
                 {activeModalDish.spicyLevel !== undefined && (
-                  <span>{language === "si" ? "සැර" : "Spice"}: <strong>{"🌶️".repeat(activeModalDish.spicyLevel) || (language === "si" ? "මෘදු" : "Mild")}</strong></span>
+                  <span>
+                    {language === "si" ? "සැර" : "Spice"}: <strong>{"🌶️".repeat(activeModalDish.spicyLevel) || (language === "si" ? "මෘදු" : "Mild")}</strong>
+                  </span>
                 )}
               </div>
 
@@ -346,17 +510,17 @@ export default function MenuSection() {
 
               {/* Tags */}
               <div className="flex flex-wrap gap-1.5 my-4">
-                {activeModalDish.tags.map((t, idx) => (
+                {activeModalDish.tags.map((tag, idx) => (
                   <span
                     key={idx}
                     className="px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-[11px] text-madara-textMuted"
                   >
-                    #{t}
+                    #{tag}
                   </span>
                 ))}
               </div>
 
-              {/* Modal Footer: Price & Direct WhatsApp Inquiry */}
+              {/* Modal Footer: Price & Direct WhatsApp Order */}
               <div className="mt-6 pt-5 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
                   <span className="text-xs text-madara-textMuted block">{t("menu.priceLabel")}</span>
@@ -366,13 +530,13 @@ export default function MenuSection() {
                 </div>
 
                 <a
-                  href={`https://wa.me/${RESTAURANT_INFO.whatsappNumber}?text=Hi%20Madara%20Restaurant,%20I%20would%20like%20to%20order/inquire%20about%20the%20${encodeURIComponent(activeModalDish.name)}%20(LKR%20${activeModalDish.priceLKR}).`}
+                  href={generateWhatsAppDishUrl(activeModalDish)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto btn-whatsapp px-6 py-3 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto btn-whatsapp px-6 py-3 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-lg"
                 >
                   <MessageCircle className="w-4 h-4" />
-                  <span>{t("catering.whatsappInquiry")}</span>
+                  <span>Order via WhatsApp</span>
                 </a>
               </div>
 
