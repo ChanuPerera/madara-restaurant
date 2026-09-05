@@ -30,9 +30,8 @@ import {
 
 export default function MenuSection() {
   const { language, t } = useLanguage();
-  const [activeCategoryTab, setActiveCategoryTab] = useState<string>("all");
+  const [activeCategoryTab, setActiveCategoryTab] = useState<string>("signatures");
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedFilter, setSelectedFilter] = useState<string>("all");
   const [activeModalDish, setActiveModalDish] = useState<MenuItem | null>(null);
 
   // Icon mapper helper
@@ -49,35 +48,20 @@ export default function MenuSection() {
     }
   };
 
-  // Filter dishes based on search query and dietary/feature pills
+  // Filter dishes based on search query (Search Only)
   const filteredDishes = useMemo(() => {
+    const q = searchQuery.toLowerCase().trim();
+    if (!q) return MENU_ITEMS;
+
     return MENU_ITEMS.filter((dish) => {
-      // Search query check
-      const q = searchQuery.toLowerCase().trim();
-      const matchesSearch =
-        !q ||
+      return (
         dish.name.toLowerCase().includes(q) ||
         dish.description.toLowerCase().includes(q) ||
         (dish.sinhalaName && dish.sinhalaName.toLowerCase().includes(q)) ||
-        dish.tags.some((tag) => tag.toLowerCase().includes(q));
-
-      // Dietary / Feature pill check
-      let matchesFilter = true;
-      if (selectedFilter === "chefs_special") {
-        matchesFilter = !!dish.isChefsSpecial;
-      } else if (selectedFilter === "action_kitchen") {
-        matchesFilter = !!dish.isActionKitchen;
-      } else if (selectedFilter === "byob_pairing") {
-        matchesFilter = !!dish.isByobPairing;
-      } else if (selectedFilter === "vegetarian") {
-        matchesFilter = !!dish.isVegetarian;
-      } else if (selectedFilter === "spicy") {
-        matchesFilter = (dish.spicyLevel ?? 0) >= 2;
-      }
-
-      return matchesSearch && matchesFilter;
+        dish.tags.some((tag) => tag.toLowerCase().includes(q))
+      );
     });
-  }, [searchQuery, selectedFilter]);
+  }, [searchQuery]);
 
   // Group filtered dishes by category
   const categoriesWithDishes = useMemo(() => {
@@ -144,64 +128,57 @@ export default function MenuSection() {
         </div>
 
         {/* ============================================================ */}
-        {/* SEARCH & DIETARY ATTRIBUTE FILTERS BAR */}
+        {/* MENU SEARCH BAR (SEARCH ONLY) */}
         {/* ============================================================ */}
-        <div className="glass-panel p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-white/10 mb-8 max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-4 shadow-xl">
-          
-          {/* Search Input */}
-          <div className="relative w-full md:w-5/12">
-            <Search className="w-4 h-4 text-madara-textMuted absolute left-3.5 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={t("menu.searchPlaceholder")}
-              className="w-full bg-black/50 border border-white/10 rounded-xl pl-10 pr-9 py-2.5 text-xs sm:text-sm text-white placeholder-madara-textMuted focus:outline-none focus:border-madara-orange transition-colors"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery("")}
-                aria-label="Clear Search"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-madara-textMuted hover:text-white"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            )}
-          </div>
-
-          {/* Quick Feature Filter Pills */}
-          <div className="w-full md:w-7/12 overflow-x-auto pb-1 md:pb-0 scrollbar-orange">
-            <div className="flex items-center gap-2 w-max px-1">
-              {[
-                { id: "all", label: t("menu.all") },
-                { id: "chefs_special", label: `⭐ ${t("menu.chefsPicks")}` },
-                { id: "action_kitchen", label: `🔥 ${t("menu.liveAction")}` },
-                { id: "byob_pairing", label: `🍾 ${t("menu.byobBites")}` },
-                { id: "vegetarian", label: `🌿 ${t("menu.vegetarian")}` },
-                { id: "spicy", label: `🌶️ ${language === "si" ? "අධික සැර" : "Extra Spicy"}` },
-              ].map((f) => (
+        <div className="max-w-2xl mx-auto mb-10">
+          <div className="relative group">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-madara-orange/30 to-amber-500/20 rounded-2xl blur-sm opacity-50 group-focus-within:opacity-100 transition-opacity duration-300" />
+            <div className="relative flex items-center bg-[#101116]/95 backdrop-blur-xl border border-white/15 rounded-2xl shadow-xl transition-all duration-300 group-focus-within:border-madara-orange/60 group-focus-within:bg-[#12131a] px-4 py-1">
+              <Search className="w-5 h-5 text-madara-orange flex-shrink-0 group-focus-within:scale-110 transition-transform duration-200" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={t("menu.searchPlaceholder")}
+                className="w-full bg-transparent px-3.5 py-3 text-xs sm:text-sm md:text-base text-white placeholder-madara-textMuted focus:outline-none"
+              />
+              {searchQuery && (
                 <button
-                  key={f.id}
-                  onClick={() => setSelectedFilter(f.id)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
-                    selectedFilter === f.id
-                      ? "bg-madara-orange text-white shadow-glow-orange-sm scale-105"
-                      : "bg-white/5 text-madara-textSecondary hover:bg-white/10 border border-white/10"
-                  }`}
+                  onClick={() => setSearchQuery("")}
+                  aria-label="Clear Search"
+                  className="p-1 rounded-lg text-madara-textMuted hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
                 >
-                  {f.label}
+                  <X className="w-4 h-4" />
                 </button>
-              ))}
+              )}
             </div>
           </div>
 
+          {/* Active Search Status Feedback */}
+          {searchQuery && (
+            <div className="flex items-center justify-between px-3 pt-2.5 text-xs text-madara-textSecondary animate-in fade-in duration-200">
+              <span>
+                {language === "si" ? (
+                  <>ප්‍රතිඵල <strong>{filteredDishes.length}</strong> ක් හමු විය: &ldquo;{searchQuery}&rdquo;</>
+                ) : (
+                  <>Found <strong>{filteredDishes.length}</strong> {filteredDishes.length === 1 ? "dish" : "dishes"} matching &ldquo;{searchQuery}&rdquo;</>
+                )}
+              </span>
+              <button
+                onClick={() => setSearchQuery("")}
+                className="text-madara-orange hover:underline font-semibold cursor-pointer"
+              >
+                {language === "si" ? "සොඳුම මකන්න" : "Clear Search"}
+              </button>
+            </div>
+          )}
         </div>
 
         {/* ============================================================ */}
         {/* STICKY / HORIZONTAL CATEGORY JUMP NAVIGATION STRIP */}
         {/* ============================================================ */}
-        <div className="sticky top-20 z-30 mb-10 py-3 bg-madara-dark/95 backdrop-blur-xl border-y border-white/10 -mx-4 px-4 sm:mx-0 sm:px-0 sm:rounded-2xl sm:border">
-          <div className="overflow-x-auto scrollbar-orange">
+        <div className="sticky top-20 z-30 mb-10 py-3 bg-madara-dark/95 backdrop-blur-xl border-y border-white/10 -mx-4 px-4 sm:mx-0 sm:px-0 sm:rounded-2xl sm:border shadow-lg">
+          <div className="overflow-x-auto no-scrollbar">
             <div className="flex items-center gap-2 w-max px-2 py-1">
               <button
                 onClick={() => scrollToCategory("all")}
@@ -422,12 +399,11 @@ export default function MenuSection() {
               <button
                 onClick={() => {
                   setSearchQuery("");
-                  setSelectedFilter("all");
                   setActiveCategoryTab("all");
                 }}
                 className="mt-4 px-5 py-2.5 rounded-xl bg-madara-orange text-white text-xs font-bold shadow-glow-orange-sm cursor-pointer"
               >
-                {language === "si" ? "පෙරහන් නැවත සකසන්න" : "Reset Filters"}
+                {language === "si" ? "සොඳුම මකන්න" : "Clear Search"}
               </button>
             </div>
           )}

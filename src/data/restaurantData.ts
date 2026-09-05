@@ -161,7 +161,7 @@ export const CATERING_CATEGORIES: CateringEventCategory[] = [
     sinhalaName: "අවමංගල්‍ය සහ මතක වස්ත්‍ර පූජා",
     description: "Dignified, punctual catering for gatherings and memorial wakes with tea, short eats, or hot meals.",
     icon: "Sparkles",
-    image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80",
     badge: "Dignified & Punctual",
   },
   {
@@ -726,7 +726,7 @@ export const MENU_ITEMS: MenuItem[] = [
     spicyLevel: 2,
     isChefsSpecial: true,
     isByobPairing: true,
-    image: "https://images.unsplash.com/photo-1559742811-822873691df8?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?auto=format&fit=crop&w=800&q=80",
     tags: ["Seafood", "Sizzling", "Chef Special", "BYOB Favorite"],
   },
   {
@@ -918,7 +918,7 @@ export const MENU_ITEMS: MenuItem[] = [
     portion: "Full Platter",
     spicyLevel: 3,
     isByobPairing: true,
-    image: "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=800&q=80",
     tags: ["Devilled", "Spicy Chaser", "BYOB Favorite"],
   },
 
@@ -947,7 +947,7 @@ export const MENU_ITEMS: MenuItem[] = [
     portion: "Platter",
     spicyLevel: 3,
     isByobPairing: true,
-    image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1534939561126-855b8675edd7?auto=format&fit=crop&w=800&q=80",
     tags: ["Beef Chaser", "Pepper Fry", "BYOB Essential"],
   },
   {
@@ -960,7 +960,7 @@ export const MENU_ITEMS: MenuItem[] = [
     portion: "Crunchy Bowl",
     spicyLevel: 2,
     isByobPairing: true,
-    image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=800&q=80",
     tags: ["Crunchy", "Local Favorite", "BYOB Bite"],
   },
 

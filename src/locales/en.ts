@@ -39,6 +39,12 @@ export const en = {
     tailorMade: "100% Tailor-Made Menu",
     inclusionsTitle: "Included Menu Items:",
     customizationsTitle: "Available Dish Categories & Live Stations:",
+    discoverMenuBtn: "Discover Catering Menu",
+    showcaseDesc: "From intimate birthday gatherings and alms givings to grand wedding banquets and corporate galas, we deliver bespoke culinary experiences across Homagama & Colombo. Complete with live action cooking stations, chafing warmers, dedicated party stewards, and 100% transparent per-person packages.",
+    perk1: "Itemized & fully customizable menus from LKR 2,150 / pax",
+    perk2: "Chafing warmers, dinnerware & dedicated party stewards included",
+    perk3: "Curated for Weddings, Alms Giving (Dane), Funerals & Birthdays",
+    perk4: "Live Action Wok & Mongolian Station add-ons available",
   },
   menu: {
     badge: "Gastronomy & Multi-Cuisine",
@@ -98,6 +104,35 @@ export const en = {
     formMessage: "Message / Inquiry Details",
     formSubmit: "Submit Inquiry",
     formSuccess: "Thank you! Your inquiry has been submitted successfully. Our catering team will contact you shortly.",
+    sendEmail: "Send via Email Consultation",
+    orEmail: "Need an official quotation or don't have WhatsApp?",
+    copySummary: "Copy Inquiry Summary",
+    copied: "Copied to Clipboard!",
+  },
+  estimator: {
+    badge: "Interactive Cost Estimator",
+    title: "Instant Catering",
+    titleAccent: "Quote Calculator",
+    subtext: "Calculate your estimated event investment in real-time. Choose your occasion, adjust guest count, and receive a customized itemized estimate.",
+    guestsLabel: "Number of Guests (Pax)",
+    guestsHelp: "Use the slider or quick presets below",
+    occasionLabel: "Step 1: Select Your Event Type",
+    packageLabel: "Step 2: Choose Your Package",
+    ratePerPerson: "Rate / Person",
+    estTotal: "Estimated Total Investment",
+    minPaxWarning: "Note: Selected package requires a minimum of {min} guests.",
+    customNotice: "100% Tailor-made menus are individually priced according to your dish selections and live station choices.",
+    whatsIncluded: "What's Included With This Setup:",
+    featureBuffet: "Chafing warmers & luxury buffet table presentation",
+    featureStewards: "Professional uniformed serving stewards",
+    featureGlassware: "Complimentary BYOB glassware & ice service",
+    featureLiveStation: "Live cooking station readiness & on-site chef team",
+    btnWhatsApp: "Send Estimate to WhatsApp",
+    btnEmail: "Request Official PDF Quote via Email",
+  },
+  dock: {
+    callDirect: "Call Desk",
+    whatsapp: "WhatsApp Direct",
   },
   footer: {
     subtext: "Homagama's premier event catering specialist. High-capacity custom menus, live action kitchen stations, and premium BYOB dining experiences.",
@@ -108,3 +143,4 @@ export const en = {
     rights: "All Rights Reserved.",
   }
 };
+

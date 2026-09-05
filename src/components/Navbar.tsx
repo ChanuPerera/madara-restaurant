@@ -52,10 +52,8 @@ export default function Navbar() {
   }, [mobileMenuOpen]);
 
   const navLinks = [
-    { name: t("nav.catering"), href: "/#catering", icon: ChefHat },
+    { name: t("nav.catering"), href: "/catering", icon: ChefHat },
     { name: t("nav.menu"), href: "/#menu", icon: UtensilsCrossed },
-    { name: t("nav.actionKitchen"), href: "/#action-kitchen", icon: Flame },
-    { name: t("nav.byob"), href: "/#byob", icon: Wine },
     { name: t("nav.partners"), href: "/#partners", icon: Sparkles },
     { name: t("nav.gallery"), href: "/#gallery", icon: ImageIcon },
     { name: t("nav.careers"), href: "/careers", icon: Briefcase, isCareer: true },
@@ -72,23 +70,23 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Desktop Top Notification Announcement Bar */}
-      <div className="hidden md:block bg-gradient-to-r from-[#181920] via-[#241a10] to-[#181920] border-b border-madara-orange/20 text-xs py-2 px-4 text-madara-textSecondary relative z-40">
+      {/* Clean, Unified Top Notification Announcement Bar (Responsive across all screens) */}
+      <div className="bg-gradient-to-r from-[#14151b] via-[#20170f] to-[#14151b] border-b border-madara-orange/20 text-xs py-2 px-3 sm:px-4 text-madara-textSecondary relative z-40">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-madara-orange text-white uppercase tracking-wider animate-pulse">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-madara-orange text-white uppercase tracking-wider flex-shrink-0">
               Homagama
             </span>
-            <span className="text-[11px] sm:text-xs">
+            <span className="text-[11px] sm:text-xs truncate">
               {language === "si" ? (
-                <>✨ පෙ.ව 7:00 – ප.ව 10:00 දක්වා විවෘතයි • <strong className="text-madara-amber">පෝය දිනවල වසා ඇත</strong></>
+                <>✨ පෙ.ව 7:00 – ප.ව 10:00 • <strong className="text-amber-400">පෝය දිනවල වසා ඇත</strong></>
               ) : (
-                <>✨ Open 7:00 AM – 10:00 PM • <strong className="text-madara-amber">Closed on Full Moon Poya Days</strong></>
+                <>✨ Open 7:00 AM – 10:00 PM • <strong className="text-amber-400">Closed on Full Moon Poya Days</strong></>
               )}
             </span>
           </div>
-          <div className="flex items-center gap-4 text-[11px]">
-            <span className="flex items-center gap-1">
+          <div className="flex items-center gap-3 text-[11px] flex-shrink-0">
+            <span className="hidden lg:flex items-center gap-1">
               <Clock className="w-3.5 h-3.5 text-madara-orange" />
               Daily: 7:00 AM – 10:00 PM
             </span>
@@ -97,53 +95,8 @@ export default function Navbar() {
               className="flex items-center gap-1 text-white hover:text-madara-orange transition-colors font-semibold"
             >
               <Phone className="w-3.5 h-3.5 text-madara-orange" />
-              {RESTAURANT_INFO.phoneFormatted}
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Top Scrolling Marquee Ticker */}
-      <div className="md:hidden bg-gradient-to-r from-[#181920] via-[#241a10] to-[#181920] border-b border-madara-orange/20 text-xs py-2 relative overflow-hidden z-40">
-        <div className="animate-marquee flex items-center gap-12 whitespace-nowrap">
-          {/* Loop Segment 1 */}
-          <div className="flex items-center gap-6">
-            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-madara-orange text-white uppercase tracking-wider">
-              Homagama
-            </span>
-            <span className="text-[11px]">
-              {language === "si" ? (
-                <>✨ පෙ.ව 7:00 – ප.ව 10:00 දක්වා විවෘතයි • <strong className="text-madara-amber">පෝය දිනවල වසා ඇත</strong></>
-              ) : (
-                <>✨ Open 7:00 AM – 10:00 PM • <strong className="text-madara-amber">Closed on Full Moon Poya Days</strong></>
-              )}
-            </span>
-            <a
-              href={`tel:${RESTAURANT_INFO.phone}`}
-              className="flex items-center gap-1 text-white hover:text-madara-orange transition-colors font-semibold"
-            >
-              <Phone className="w-3 h-3 text-madara-orange" />
-              {RESTAURANT_INFO.phoneFormatted}
-            </a>
-          </div>
-          {/* Loop Segment 2 (Duplicate for infinite seamless loop) */}
-          <div className="flex items-center gap-6" aria-hidden="true">
-            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-madara-orange text-white uppercase tracking-wider">
-              Homagama
-            </span>
-            <span className="text-[11px]">
-              {language === "si" ? (
-                <>✨ පෙ.ව 7:00 – ප.ව 10:00 දක්වා විවෘතයි • <strong className="text-madara-amber">පෝය දිනවල වසා ඇත</strong></>
-              ) : (
-                <>✨ Open 7:00 AM – 10:00 PM • <strong className="text-madara-amber">Closed on Full Moon Poya Days</strong></>
-              )}
-            </span>
-            <a
-              href={`tel:${RESTAURANT_INFO.phone}`}
-              className="flex items-center gap-1 text-white hover:text-madara-orange transition-colors font-semibold"
-            >
-              <Phone className="w-3 h-3 text-madara-orange" />
-              {RESTAURANT_INFO.phoneFormatted}
+              <span className="hidden sm:inline">{RESTAURANT_INFO.phoneFormatted}</span>
+              <span className="sm:hidden">070 453 5815</span>
             </a>
           </div>
         </div>

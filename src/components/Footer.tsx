@@ -22,10 +22,8 @@ export default function Footer() {
   const { language, t } = useLanguage();
 
   const quickLinks = [
-    { name: t("nav.catering"), href: "/#catering" },
+    { name: t("nav.catering"), href: "/catering" },
     { name: t("nav.menu"), href: "/#menu" },
-    { name: t("nav.actionKitchen"), href: "/#action-kitchen" },
-    { name: t("nav.byob"), href: "/#byob" },
     { name: t("nav.partners"), href: "/#partners" },
     { name: t("nav.gallery"), href: "/#gallery" },
     { name: t("nav.careers"), href: "/careers" },
@@ -227,16 +225,16 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Floating Bottom Right WhatsApp Action Button */}
+      {/* Floating Bottom Right WhatsApp Action Button (Desktop Only) */}
       <a
         href={`https://wa.me/${RESTAURANT_INFO.whatsappNumber}?text=Hi%20Madara%20Restaurant,%20I%20would%20like%20to%20inquire%20about%20catering%20packages%20and%20services.`}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 btn-whatsapp p-3 sm:px-5 sm:py-3.5 rounded-full flex items-center gap-2 shadow-2xl hover:scale-105 transition-transform duration-300 group max-w-[calc(100vw-2rem)]"
+        className="hidden md:flex fixed bottom-6 right-6 z-40 btn-whatsapp px-5 py-3.5 rounded-full items-center gap-2 shadow-2xl hover:scale-105 transition-transform duration-300 group max-w-[calc(100vw-2rem)]"
         title="Chat on WhatsApp (070 453 5815)"
       >
         <MessageCircle className="w-5 h-5 text-white animate-bounce" />
-        <span className="hidden sm:inline text-xs font-bold text-white">
+        <span className="text-xs font-bold text-white">
           WhatsApp Desk (070 453 5815)
         </span>
       </a>

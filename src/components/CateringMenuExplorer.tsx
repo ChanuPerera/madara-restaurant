@@ -34,6 +34,7 @@ export default function CateringMenuExplorer() {
   const { language, t } = useLanguage();
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("birthday");
   const [activePackageIndex, setActivePackageIndex] = useState<number>(0);
+  const [expandedPackageId, setExpandedPackageId] = useState<string | null>(null);
   const sliderContainerRef = useRef<HTMLDivElement | null>(null);
 
   // Icon mapper helper
@@ -251,38 +252,59 @@ export default function CateringMenuExplorer() {
                   ))}
                 </div>
 
-                {/* Itemized Menu: Single Unified List Grouped by Type */}
-                <div className="mt-5 space-y-4">
-                  <span className="text-xs font-bold text-white uppercase tracking-wider block">
-                    {pkg.isCustomizable ? t("catering.customizationsTitle") : t("catering.inclusionsTitle")}
-                  </span>
+                {/* Menu Summary & Collapsible Itemized List */}
+                <div className="mt-5 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-white uppercase tracking-wider block">
+                      {pkg.isCustomizable ? "Customizable Selection" : "Menu Inclusions"}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setExpandedPackageId(expandedPackageId === pkg.id ? null : pkg.id)}
+                      className="text-[11px] font-bold text-madara-orange hover:underline cursor-pointer flex items-center gap-1"
+                    >
+                      <span>{expandedPackageId === pkg.id ? "Hide Details ▲" : "View Full Menu ▼"}</span>
+                    </button>
+                  </div>
 
-                  <div className="space-y-4 pt-1">
+                  {/* High-level category badges */}
+                  <div className="flex flex-wrap gap-1.5 text-[11px] text-white/80">
                     {pkg.menuSections.map((sec, secIdx) => (
-                      <div key={secIdx} className="space-y-1.5">
-                        <h5 className="text-xs sm:text-sm font-bold text-madara-amber uppercase tracking-wider flex items-center gap-1.5">
-                          <span className="w-1.5 h-1.5 rounded-full bg-madara-orange" />
-                          <span>{sec.title}</span>
-                        </h5>
-                        <ul className="space-y-1 pl-3 text-xs sm:text-sm text-madara-textSecondary">
-                          {sec.items.map((item, itemIdx) => (
-                            <li key={itemIdx} className="flex items-start gap-1.5 leading-relaxed">
-                              <span className="text-madara-orange font-bold text-[11px] mt-0.5">•</span>
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                      <span key={secIdx} className="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-madara-textSecondary text-[11px]">
+                        {sec.title}
+                      </span>
                     ))}
                   </div>
+
+                  {/* Collapsible Itemized Menu (Collapsed by default for minimal scrolling) */}
+                  {expandedPackageId === pkg.id && (
+                    <div className="space-y-4 pt-3 border-t border-white/10 animate-in fade-in duration-200">
+                      {pkg.menuSections.map((sec, secIdx) => (
+                        <div key={secIdx} className="space-y-1">
+                          <h5 className="text-xs font-bold text-madara-amber uppercase tracking-wider flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-madara-orange" />
+                            <span>{sec.title}</span>
+                          </h5>
+                          <ul className="space-y-0.5 pl-3 text-xs text-madara-textSecondary">
+                            {sec.items.map((item, itemIdx) => (
+                              <li key={itemIdx} className="flex items-start gap-1.5 leading-relaxed">
+                                <span className="text-madara-orange text-[10px] mt-0.5">•</span>
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
               </div>
 
               {/* Package Action Footer */}
-              <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+              <div className="mt-6 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
                 <div className="text-xs text-madara-textMuted text-center sm:text-left">
-                  <span>{t("catering.includesFooter")}</span>
+                  <span>Buffet warmers, setup &amp; stewards included.</span>
                 </div>
 
                 <div className="flex items-center gap-2 w-full sm:w-auto">
@@ -290,10 +312,10 @@ export default function CateringMenuExplorer() {
                     href={generateWhatsAppPackageUrl(pkg)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full sm:w-auto btn-whatsapp px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-md"
+                    className="w-full sm:w-auto btn-whatsapp px-5 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-md"
                   >
                     <MessageCircle className="w-4 h-4" />
-                    <span>{pkg.isCustomizable ? t("catering.buildCustomMenu") : t("catering.contactNow")}</span>
+                    <span>{pkg.isCustomizable ? "Build Custom Menu" : "Book via WhatsApp"}</span>
                   </a>
                 </div>
               </div>
@@ -394,10 +416,40 @@ export default function CateringMenuExplorer() {
           </p>
         </div>
 
-        {/* Desktop Layout (Sidebar + Content) */}
-        <div className="hidden md:grid md:grid-cols-12 md:gap-8 lg:gap-10">
-          {/* Sidebar Selector */}
-          <div className="md:col-span-4 lg:col-span-3 space-y-3">
+        {/* Mobile Occasion Selector Pills Bar (Visible on mobile/tablet < md) */}
+        <div className="md:hidden mb-6">
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-orange -mx-4 px-4">
+            {CATERING_CATEGORIES.map((cat) => {
+              const Icon = getCategoryIcon(cat.icon);
+              const isSelected = selectedCategoryId === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedCategoryId(cat.id)}
+                  className={`px-3.5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer flex items-center gap-2 flex-shrink-0 ${
+                    isSelected
+                      ? "bg-gradient-to-r from-madara-orange to-red-600 text-white shadow-glow-orange scale-102"
+                      : "bg-white/5 text-madara-textSecondary hover:bg-white/10 border border-white/10"
+                  }`}
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                  <span>{language === "si" && cat.sinhalaName ? cat.sinhalaName : cat.name}</span>
+                  <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${isSelected ? "bg-black/40 text-white" : "bg-white/10 text-madara-textMuted"}`}>
+                    {cat.badge}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Unified Layout (Sidebar on Desktop + Single Content Column for All Viewports) */}
+        <div className="grid grid-cols-1 md:grid-cols-12 md:gap-8 lg:gap-10">
+          {/* Desktop Sidebar Selector */}
+          <div className="hidden md:block md:col-span-4 lg:col-span-3 space-y-3">
+            <span className="text-xs font-bold text-madara-orange uppercase tracking-wider block mb-2 px-1">
+              Select Occasion
+            </span>
             {CATERING_CATEGORIES.map((cat) => {
               const Icon = getCategoryIcon(cat.icon);
               const isSelected = selectedCategoryId === cat.id;
@@ -429,62 +481,11 @@ export default function CateringMenuExplorer() {
             })}
           </div>
 
-          {/* Content Column (Banner + Packages with Slider Slick Dots) */}
-          <div className="md:col-span-8 lg:col-span-9 space-y-8">
+          {/* Single Content Column (Rendered Exactly Once in the DOM) */}
+          <div className="col-span-1 md:col-span-8 lg:col-span-9 space-y-8">
             {renderCategoryBanner(currentCategory)}
             {renderPackages(packagesInCurrentCategory)}
           </div>
-        </div>
-
-        {/* Mobile Layout (Accordion) */}
-        <div className="md:hidden space-y-4">
-          {CATERING_CATEGORIES.map((cat) => {
-            const Icon = getCategoryIcon(cat.icon);
-            const isOpen = selectedCategoryId === cat.id;
-            const packages = CATERING_PACKAGES.filter((p) => p.categoryId === cat.id);
-            
-            return (
-              <div key={cat.id} className="border border-white/10 rounded-3xl overflow-hidden bg-white/5 transition-all">
-                {/* Accordion Header */}
-                <button
-                  onClick={() => setSelectedCategoryId(isOpen ? "" : cat.id)}
-                  className={`w-full flex items-center justify-between p-5 text-left transition-all ${
-                    isOpen ? "bg-gradient-to-r from-madara-orange/20 to-red-600/10 border-b border-white/15" : "hover:bg-white/10"
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                      isOpen ? "bg-madara-orange text-white" : "bg-white/5 text-madara-orange"
-                    }`}>
-                      <Icon className="w-4.5 h-4.5" />
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-bold text-white flex items-center gap-1.5">
-                        <span>{language === "si" && cat.sinhalaName ? cat.sinhalaName : cat.name}</span>
-                      </h4>
-                      {cat.sinhalaName && language !== "si" && (
-                        <span className="text-[10px] text-madara-textMuted block mt-0.5">{cat.sinhalaName}</span>
-                      )}
-                    </div>
-                  </div>
-                  <div className="text-madara-orange">
-                    {isOpen ? (
-                      <ChevronUp className="w-5 h-5" />
-                    ) : (
-                      <ChevronDown className="w-5 h-5" />
-                    )}
-                  </div>
-                </button>
-
-                {/* Accordion Content */}
-                {isOpen && (
-                  <div className="p-4 space-y-6 bg-madara-dark/50 border-t border-white/5">
-                    {renderPackages(packages)}
-                  </div>
-                )}
-              </div>
-            );
-          })}
         </div>
 
         {/* Global Custom Catering Banner */}
