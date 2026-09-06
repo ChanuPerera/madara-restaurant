@@ -105,34 +105,6 @@ export default function CateringShowcase() {
               </p>
             </div>
 
-            {/* Inclusions / Perks List */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-              <div className="flex items-start gap-2.5 p-3 rounded-xl bg-white/[0.03] border border-white/10">
-                <CheckCircle2 className="w-4 h-4 text-madara-orange flex-shrink-0 mt-0.5" />
-                <span className="text-xs sm:text-sm text-gray-200">
-                  {t("catering.perk1")}
-                </span>
-              </div>
-              <div className="flex items-start gap-2.5 p-3 rounded-xl bg-white/[0.03] border border-white/10">
-                <CheckCircle2 className="w-4 h-4 text-madara-orange flex-shrink-0 mt-0.5" />
-                <span className="text-xs sm:text-sm text-gray-200">
-                  {t("catering.perk2")}
-                </span>
-              </div>
-              <div className="flex items-start gap-2.5 p-3 rounded-xl bg-white/[0.03] border border-white/10">
-                <CheckCircle2 className="w-4 h-4 text-madara-orange flex-shrink-0 mt-0.5" />
-                <span className="text-xs sm:text-sm text-gray-200">
-                  {t("catering.perk3")}
-                </span>
-              </div>
-              <div className="flex items-start gap-2.5 p-3 rounded-xl bg-white/[0.03] border border-white/10">
-                <CheckCircle2 className="w-4 h-4 text-madara-orange flex-shrink-0 mt-0.5" />
-                <span className="text-xs sm:text-sm text-gray-200">
-                  {t("catering.perk4")}
-                </span>
-              </div>
-            </div>
-
             {/* Action Buttons */}
             <div className="pt-3 flex flex-wrap items-center gap-4">
               <Link
@@ -142,16 +114,6 @@ export default function CateringShowcase() {
                 <span>{t("catering.discoverMenuBtn")}</span>
                 <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
-
-              <a
-                href={cateringWhatsAppUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-whatsapp px-6 py-4 rounded-xl text-sm font-bold flex items-center gap-2 transition-all duration-300"
-              >
-                <MessageCircle className="w-4 h-4" />
-                <span>{t("catering.whatsappInquiry")}</span>
-              </a>
             </div>
 
             {/* Quick Guest Count Callout */}

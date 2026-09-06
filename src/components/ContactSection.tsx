@@ -270,51 +270,6 @@ export default function ContactSection() {
 
         </div>
 
-        {/* FAQ Accordion Section */}
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-madara-textMuted text-xs font-semibold uppercase tracking-wider mb-2">
-              <HelpCircle className="w-3.5 h-3.5 text-madara-orange" />
-              <span>Frequently Asked Questions</span>
-            </div>
-            <h3 className="text-2xl sm:text-3xl font-bold text-white font-serif">
-              Got Questions? We&apos;ve Got Answers
-            </h3>
-          </div>
-
-          <div className="space-y-3">
-            {FAQS.slice(0, 3).map((faq, idx) => {
-              const isOpen = openFaqIndex === idx;
-              return (
-                <div
-                  key={idx}
-                  className="glass-card rounded-2xl border border-white/10 overflow-hidden transition-all"
-                >
-                  <button
-                    onClick={() => toggleFaq(idx)}
-                    className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 focus:outline-none cursor-pointer"
-                  >
-                    <span className="text-sm sm:text-base font-bold text-white">
-                      {faq.question}
-                    </span>
-                    <ChevronDown
-                      className={`w-5 h-5 text-madara-orange flex-shrink-0 transition-transform duration-300 ${
-                        isOpen ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-
-                  {isOpen && (
-                    <div className="px-5 pb-6 sm:px-6 text-xs sm:text-sm text-madara-textSecondary leading-relaxed border-t border-white/5 pt-3">
-                      {faq.answer}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
       </div>
     </section>
   );

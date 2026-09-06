@@ -4,6 +4,7 @@ import React from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import CateringShowcase from "@/components/CateringShowcase";
+import OfferBannerSlider from "@/components/OfferBannerSlider";
 import MenuSection from "@/components/MenuSection";
 import PartnersSection from "@/components/PartnersSection";
 import Testimonials from "@/components/Testimonials";
@@ -23,6 +24,9 @@ export default function HomePage() {
 
       {/* Flagship Feature: Catering Showcase & Teaser (Side by Side) */}
       <CateringShowcase />
+
+      {/* Interactive Offer Banner Slider */}
+      <OfferBannerSlider />
 
       {/* Food & Beverage Menu (Dine-In, Takeaway, Delivery) */}
       <MenuSection />

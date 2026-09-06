@@ -189,7 +189,7 @@ export default function MenuSection() {
                 }`}
               >
                 <UtensilsCrossed className="w-3.5 h-3.5" />
-                <span>{language === "si" ? "සියලුම කාණ්ඩ (All)" : "All Categories"}</span>
+                <span>{language === "si" ? "සියලුම කාණ්ඩ" : "All Categories"}</span>
                 <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-black/40 ml-1">
                   {filteredDishes.length}
                 </span>
@@ -247,11 +247,6 @@ export default function MenuSection() {
                           <h3 className="text-xl sm:text-2xl font-bold text-white font-serif">
                             {language === "si" && group.sinhalaName ? group.sinhalaName : group.name}
                           </h3>
-                          {group.sinhalaName && language !== "si" && (
-                            <span className="text-xs text-madara-orange font-semibold hidden sm:inline">
-                              ({group.sinhalaName})
-                            </span>
-                          )}
                         </div>
                         <p className="text-xs text-madara-textMuted mt-0.5">
                           {group.dishes.length} {group.dishes.length === 1 ? "Dish" : "Dishes"} available
@@ -323,12 +318,6 @@ export default function MenuSection() {
                             <h4 className="text-sm sm:text-base font-bold text-white group-hover:text-madara-orange transition-colors">
                               {language === "si" && dish.sinhalaName ? dish.sinhalaName : dish.name}
                             </h4>
-
-                            {dish.sinhalaName && language !== "si" && (
-                              <span className="text-xs text-madara-orange font-medium block">
-                                {dish.sinhalaName}
-                              </span>
-                            )}
 
                             {/* Description */}
                             <p className="text-xs text-madara-textSecondary mt-1 line-clamp-2 sm:line-clamp-1 leading-relaxed">
@@ -462,11 +451,6 @@ export default function MenuSection() {
                 )}
               </div>
 
-              {activeModalDish.sinhalaName && language !== "si" && (
-                <span className="text-xs text-madara-orange font-semibold block">
-                  {activeModalDish.sinhalaName}
-                </span>
-              )}
               <h3 className="text-2xl font-bold text-white font-serif mt-1">
                 {language === "si" && activeModalDish.sinhalaName ? activeModalDish.sinhalaName : activeModalDish.name}
               </h3>

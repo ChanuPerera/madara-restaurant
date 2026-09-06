@@ -239,14 +239,14 @@ export default function Hero() {
           <div className="lg:col-span-8 text-center lg:text-left">
             
             {/* Pill Badge */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-black/60 border border-madara-orange/40 backdrop-blur-xl mb-6 shadow-glow-orange-sm animate-float">
-              <span className="flex h-2.5 w-2.5 rounded-full bg-madara-orange animate-ping flex-shrink-0" />
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-madara-surface/80 border border-madara-orange/30 backdrop-blur-xl mb-6 shadow-glow-orange-sm">
+              <span className="flex h-2 w-2 rounded-full bg-madara-orange flex-shrink-0" />
               <span className="text-xs sm:text-sm font-bold text-madara-orange uppercase tracking-wider">
                 {language === "si" ? currentSlide.pillSi : currentSlide.pillEn}
               </span>
               <span className="hidden sm:inline text-white/30">•</span>
-              <span className="hidden sm:inline text-xs font-semibold text-white/80">
-                191/B/1, Athurugiriya Rd, Homagama
+              <span className="hidden sm:inline text-xs font-medium text-madara-textSecondary">
+                Homagama, Sri Lanka
               </span>
             </div>
 
@@ -267,15 +267,6 @@ export default function Hero() {
 
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-8">
-              <a
-                href={currentSlide.ctaPrimaryHref}
-                className="btn-primary-orange px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl text-sm sm:text-base font-bold flex items-center gap-2.5 shadow-glow-orange group cursor-pointer"
-              >
-                <ChefHat className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-                <span>{language === "si" ? currentSlide.ctaPrimarySi : currentSlide.ctaPrimaryEn}</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
-
               <a
                 href="#menu"
                 className="btn-outline-dark px-5 sm:px-7 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl text-sm sm:text-base font-semibold flex items-center gap-2 backdrop-blur-md"
@@ -298,10 +289,6 @@ export default function Hero() {
 
             {/* Slide Badges / Highlight Pills */}
             <div className="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-2">
-              <span className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-black/50 border border-white/10 text-white/90 backdrop-blur-md flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-madara-orange" />
-                <span>{language === "si" ? currentSlide.badgeSi : currentSlide.badgeEn}</span>
-              </span>
               <span className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 backdrop-blur-md flex items-center gap-1.5">
                 <ShieldCheck className="w-3.5 h-3.5" />
                 <span>100% Punctual Guarantee</span>
@@ -311,70 +298,7 @@ export default function Hero() {
           </div>
 
           {/* Right Column: Floating Showcase Card & Slide Stats */}
-          <div className="lg:col-span-4 hidden lg:flex flex-col gap-5">
-            {/* Live Interactive Stat Card */}
-            <div className="glass-panel-orange rounded-3xl p-6 border border-madara-orange/30 shadow-2xl backdrop-blur-2xl relative overflow-hidden group">
-              <div className="flex items-start justify-between">
-                <div>
-                  <span className="text-[11px] font-extrabold text-madara-orange uppercase tracking-wider block">
-                    {language === "si" ? "විශේෂාංගය" : "Featured Spotlight"}
-                  </span>
-                  <p className="text-3xl font-extrabold text-white font-serif mt-1">
-                    {currentSlide.statNumber}
-                  </p>
-                  <p className="text-xs text-madara-textSecondary mt-0.5 font-medium">
-                    {language === "si" ? currentSlide.statLabelSi : currentSlide.statLabelEn}
-                  </p>
-                </div>
-
-                <div className="w-12 h-12 rounded-2xl bg-madara-orange/20 border border-madara-orange/40 flex items-center justify-center text-madara-orange">
-                  <Star className="w-6 h-6 fill-madara-orange text-madara-orange" />
-                </div>
-              </div>
-
-              {/* Progress Bar for Active Slide */}
-              <div className="mt-5 pt-4 border-t border-white/10">
-                <div className="flex items-center justify-between text-xs text-white/60 mb-2">
-                  <span>{language === "si" ? "ස්ලයිඩය" : "Slide"} {currentSlideIndex + 1} / {totalSlides}</span>
-                  <span className="text-madara-orange font-semibold">{isPaused ? "Paused" : "Auto-playing"}</span>
-                </div>
-                <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
-                  <div 
-                    key={currentSlideIndex}
-                    className={`h-full bg-gradient-to-r from-madara-orange to-red-500 rounded-full ${
-                      isPaused ? "w-full" : "animate-[progress_6s_linear_infinite]"
-                    }`}
-                    style={{ width: isPaused ? "100%" : undefined }}
-                  />
-                </div>
-              </div>
-
-              {/* Quick Slide Switch Buttons */}
-              <div className="mt-4 flex items-center justify-between gap-2">
-                <button
-                  onClick={prevSlide}
-                  aria-label="Previous Slide"
-                  className="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 hover:bg-madara-orange hover:text-white text-xs font-semibold text-white/80 transition-all flex items-center gap-1 cursor-pointer"
-                >
-                  <ChevronLeft className="w-4 h-4" /> Prev
-                </button>
-                <button
-                  onClick={() => setIsPaused(!isPaused)}
-                  className="px-2 py-1.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-white/80 text-xs transition-all cursor-pointer"
-                >
-                  {isPaused ? <Play className="w-3.5 h-3.5" /> : <Pause className="w-3.5 h-3.5" />}
-                </button>
-                <button
-                  onClick={nextSlide}
-                  aria-label="Next Slide"
-                  className="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 hover:bg-madara-orange hover:text-white text-xs font-semibold text-white/80 transition-all flex items-center gap-1 cursor-pointer"
-                >
-                  Next <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-
-            </div>
-
+          <div className="lg:col-span-4 hidden lg:flex flex-col gap-5 justify-center">
             {/* Quick Ratings & Review Snippet */}
             <div className="glass-panel p-5 rounded-2xl border border-white/10 backdrop-blur-xl flex items-center gap-4">
               <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 flex-shrink-0">

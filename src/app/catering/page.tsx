@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import CateringMenuExplorer from "@/components/CateringMenuExplorer";
+import Catering3DCarousel from "@/components/Catering3DCarousel";
 import Footer from "@/components/Footer";
 import MobileActionDock from "@/components/MobileActionDock";
 import { RESTAURANT_INFO } from "@/data/restaurantData";
@@ -151,6 +152,9 @@ export default function CateringPage() {
           </div>
         </div>
       </section>
+
+      {/* 3D Perspective Showcase Carousel (Example 1 Style) */}
+      <Catering3DCarousel />
 
       {/* Main Complete Interactive Catering Explorer */}
       <CateringMenuExplorer />

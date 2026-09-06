@@ -140,13 +140,8 @@ export default function CateringMenuExplorer() {
           <div>
             <div className="flex items-center gap-2">
               <h3 className="text-lg sm:text-xl font-bold text-white font-serif">
-                {cat.name}
+                {language === "si" && cat.sinhalaName ? cat.sinhalaName : cat.name}
               </h3>
-              {cat.sinhalaName && (
-                <span className="text-xs text-madara-orange font-medium hidden sm:inline">
-                  ({cat.sinhalaName})
-                </span>
-              )}
               <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-madara-orange/20 text-madara-orange border border-madara-orange/30">
                 {cat.badge}
               </span>
@@ -211,17 +206,20 @@ export default function CateringMenuExplorer() {
               )}
 
               <div>
-                {/* Header: Title, Sinhala name, Tagline, and Price (Stacked one after another) */}
+                {/* Header: Title, Tagline, Price & Prominent View Full Menu Button */}
                 <div className="pb-5 border-b border-white/10 space-y-3">
-                  <div>
+                  <div className="flex items-start justify-between gap-3">
                     <h4 className="text-xl sm:text-2xl font-bold text-white font-serif">
                       {language === "si" && pkg.sinhalaName ? pkg.sinhalaName : pkg.packageName}
                     </h4>
-                    {pkg.sinhalaName && language !== "si" && (
-                      <span className="text-xs text-madara-orange font-semibold block mt-0.5">
-                        {pkg.sinhalaName}
-                      </span>
-                    )}
+
+                    <button
+                      type="button"
+                      onClick={() => setExpandedPackageId(expandedPackageId === pkg.id ? null : pkg.id)}
+                      className="px-3 py-1.5 rounded-xl bg-madara-orange/20 hover:bg-madara-orange border border-madara-orange/50 text-madara-orange hover:text-white text-xs font-extrabold transition-all flex-shrink-0 cursor-pointer flex items-center gap-1 shadow-sm"
+                    >
+                      <span>{expandedPackageId === pkg.id ? "Hide Full Menu ▲" : "View Full Menu ▼"}</span>
+                    </button>
                   </div>
 
                   <div className="inline-block bg-black/40 px-4 py-2.5 rounded-2xl border border-white/10">
@@ -252,52 +250,27 @@ export default function CateringMenuExplorer() {
                   ))}
                 </div>
 
-                {/* Menu Summary & Collapsible Itemized List */}
-                <div className="mt-5 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-white uppercase tracking-wider block">
-                      {pkg.isCustomizable ? "Customizable Selection" : "Menu Inclusions"}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => setExpandedPackageId(expandedPackageId === pkg.id ? null : pkg.id)}
-                      className="text-[11px] font-bold text-madara-orange hover:underline cursor-pointer flex items-center gap-1"
-                    >
-                      <span>{expandedPackageId === pkg.id ? "Hide Details ▲" : "View Full Menu ▼"}</span>
-                    </button>
-                  </div>
-
-                  {/* High-level category badges */}
-                  <div className="flex flex-wrap gap-1.5 text-[11px] text-white/80">
+                {/* Collapsible Itemized Menu (Displayed when header button is clicked) */}
+                {expandedPackageId === pkg.id && (
+                  <div className="mt-4 space-y-4 p-4 rounded-2xl bg-black/40 border border-white/10 animate-in fade-in duration-200">
                     {pkg.menuSections.map((sec, secIdx) => (
-                      <span key={secIdx} className="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-madara-textSecondary text-[11px]">
-                        {sec.title}
-                      </span>
+                      <div key={secIdx} className="space-y-1">
+                        <h5 className="text-xs font-bold text-madara-amber uppercase tracking-wider flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-madara-orange" />
+                          <span>{sec.title}</span>
+                        </h5>
+                        <ul className="space-y-0.5 pl-3 text-xs text-madara-textSecondary">
+                          {sec.items.map((item, itemIdx) => (
+                            <li key={itemIdx} className="flex items-start gap-1.5 leading-relaxed">
+                              <span className="text-madara-orange text-[10px] mt-0.5">•</span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     ))}
                   </div>
-
-                  {/* Collapsible Itemized Menu (Collapsed by default for minimal scrolling) */}
-                  {expandedPackageId === pkg.id && (
-                    <div className="space-y-4 pt-3 border-t border-white/10 animate-in fade-in duration-200">
-                      {pkg.menuSections.map((sec, secIdx) => (
-                        <div key={secIdx} className="space-y-1">
-                          <h5 className="text-xs font-bold text-madara-amber uppercase tracking-wider flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-madara-orange" />
-                            <span>{sec.title}</span>
-                          </h5>
-                          <ul className="space-y-0.5 pl-3 text-xs text-madara-textSecondary">
-                            {sec.items.map((item, itemIdx) => (
-                              <li key={itemIdx} className="flex items-start gap-1.5 leading-relaxed">
-                                <span className="text-madara-orange text-[10px] mt-0.5">•</span>
-                                <span>{item}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                )}
 
               </div>
 
@@ -402,20 +375,6 @@ export default function CateringMenuExplorer() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Section Header: Catering Dominance */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-madara-orange/10 border border-madara-orange/30 text-madara-orange text-xs font-bold uppercase tracking-wider mb-4 shadow-glow-orange-sm">
-            <ChefHat className="w-3.5 h-3.5" />
-            <span>{t("catering.badge")}</span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-bold text-white font-serif tracking-tight">
-            {t("catering.title")} <span className="text-gradient-orange">{t("catering.titleAccent")}</span>
-          </h2>
-          <p className="mt-4 text-sm sm:text-base text-madara-textSecondary">
-            {t("catering.subtext")}
-          </p>
-        </div>
-
         {/* Mobile Occasion Selector Pills Bar (Visible on mobile/tablet < md) */}
         <div className="md:hidden mb-6">
           <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-orange -mx-4 px-4">
@@ -472,9 +431,6 @@ export default function CateringMenuExplorer() {
                     <span className="text-sm font-bold text-white block truncate">
                       {language === "si" && cat.sinhalaName ? cat.sinhalaName : cat.name}
                     </span>
-                    {cat.sinhalaName && language !== "si" && (
-                      <span className="text-[10px] text-madara-orange font-semibold block truncate mt-0.5">{cat.sinhalaName}</span>
-                    )}
                   </div>
                 </button>
               );

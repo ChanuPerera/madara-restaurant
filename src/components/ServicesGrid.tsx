@@ -20,7 +20,7 @@ export default function ServicesGrid() {
       title: "Wedding & Event Catering",
       subtitle: "From 20 to 1,000+ Guests",
       description: "Event catering with luxury chafing displays, custom menus, live action stations, and silver service stewards.",
-      highlights: ["Weddings & Homecomings", "Alms Giving (දාන) & Funerals", "Customizable Event Menus"],
+      highlights: ["Weddings & Homecomings", "Alms Giving (Dane) & Funerals", "Customizable Event Menus"],
       actionLabel: "View Catering Packages",
       actionHref: "#catering",
       badge: "Primary Specialty",
