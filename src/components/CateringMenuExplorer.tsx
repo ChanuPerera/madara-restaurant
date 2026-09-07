@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
+import CateringAddons from "./CateringAddons";
 import { 
   CATERING_CATEGORIES, 
   CATERING_PACKAGES, 
@@ -32,10 +33,17 @@ import {
 
 export default function CateringMenuExplorer() {
   const { language, t } = useLanguage();
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string>("birthday");
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string>("birthday_party");
   const [activePackageIndex, setActivePackageIndex] = useState<number>(0);
-  const [expandedPackageId, setExpandedPackageId] = useState<string | null>(null);
+  const [expandedPackageIds, setExpandedPackageIds] = useState<Record<string, boolean>>({});
   const sliderContainerRef = useRef<HTMLDivElement | null>(null);
+
+  const togglePackageExpand = (id: string) => {
+    setExpandedPackageIds((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
 
   // Icon mapper helper
   const getCategoryIcon = (iconName: string) => {
@@ -171,130 +179,139 @@ export default function CateringMenuExplorer() {
     const hasMultiple = packages.length > 1;
     return (
       <div className="space-y-4">
-        {/* Packages Horizontal / Grid Slider Container */}
+        {/* Packages Horizontal Swiper Slider Container */}
         <div 
           ref={sliderContainerRef}
           onScroll={handleScroll}
           className={`
             ${hasMultiple 
-              ? "flex items-stretch overflow-x-auto snap-x snap-mandatory gap-5 pt-2 pb-4 scrollbar-none -mx-4 px-4 md:mx-0 md:px-0 md:grid md:grid-cols-2 md:overflow-x-visible md:pb-0" 
-              : "grid grid-cols-1 pt-2"
-            } gap-6
+              ? "flex items-stretch overflow-x-auto snap-x snap-mandatory gap-6 pt-2 pb-4 scrollbar-none -mx-4 px-4 md:mx-0 md:px-0" 
+              : "flex items-stretch pt-2"
+            }
           `}
         >
-          {packages.map((pkg, idx) => (
-            <div
-              key={pkg.id}
-              className={`glass-panel-orange rounded-2xl sm:rounded-3xl p-5 sm:p-8 flex flex-col justify-between relative border transition-all duration-300 ${
-                pkg.isCustomizable
-                  ? "border-madara-orange shadow-glow-orange bg-madara-surfaceElevated"
-                  : "border-white/10 hover:border-madara-orange/40"
-              } ${
-                hasMultiple ? "w-[88vw] xs:w-[340px] sm:w-[380px] md:w-auto flex-shrink-0 snap-start" : "w-full"
-              }`}
-            >
-              {pkg.popular && (
-                <div className="absolute -top-3 left-6 bg-gradient-to-r from-madara-orange to-red-600 text-white text-[11px] font-extrabold px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-full uppercase tracking-wider shadow-md">
-                  ⭐ Top Recommended
-                </div>
-              )}
-
-              {pkg.isCustomizable && (
-                <div className="absolute -top-3 left-6 bg-gradient-to-r from-amber-500 to-madara-orange text-black text-[11px] font-extrabold px-3 py-0.5 sm:px-4 sm:py-1 rounded-full uppercase tracking-wider shadow-md">
-                  ✨ 100% Tailor-Made Menu
-                </div>
-              )}
-
-              <div>
-                {/* Header: Title, Tagline, Price & Prominent View Full Menu Button */}
-                <div className="pb-5 border-b border-white/10 space-y-3">
-                  <div className="flex items-start justify-between gap-3">
-                    <h4 className="text-xl sm:text-2xl font-bold text-white font-serif">
-                      {language === "si" && pkg.sinhalaName ? pkg.sinhalaName : pkg.packageName}
-                    </h4>
-
-                    <button
-                      type="button"
-                      onClick={() => setExpandedPackageId(expandedPackageId === pkg.id ? null : pkg.id)}
-                      className="px-3 py-1.5 rounded-xl bg-madara-orange/20 hover:bg-madara-orange border border-madara-orange/50 text-madara-orange hover:text-white text-xs font-extrabold transition-all flex-shrink-0 cursor-pointer flex items-center gap-1 shadow-sm"
-                    >
-                      <span>{expandedPackageId === pkg.id ? "Hide Full Menu ▲" : "View Full Menu ▼"}</span>
-                    </button>
-                  </div>
-
-                  <div className="inline-block bg-black/40 px-4 py-2.5 rounded-2xl border border-white/10">
-                    <span className="text-[10px] text-madara-textMuted uppercase font-bold block">
-                      {t("catering.priceLabel")}
-                    </span>
-                    <div className="flex flex-wrap items-baseline gap-2 mt-0.5">
-                      <span className={`text-lg sm:text-2xl font-extrabold ${pkg.isCustomizable ? "text-madara-amber" : "text-madara-orange"}`}>
-                        {pkg.priceDisplay === "Custom Quote" && language === "si" ? "මිල ගණන් විමසන්න" : pkg.priceDisplay}
-                      </span>
-                      <span className="text-xs text-madara-textSecondary">
-                        ({t("catering.minGuests").replace("{count}", pkg.minGuests.toString())})
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Highlights */}
-                <div className="my-4 flex flex-wrap gap-1.5 sm:gap-2">
-                  {pkg.highlights.map((h, i) => (
-                    <span
-                      key={i}
-                      className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-[11px] text-madara-textSecondary flex items-center gap-1.5"
-                    >
-                      <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-madara-orange flex-shrink-0" />
-                      <span>{h}</span>
-                    </span>
-                  ))}
-                </div>
-
-                {/* Collapsible Itemized Menu (Displayed when header button is clicked) */}
-                {expandedPackageId === pkg.id && (
-                  <div className="mt-4 space-y-4 p-4 rounded-2xl bg-black/40 border border-white/10 animate-in fade-in duration-200">
-                    {pkg.menuSections.map((sec, secIdx) => (
-                      <div key={secIdx} className="space-y-1">
-                        <h5 className="text-xs font-bold text-madara-amber uppercase tracking-wider flex items-center gap-1.5">
-                          <span className="w-1.5 h-1.5 rounded-full bg-madara-orange" />
-                          <span>{sec.title}</span>
-                        </h5>
-                        <ul className="space-y-0.5 pl-3 text-xs text-madara-textSecondary">
-                          {sec.items.map((item, itemIdx) => (
-                            <li key={itemIdx} className="flex items-start gap-1.5 leading-relaxed">
-                              <span className="text-madara-orange text-[10px] mt-0.5">•</span>
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
+          {packages.map((pkg) => {
+            const isExpanded = !!expandedPackageIds[pkg.id];
+            return (
+              <div
+                key={pkg.id}
+                className={`glass-panel-orange rounded-2xl sm:rounded-3xl p-5 sm:p-7 flex flex-col justify-between relative border transition-all duration-300 ${
+                  pkg.isCustomizable
+                    ? "border-madara-orange shadow-glow-orange bg-madara-surfaceElevated w-full"
+                    : "border-white/10 hover:border-madara-orange/40"
+                } ${
+                  hasMultiple 
+                    ? "w-[85vw] sm:w-[380px] md:w-[calc(50%-12px)] flex-shrink-0 snap-start" 
+                    : "w-full"
+                }`}
+              >
+                {pkg.popular && (
+                  <div className="absolute -top-3 left-6 bg-gradient-to-r from-madara-orange to-red-600 text-white text-[11px] font-extrabold px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-full uppercase tracking-wider shadow-md">
+                    ⭐ Top Recommended
                   </div>
                 )}
 
-              </div>
+                {pkg.isCustomizable && (
+                  <div className="absolute -top-3 left-6 bg-gradient-to-r from-amber-500 to-madara-orange text-black text-[11px] font-extrabold px-3 py-0.5 sm:px-4 sm:py-1 rounded-full uppercase tracking-wider shadow-md">
+                    ✨ 100% Tailor-Made Menu
+                  </div>
+                )}
 
-              {/* Package Action Footer */}
-              <div className="mt-6 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
-                <div className="text-xs text-madara-textMuted text-center sm:text-left">
-                  <span>Buffet warmers, setup &amp; stewards included.</span>
+                <div>
+                  {/* Header: Title, Price & View Full Menu Toggle Button */}
+                  <div className="pb-5 border-b border-white/10 space-y-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <h4 className="text-xl sm:text-2xl font-bold text-white font-serif">
+                          {language === "si" && pkg.sinhalaName ? pkg.sinhalaName : pkg.packageName}
+                        </h4>
+                        <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-madara-orange/10 border border-madara-orange/30 text-madara-orange inline-block mt-1">
+                          {pkg.minGuests}+ Guests
+                        </span>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => togglePackageExpand(pkg.id)}
+                        className="px-3.5 py-1.5 rounded-xl bg-madara-orange/20 hover:bg-madara-orange border border-madara-orange/40 text-madara-orange hover:text-white text-xs font-extrabold transition-all flex items-center gap-1.5 shadow-sm cursor-pointer flex-shrink-0"
+                      >
+                        <span>{isExpanded ? "Hide Full Menu ▲" : "View Full Menu ▼"}</span>
+                      </button>
+                    </div>
+
+                    <div className="inline-block bg-black/40 px-4 py-2 rounded-2xl border border-white/10">
+                      <span className="text-[10px] text-madara-textMuted uppercase font-bold block">
+                        {t("catering.priceLabel")}
+                      </span>
+                      <div className="flex flex-wrap items-baseline gap-2 mt-0.5">
+                        <span className={`text-lg sm:text-2xl font-extrabold ${pkg.isCustomizable ? "text-madara-amber" : "text-madara-orange"}`}>
+                          {pkg.priceDisplay === "Custom Quote" && language === "si" ? "මිල ගණන් විමසන්න" : pkg.priceDisplay}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Highlights */}
+                  <div className="my-4 flex flex-wrap gap-1.5 sm:gap-2">
+                    {pkg.highlights.map((h, i) => (
+                      <span
+                        key={i}
+                        className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-[11px] text-madara-textSecondary flex items-center gap-1.5"
+                      >
+                        <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-madara-orange flex-shrink-0" />
+                        <span>{h}</span>
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Collapsible Itemized Full Menu */}
+                  {isExpanded && (
+                    <div className="mt-4 space-y-3 p-4 rounded-2xl bg-black/40 border border-white/10 animate-in fade-in duration-200">
+                      {pkg.menuSections.map((sec, secIdx) => (
+                        <div key={secIdx} className="space-y-1.5">
+                          {pkg.menuSections.length > 1 && (
+                            <h5 className="text-xs font-bold text-madara-amber uppercase tracking-wider flex items-center gap-1.5">
+                              <span className="w-1.5 h-1.5 rounded-full bg-madara-orange" />
+                              <span>{sec.title}</span>
+                            </h5>
+                          )}
+                          <ul className="space-y-1 text-xs text-white/90 font-medium">
+                            {sec.items.map((item, itemIdx) => (
+                              <li key={itemIdx} className="flex items-start gap-2 leading-relaxed">
+                                <span className="text-madara-orange text-xs mt-0.5">•</span>
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
                 </div>
 
-                <div className="flex items-center gap-2 w-full sm:w-auto">
-                  <a
-                    href={generateWhatsAppPackageUrl(pkg)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full sm:w-auto btn-whatsapp px-5 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-md"
-                  >
-                    <MessageCircle className="w-4 h-4" />
-                    <span>{pkg.isCustomizable ? "Build Custom Menu" : "Book via WhatsApp"}</span>
-                  </a>
-                </div>
-              </div>
+                {/* Package Action Footer */}
+                <div className="mt-6 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+                  <div className="text-xs text-madara-textMuted text-center sm:text-left">
+                    <span>Buffet warmers, setup &amp; stewards included.</span>
+                  </div>
 
-            </div>
-          ))}
+                  <div className="flex items-center gap-2 w-full sm:w-auto">
+                    <a
+                      href={generateWhatsAppPackageUrl(pkg)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full sm:w-auto btn-whatsapp px-5 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-md"
+                    >
+                      <MessageCircle className="w-4 h-4" />
+                      <span>{pkg.isCustomizable ? "Build Custom Menu" : "Book via WhatsApp"}</span>
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+            );
+          })}
         </div>
 
         {/* ============================================================ */}
@@ -444,7 +461,15 @@ export default function CateringMenuExplorer() {
           </div>
         </div>
 
-        {/* Global Custom Catering Banner */}
+       
+
+        {/* Catering Add-Ons Section */}
+        <div className="mt-16">
+          <CateringAddons />
+        </div>
+
+
+         {/* Global Custom Catering Banner */}
         <div className="mt-16 glass-card rounded-3xl p-6 sm:p-10 border border-madara-orange/30 flex flex-col lg:flex-row items-center justify-between gap-6 text-center lg:text-left">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-2xl bg-madara-orange flex items-center justify-center text-white shadow-glow-orange flex-shrink-0">
@@ -484,6 +509,7 @@ export default function CateringMenuExplorer() {
             </a>
           </div>
         </div>
+        
 
       </div>
     </section>
