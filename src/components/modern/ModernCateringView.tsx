@@ -213,20 +213,7 @@ export default function ModernCateringView() {
               </p>
             </div>
 
-            {/* Addon 4: Live Action Wok & BBQ */}
-            <div className="bg-white rounded-2xl p-5 border border-stone-200/80 shadow-2xs space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
-                <Flame className="w-5 h-5" />
-              </div>
-              <h4 className="text-sm font-bold text-stone-900">
-                {language === "si" ? "සජීවී මොන්ගෝලියන් / BBQ" : "Live Action Cooking"}
-              </h4>
-              <p className="text-xs text-stone-500 leading-relaxed">
-                {language === "si"
-                  ? "ඔබ ඉදිරියේම සකසන මොන්ගෝලියන් වොක් කුටි, චිකන් BBQ සහ උණු උණු චීස් කොත්තු."
-                  : "On-site high flame Mongolian wok chef, charcoal BBQ, and sizzling cheese kottu."}
-              </p>
-            </div>
+
           </div>
         </div>
       </section>
