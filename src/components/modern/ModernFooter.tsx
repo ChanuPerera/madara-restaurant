@@ -1,7 +1,8 @@
 "use client";
 
-import React from "react";
+import Image from "next/image";
 import Link from "next/link";
+import OrLogo from "@/assets/orlogo-01.png";
 import { useLanguage } from "@/context/LanguageContext";
 import { RESTAURANT_INFO } from "@/data/restaurantData";
 import { 
@@ -24,8 +25,12 @@ export default function ModernFooter() {
           {/* Brand Info */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center text-stone-950 font-serif font-black text-xl">
-                M
+              <div className="h-10 w-auto flex items-center justify-center">
+                <Image 
+                  src={OrLogo} 
+                  alt="Madara Logo" 
+                  className="h-10 w-auto object-contain"
+                />
               </div>
               <div>
                 <span className="font-serif font-bold text-white tracking-wider text-xl leading-tight block">
@@ -51,7 +56,7 @@ export default function ModernFooter() {
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <Link href="/catering" className="hover:text-amber-400 transition-colors">
+                <Link href="/catering-menu" className="hover:text-amber-400 transition-colors">
                   {language === "si" ? "කේටරින් පැකේජ" : "Catering Packages"}
                 </Link>
               </li>

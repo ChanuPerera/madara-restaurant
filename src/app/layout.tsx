@@ -84,6 +84,8 @@ export const metadata: Metadata = {
   },
 };
 
+import FloatingCareersButton from "@/components/FloatingCareersButton";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -201,6 +203,7 @@ export default function RootLayout({
         <ThemeProvider>
           <LanguageProvider>
             {children}
+            <FloatingCareersButton />
           </LanguageProvider>
         </ThemeProvider>
       </body>

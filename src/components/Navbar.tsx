@@ -20,7 +20,7 @@ import {
   AlertCircle,
   ChevronDown
 } from "lucide-react";
-import LogoWhite from "@/assets/logo_white.png";
+import OrLogo from "@/assets/orlogo-01.png";
 import { useLanguage } from "@/context/LanguageContext";
 export default function Navbar() {
   const { language, setLanguage, t } = useLanguage();
@@ -52,7 +52,7 @@ export default function Navbar() {
   }, [mobileMenuOpen]);
 
   const navLinks = [
-    { name: t("nav.catering"), href: "/catering", icon: ChefHat },
+    { name: language === "si" ? "කේටරින් මෙනුව" : "Catering Menu", href: "/catering-menu", icon: ChefHat },
     { name: t("nav.menu"), href: "/#menu", icon: UtensilsCrossed },
     { name: t("nav.partners"), href: "/#partners", icon: Sparkles },
     { name: t("nav.gallery"), href: "/#gallery", icon: ImageIcon },
@@ -113,10 +113,10 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Row 1: Logo (Left) and Buttons/Mobile Toggle (Right) */}
           <div className="flex items-center justify-between">
-            {/* Brand Logo */}
+            {/* Brand Logo with OrLogo */}
             <Link href="/" className="flex items-center group">
               <img
-                src={LogoWhite.src}
+                src={OrLogo.src}
                 alt="MADARA Logo"
                 className="h-10 sm:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
               />
@@ -193,13 +193,14 @@ export default function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`px-3 py-1.5 text-xs xl:text-sm font-semibold rounded-lg transition-all ${
+                  className={`px-3.5 py-1.5 text-xs xl:text-sm transition-all ${
                     link.isCareer
-                      ? "text-madara-amber hover:text-white bg-madara-amber/10 hover:bg-madara-amber/20 font-bold"
-                      : "text-madara-textSecondary hover:text-white hover:bg-white/5"
+                      ? "bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 text-stone-950 font-black rounded-full shadow-md hover:scale-105 ring-2 ring-amber-400/50 flex items-center gap-1.5 uppercase"
+                      : "font-semibold text-madara-textSecondary hover:text-white hover:bg-white/5 rounded-lg"
                   }`}
                 >
-                  {link.name}
+                  {link.isCareer && <Sparkles className="w-3.5 h-3.5 text-stone-950 fill-stone-950/20" />}
+                  <span>{link.name}</span>
                 </Link>
               ))}
 
@@ -275,7 +276,7 @@ export default function Navbar() {
                 className="flex items-center"
               >
                 <img
-                  src={LogoWhite.src}
+                  src={OrLogo.src}
                   alt="MADARA Logo"
                   className="h-9 w-auto object-contain"
                 />

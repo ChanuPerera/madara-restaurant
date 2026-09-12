@@ -7,6 +7,7 @@ import ModernFooter from "@/components/modern/ModernFooter";
 import MobileActionDock from "@/components/MobileActionDock";
 import Catering3DCarousel from "@/components/Catering3DCarousel";
 import CateringMenuBook from "@/components/modern/CateringMenuBook";
+import OrLogo from "@/assets/orlogo-01.png";
 import { RESTAURANT_INFO } from "@/data/restaurantData";
 import { useLanguage } from "@/context/LanguageContext";
 import { 
@@ -307,8 +308,12 @@ export default function ModernCateringView() {
           <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-amber-600/10 rounded-full blur-3xl pointer-events-none" />
 
           {/* Luxury Logo Badge */}
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-300 text-stone-950 flex items-center justify-center mx-auto font-serif font-black text-2xl shadow-xl ring-4 ring-amber-500/20 relative z-10 transition-transform group-hover:scale-105">
-            M
+          <div className="w-14 h-14 rounded-2xl bg-stone-900/90 border border-amber-500/40 p-2.5 flex items-center justify-center mx-auto shadow-xl ring-4 ring-amber-500/20 relative z-10 transition-transform group-hover:scale-105">
+            <img
+              src={OrLogo.src}
+              alt="Madara Logo"
+              className="w-full h-full object-contain"
+            />
           </div>
 
           {/* Minimal Text Heading */}
@@ -318,11 +323,6 @@ export default function ModernCateringView() {
                 ? "විශේෂිත මෙනුවක් අවශ්‍යද?"
                 : "Need a Custom Catering Menu?"}
             </h3>
-            <p className="text-xs sm:text-sm text-stone-400 font-medium">
-              {language === "si"
-                ? "ඔබගේ උත්සවයට ගැලපෙන පරිදි මෙනුව සකසා ගන්න"
-                : "Speak with our Head Chef to tailor dishes for your event."}
-            </p>
           </div>
 
           {/* Enhanced Action Buttons */}

@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { RESTAURANT_INFO } from "@/data/restaurantData";
 import { useLanguage } from "@/context/LanguageContext";
-import LogoWhite from "@/assets/logo_white.png";
+import OrLogo from "@/assets/orlogo-01.png";
 import { 
   Flame, 
   Phone, 
@@ -22,7 +22,7 @@ export default function Footer() {
   const { language, t } = useLanguage();
 
   const quickLinks = [
-    { name: t("nav.catering"), href: "/catering" },
+    { name: language === "si" ? "කේටරින් මෙනුව" : "Catering Menu", href: "/catering-menu" },
     { name: t("nav.menu"), href: "/#menu" },
     { name: t("nav.partners"), href: "/#partners" },
     { name: t("nav.gallery"), href: "/#gallery" },
@@ -65,9 +65,9 @@ export default function Footer() {
           <div className="lg:col-span-4 space-y-4">
             <Link href="/" className="flex items-center group inline-flex">
               <img
-                src={LogoWhite.src}
+                src={OrLogo.src}
                 alt="MADARA Logo"
-                className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                className="h-10 sm:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
               />
             </Link>
 
