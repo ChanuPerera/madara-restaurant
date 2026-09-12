@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import ModernNavbar from "@/components/modern/ModernNavbar";
 import ModernFooter from "@/components/modern/ModernFooter";
-import MobileActionDock from "@/components/MobileActionDock";
 import OrLogo from "@/assets/orlogo-01.png";
 import { JOB_VACANCIES, RESTAURANT_INFO } from "@/data/restaurantData";
 import { useLanguage } from "@/context/LanguageContext";
@@ -362,9 +361,6 @@ export default function ModernCareersView() {
 
       {/* Modern Footer */}
       <ModernFooter />
-
-      {/* Mobile Sticky Quick Action Dock */}
-      <MobileActionDock />
     </main>
   );
 }

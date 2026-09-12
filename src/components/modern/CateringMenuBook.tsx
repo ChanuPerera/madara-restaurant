@@ -64,12 +64,19 @@ export default function CateringMenuBook() {
   const [currentPage, setCurrentPage] = useState(0);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const audioCtxRef = useRef<AudioContext | null>(null);
   const bookRef = useRef<any>(null);
 
   useEffect(() => {
     setIsMounted(true);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // Soft paper flip sound
@@ -221,21 +228,25 @@ export default function CateringMenuBook() {
           </button>
 
           <span className="font-semibold text-amber-900 bg-amber-100/80 px-3 py-1.5 rounded-full border border-amber-200">
-            {language === "si"
-              ? `පිටුව ${currentPage + 1}-${currentPage + 2} / 12`
-              : `Pages ${currentPage + 1}-${Math.min(currentPage + 2, 12)} of 12`}
+            {isMobile
+              ? language === "si"
+                ? `පිටුව ${currentPage + 1} / 12`
+                : `Page ${currentPage + 1} of 12`
+              : language === "si"
+                ? `පිටුව ${currentPage + 1}-${Math.min(currentPage + 2, 12)} / 12`
+                : `Pages ${currentPage + 1}-${Math.min(currentPage + 2, 12)} of 12`}
           </span>
         </div>
       </div>
 
       {/* Main Flipbook Stage Container */}
-      <div className="relative w-full flex justify-center items-center py-2 min-h-[550px]">
+      <div className="relative w-full flex justify-center items-center py-2 min-h-[480px] sm:min-h-[550px]">
 
         {/* Left Navigation Arrow */}
         <button
           onClick={handlePrev}
           disabled={currentPage === 0}
-          className={`absolute left-0 sm:left-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-white/90 backdrop-blur border border-stone-300 text-stone-800 flex items-center justify-center transition-all ${
+          className={`absolute left-0 sm:left-2 top-1/2 -translate-y-1/2 z-30 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 backdrop-blur border border-stone-300 text-stone-800 flex items-center justify-center transition-all ${
             currentPage === 0
               ? "opacity-20 cursor-not-allowed"
               : "hover:scale-110 hover:bg-amber-600 hover:text-white cursor-pointer shadow-lg"
@@ -248,9 +259,9 @@ export default function CateringMenuBook() {
         {/* Right Navigation Arrow */}
         <button
           onClick={handleNext}
-          disabled={currentPage >= 10}
-          className={`absolute right-0 sm:right-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-white/90 backdrop-blur border border-stone-300 text-stone-800 flex items-center justify-center transition-all ${
-            currentPage >= 10
+          disabled={isMobile ? currentPage >= 11 : currentPage >= 10}
+          className={`absolute right-0 sm:right-2 top-1/2 -translate-y-1/2 z-30 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 backdrop-blur border border-stone-300 text-stone-800 flex items-center justify-center transition-all ${
+            (isMobile ? currentPage >= 11 : currentPage >= 10)
               ? "opacity-20 cursor-not-allowed"
               : "hover:scale-110 hover:bg-amber-600 hover:text-white cursor-pointer shadow-lg"
           }`}
@@ -259,15 +270,16 @@ export default function CateringMenuBook() {
           <ChevronRight className="w-5 h-5" />
         </button>
 
-        {/* HTMLFlipBook Component - Always open to 2-page spread starting on Page 1 (TOC) */}
+        {/* HTMLFlipBook Component */}
         <HTMLFlipBook
+          key={isMobile ? "mobile-single-view" : "desktop-double-view"}
           ref={bookRef}
-          width={370}
-          height={520}
+          width={isMobile ? 320 : 370}
+          height={isMobile ? 500 : 520}
           size="fixed"
-          minWidth={300}
-          maxWidth={450}
-          minHeight={450}
+          minWidth={280}
+          maxWidth={isMobile ? 360 : 450}
+          minHeight={420}
           maxHeight={600}
           maxShadowOpacity={0.4}
           showCover={false}
@@ -277,8 +289,8 @@ export default function CateringMenuBook() {
           style={{ margin: "0 auto" }}
           startPage={0}
           drawShadow={true}
-          flippingTime={650}
-          usePortrait={false}
+          flippingTime={550}
+          usePortrait={isMobile}
           startZIndex={0}
           autoSize={true}
           clickEventForward={true}

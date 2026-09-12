@@ -4,8 +4,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import ModernNavbar from "@/components/modern/ModernNavbar";
 import ModernFooter from "@/components/modern/ModernFooter";
-import MobileActionDock from "@/components/MobileActionDock";
-import Catering3DCarousel from "@/components/Catering3DCarousel";
 import CateringMenuBook from "@/components/modern/CateringMenuBook";
 import OrLogo from "@/assets/orlogo-01.png";
 import { RESTAURANT_INFO } from "@/data/restaurantData";
@@ -37,7 +35,7 @@ export default function ModernCateringView() {
   };
 
   return (
-    <main className="min-h-screen bg-[#FAF8F5] text-stone-900 relative w-full max-w-full overflow-x-hidden pb-16 md:pb-0">
+    <main className="min-h-screen bg-[#FAF8F5] text-stone-900 relative w-full max-w-full overflow-x-hidden">
       {/* Sleek Floating Capsule Navigation */}
       <ModernNavbar />
 
@@ -116,11 +114,6 @@ export default function ModernCateringView() {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* 3D Food Showcase Carousel */}
-      <section className="py-6 scroll-mt-20">
-        <Catering3DCarousel forceTheme="light" />
       </section>
 
       {/* Interactive 3D Catering Menu Flipbook */}
@@ -350,9 +343,6 @@ export default function ModernCateringView() {
 
       {/* Modern Footer */}
       <ModernFooter />
-
-      {/* Mobile Sticky Quick Action Dock */}
-      <MobileActionDock />
     </main>
   );
 }
