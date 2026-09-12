@@ -1,53 +1,23 @@
 "use client";
 
 import React from "react";
-import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
-import CateringShowcase from "@/components/CateringShowcase";
-import OfferBannerSlider from "@/components/OfferBannerSlider";
-import MenuSection from "@/components/MenuSection";
-import PartnersSection from "@/components/PartnersSection";
-import Testimonials from "@/components/Testimonials";
-import Gallery from "@/components/Gallery";
-import ContactSection from "@/components/ContactSection";
-import Footer from "@/components/Footer";
-import MobileActionDock from "@/components/MobileActionDock";
+import { useTheme } from "@/context/ThemeContext";
+import ModernThemeHome from "@/themes/modern/ModernThemeHome";
+import ClassicThemeHome from "@/themes/classic/ClassicThemeHome";
 
+/**
+ * HomePage
+ * Selects theme layout based on environment configuration:
+ * 1. "modern-light" (New ultra-clean light theme with Catering3DCarousel) [Default]
+ * 2. "classic-dark" (Preserved original dark theme)
+ * Controlled strictly via NEXT_PUBLIC_THEME in .env and built.
+ */
 export default function HomePage() {
-  return (
-    <main className="min-h-screen bg-madara-dark text-white relative w-full max-w-full overflow-x-hidden pb-16 md:pb-0">
-      {/* Navigation Bar */}
-      <Navbar />
+  const { theme } = useTheme();
 
-      {/* Hero Section: Catering & Event Milestone Highlights */}
-      <Hero />
+  if (theme === "classic-dark") {
+    return <ClassicThemeHome />;
+  }
 
-      {/* Flagship Feature: Catering Showcase & Teaser (Side by Side) */}
-      <CateringShowcase />
-
-      {/* Interactive Offer Banner Slider */}
-      <OfferBannerSlider />
-
-      {/* Food & Beverage Menu (Dine-In, Takeaway, Delivery) */}
-      <MenuSection />
-
-      {/* Partners & Venues */}
-      <PartnersSection />
-
-      {/* Customer Testimonials */}
-      <Testimonials />
-
-      {/* Image Gallery */}
-      <Gallery />
-
-      {/* Contact & Catering Consultation */}
-      <ContactSection />
-
-      {/* Global Footer */}
-      <Footer />
-
-      {/* Mobile Sticky Quick Action Dock (< 768px) */}
-      <MobileActionDock />
-    </main>
-  );
+  return <ModernThemeHome />;
 }

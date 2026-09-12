@@ -15,6 +15,15 @@
     --text-muted: #94a3b8;
   }
 
+  html.theme-modern-light {
+    color-scheme: light;
+  }
+
+  html.theme-modern-light body {
+    background-color: #fafaf9;
+    color: #0f172a;
+  }
+
   html {
     scroll-behavior: smooth;
     color-scheme: dark;
@@ -106,6 +115,34 @@
   border-color: rgba(217, 119, 6, 0.3);
   transform: translateY(-3px);
   box-shadow: 0 12px 25px -5px rgba(217, 119, 6, 0.08);
+}
+
+/* Modern Light Theme Cards & Panels */
+.glass-panel-light {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
+}
+
+.glass-card-light {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card-light:hover {
+  border-color: rgba(217, 119, 6, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px -8px rgba(217, 119, 6, 0.1);
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #b45309 0%, #d97706 50%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Glowing Ambient Utility */
@@ -268,3 +305,51 @@ input[type="range"]::-webkit-slider-thumb:hover {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+/* 3D Book Page Turning Animations */
+@keyframes pageFlipRight {
+  0% {
+    transform: rotateY(0deg);
+    opacity: 1;
+    filter: brightness(1);
+  }
+  45% {
+    transform: rotateY(-38deg) scale(0.98);
+    opacity: 0.8;
+    filter: brightness(0.92);
+  }
+  100% {
+    transform: rotateY(0deg);
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+@keyframes pageFlipLeft {
+  0% {
+    transform: rotateY(0deg);
+    opacity: 1;
+    filter: brightness(1);
+  }
+  45% {
+    transform: rotateY(38deg) scale(0.98);
+    opacity: 0.8;
+    filter: brightness(0.92);
+  }
+  100% {
+    transform: rotateY(0deg);
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+.animate-pageFlipRight {
+  transform-origin: left center;
+  animation: pageFlipRight 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-pageFlipLeft {
+  transform-origin: right center;
+  animation: pageFlipLeft 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
