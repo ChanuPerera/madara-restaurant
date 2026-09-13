@@ -2,8 +2,17 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import HTMLFlipBook from "react-pageflip";
+import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import { RESTAURANT_INFO } from "@/data/restaurantData";
+
+// Import Full A4 Cover Page Images from src/assets/menuBook
+import pg1 from "@/assets/menuBook/pg1.jpg";
+import pg2 from "@/assets/menuBook/pg2.jpg";
+import pg3 from "@/assets/menuBook/pg3.jpg";
+import pg4 from "@/assets/menuBook/pg4.jpg";
+import pg5 from "@/assets/menuBook/pg5.jpg";
+
 import { 
   Volume2, 
   VolumeX, 
@@ -18,7 +27,12 @@ import {
   Award,
   UtensilsCrossed,
   Sparkles,
-  CheckCircle2
+  CheckCircle2,
+  PartyPopper,
+  HeartHandshake,
+  Flower2,
+  ChefHat,
+  ArrowRight
 } from "lucide-react";
 
 interface PageProps {
@@ -65,7 +79,7 @@ const FOOD_IMAGES = {
   chickenDrumsticks: "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=600&q=80",
 };
 
-const TOTAL_PAGES = 16;
+const TOTAL_PAGES = 22;
 
 export default function CateringMenuBook() {
   const { language } = useLanguage();
@@ -173,42 +187,62 @@ export default function CateringMenuBook() {
     );
   }
 
-  // Structured Table of Contents categories
-  const tocSections = [
+  // Table of Contents Main Categories (Flips to full A4 Cover Pages: pg1, pg2, pg3, pg4, pg5)
+  const tocCategories = [
     {
-      category: language === "si" ? "සාද මෙනු" : "Party Menus",
-      items: [
-        { num: "01", name: "Menu 01 — Classic Menu", price: "Rs. 800/=", page: 2 },
-        { num: "02", name: "Menu 02 — Special Menu", price: "Rs. 950/=", page: 3 },
-        { num: "03", name: "Menu 03 — Sri Lankan Menu", price: "Rs. 950/=", page: 4 },
-      ]
+      id: "party",
+      num: "01",
+      title: language === "si" ? "සාද මෙනු පැකේජ" : "Party & Celebration Packages",
+      subtitle: language === "si" ? "උපන්දින, ආයතනික හා විශේෂ උත්සව සඳහා" : "Birthdays, Corporate Functions & Private Gatherings",
+      packagesCount: language === "si" ? "මෙනු පැකේජ 03" : "3 Packages",
+      priceRange: "Rs. 800/= - 950/=",
+      coverPageNum: 2, // Page 2 (0-indexed 1) - pg1.jpg
+      icon: PartyPopper,
+      badgeColor: "bg-amber-100 text-amber-900 border-amber-300"
     },
     {
-      category: language === "si" ? "බණ හා දානමය මෙනු" : "Bana / Alms-Giving",
-      items: [
-        { num: "04", name: "Menu 01 — Tradition Bana Menu", price: "Rs. 700/=", page: 5 },
-        { num: "05", name: "Menu 02 — Fish Menu", price: "Rs. 800 - 1,000/=", page: 6 },
-        { num: "06", name: "Menu 03 — Special Bana Menu", price: "Rs. 1,100/=", page: 7 },
-      ]
+      id: "bana",
+      num: "02",
+      title: language === "si" ? "බණ හා දානමය මෙනු පැකේජ" : "Bana & Alms-Giving Packages",
+      subtitle: language === "si" ? "සාංඝික දාන, පිරිත් හා ආගමික පින්කම් සඳහා" : "Traditional Alms-Giving & Religious Ceremonies",
+      packagesCount: language === "si" ? "මෙනු පැකේජ 03" : "3 Packages",
+      priceRange: "Rs. 700/= - 1,100/=",
+      coverPageNum: 6, // Page 6 (0-indexed 5) - pg2.jpg
+      icon: Flower2,
+      badgeColor: "bg-orange-100 text-orange-900 border-orange-300"
     },
     {
-      category: language === "si" ? "අවමංගල්‍ය හා මල බත මෙනු" : "Funeral & Mala Batha",
-      items: [
-        { num: "07", name: "Funeral 01 — Traditional Menu", price: "Rs. 550/=", page: 8 },
-        { num: "08", name: "Funeral 02 — Chicken Menu", price: "Rs. 550/=", page: 9 },
-        { num: "09", name: "Mala Batha 01 — Basic Menu", price: "Rs. 490/=", page: 10 },
-        { num: "10", name: "Mala Batha 02 — Special Menu", price: "Rs. 1,050/=", page: 11 },
-      ]
+      id: "funeral",
+      num: "03",
+      title: language === "si" ? "අවමංගල්‍ය හා මල බත මෙනු" : "Funeral & Mala Batha Packages",
+      subtitle: language === "si" ? "අවමංගල්‍ය හා මල බත සංග්‍රහ සේවාවන්" : "Dignified & Timely Support for Solemn Occasions",
+      packagesCount: language === "si" ? "මෙනු පැකේජ 04" : "4 Packages",
+      priceRange: "Rs. 490/= - 1,050/=",
+      coverPageNum: 10, // Page 10 (0-indexed 9) - pg3.jpg
+      icon: HeartHandshake,
+      badgeColor: "bg-stone-200 text-stone-900 border-stone-300"
     },
     {
-      category: language === "si" ? "විශේෂ සේවාවන් හා ඇමතුම්" : "Special Services & Contact",
-      items: [
-        { num: "11", name: "100% Custom Tailored Menu", price: "Custom", page: 12 },
-        { num: "12", name: "Live Action Wok & BBQ Stations", price: "Live", page: 13 },
-        { num: "13", name: "Buffet Setup & Artisanal Desserts", price: "Extras", page: 14 },
-        { num: "14", name: "Catering Standards & Inclusions", price: "Info", page: 15 },
-        { num: "15", name: "Homagama Catering Desk & Hotline", price: "Contact", page: 16 },
-      ]
+      id: "special",
+      num: "04",
+      title: language === "si" ? "විශේෂ සේවාවන් හා සජීවී කුටි" : "Special Services & Live Stations",
+      subtitle: language === "si" ? "චෙෆ් විශේෂ මෙනු, සජීවී BBQ, Wok හා බුෆේ" : "Custom Menus, Live BBQ & Wok Stations, Dessert Bars",
+      packagesCount: language === "si" ? "විශේෂාංග 04" : "4 Features",
+      priceRange: language === "si" ? "විශේෂ සේවාවන්" : "Custom Add-Ons",
+      coverPageNum: 16, // Page 16 (0-indexed 15) - pg4.jpg
+      icon: ChefHat,
+      badgeColor: "bg-amber-100 text-amber-900 border-amber-300"
+    },
+    {
+      id: "contact",
+      num: "05",
+      title: language === "si" ? "හෝමාගම කේටරින් ඩෙස්ක්" : "Homagama Catering Desk & Hotline",
+      subtitle: language === "si" ? "ඍජු ඇමතුම්, WhatsApp හා වෙන්කරවා ගැනුම්" : "Direct Hotline, WhatsApp & Consultation Desk",
+      packagesCount: language === "si" ? "විමසීම්" : "Reservations",
+      priceRange: language === "si" ? "දිනපතා" : "Daily 6:30 AM - 10:30 PM",
+      coverPageNum: 21, // Page 21 (0-indexed 20) - pg5.jpg
+      icon: Phone,
+      badgeColor: "bg-emerald-100 text-emerald-900 border-emerald-300"
     }
   ];
 
@@ -232,6 +266,14 @@ export default function CateringMenuBook() {
           position: relative;
           overflow: hidden;
         }
+
+        .full-cover-page {
+          padding: 0 !important;
+        }
+        
+        .full-cover-page .page-content {
+          padding: 0 !important;
+        }
       `}</style>
       
       {/* Light Bar Top Controls */}
@@ -246,7 +288,7 @@ export default function CateringMenuBook() {
         <div className="flex items-center gap-3 text-xs text-stone-700">
           <button
             onClick={() => setSoundEnabled(!soundEnabled)}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white hover:bg-stone-100 border border-stone-300 text-stone-800 transition-colors shadow-xs"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white hover:bg-stone-100 border border-stone-300 text-stone-800 transition-colors shadow-xs cursor-pointer"
             title={soundEnabled ? "Mute Flip Sound" : "Enable Flip Sound"}
           >
             {soundEnabled ? (
@@ -331,52 +373,65 @@ export default function CateringMenuBook() {
           showPageCorners={true}
           disableFlipByClick={false}
         >
-          {/* PAGE 1: TABLE OF CONTENTS */}
+          {/* ============================================================== */}
+          {/* PAGE 1: TABLE OF CONTENTS                                      */}
+          {/* ============================================================== */}
           <Page>
             <div className="w-full h-full flex flex-col justify-between font-sans p-3">
               <div className="border-b border-amber-900/15 pb-2">
                 <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-800 block">
-                  MADARA CATERING
+                  MADARA CATERING MENU BOOK
                 </span>
                 <h3 className="font-serif font-extrabold text-stone-900 text-xl sm:text-2xl tracking-tight">
                   {language === "si" ? "මෙනු පටුන" : "Table of Contents"}
                 </h3>
+                <p className="text-[10px] text-stone-500 mt-0.5">
+                  {language === "si" 
+                    ? "අදාළ කේටරින් කාණ්ඩය මත ක්ලික් කර එම මෙනු ආවරණ පිටුවට පිවිසෙන්න"
+                    : "Click any main category to flip to its full cover page"}
+                </p>
               </div>
 
-              <div className="space-y-2.5 my-auto py-1">
-                {tocSections.map((section, sIdx) => (
-                  <div key={sIdx} className="space-y-1">
-                    <span className="text-[9px] font-bold uppercase tracking-wider text-amber-900/80 block border-b border-amber-900/10 pb-0.5">
-                      {section.category}
-                    </span>
-                    <div className="space-y-0.5">
-                      {section.items.map((item) => (
-                        <button
-                          key={item.num}
-                          onClick={() => turnToPage(item.page - 1)}
-                          className="w-full flex items-center justify-between py-0.5 px-1 rounded hover:bg-amber-100/60 text-left transition-colors group cursor-pointer"
-                        >
-                          <div className="flex items-center gap-1.5 overflow-hidden">
-                            <span className="text-[10px] font-mono font-bold text-amber-800 group-hover:text-amber-950 w-4">
-                              {item.num}
+              {/* Main Categories Navigation List */}
+              <div className="space-y-2 my-auto py-1">
+                {tocCategories.map((cat) => {
+                  const IconComp = cat.icon;
+                  return (
+                    <button
+                      key={cat.id}
+                      onClick={() => turnToPage(cat.coverPageNum - 1)}
+                      className="w-full flex items-center justify-between p-2 rounded-xl bg-white/80 hover:bg-amber-100/90 border border-stone-200/80 hover:border-amber-400 text-left transition-all duration-200 group cursor-pointer shadow-2xs hover:shadow-md"
+                    >
+                      <div className="flex items-center gap-2.5 overflow-hidden">
+                        <div className="w-8 h-8 rounded-lg bg-amber-900/10 text-amber-900 group-hover:bg-amber-600 group-hover:text-white flex items-center justify-center flex-shrink-0 transition-colors">
+                          <IconComp className="w-4 h-4" />
+                        </div>
+                        <div className="overflow-hidden">
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-[10px] font-mono font-bold text-amber-800 group-hover:text-amber-950">
+                              {cat.num}.
                             </span>
-                            <span className="text-[11px] font-medium text-stone-800 group-hover:text-stone-950 truncate">
-                              {item.name}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-1.5 flex-shrink-0 ml-1">
-                            <span className="text-[10px] font-semibold text-stone-500">
-                              {item.price}
-                            </span>
-                            <span className="text-[9px] font-mono text-amber-800 group-hover:underline">
-                              p.{item.page}
+                            <span className="text-xs font-bold text-stone-900 group-hover:text-amber-950 truncate">
+                              {cat.title}
                             </span>
                           </div>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                ))}
+                          <span className="text-[9.5px] font-medium text-stone-500 block truncate">
+                            {cat.subtitle}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col items-end flex-shrink-0 ml-2">
+                        <span className="text-[9px] font-bold text-amber-900 bg-amber-100/90 group-hover:bg-amber-200 px-2 py-0.5 rounded-full">
+                          {cat.packagesCount}
+                        </span>
+                        <span className="text-[9px] font-mono font-bold text-amber-800 group-hover:underline mt-0.5">
+                          p.{cat.coverPageNum} ➔
+                        </span>
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
 
               <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
@@ -385,7 +440,57 @@ export default function CateringMenuBook() {
             </div>
           </Page>
 
-          {/* PAGE 2: BIRTHDAY / CORPORATE / SMALL PARTY — MENU 01 */}
+          {/* ============================================================== */}
+          {/* PAGE 2: FULL A4 COVERPAGE OF CATEGORY 1 [pg1.jpg]               */}
+          {/* ============================================================== */}
+          <Page className="full-cover-page">
+            <div className="w-full h-full relative rounded-md overflow-hidden flex flex-col justify-between select-none">
+              <Image
+                src={pg1}
+                alt="Category 1 - Party Menus Cover"
+                fill
+                className="object-cover"
+                priority
+              />
+              
+              {/* Top Bar Overlay */}
+              <div className="relative z-10 p-3 flex items-center justify-between bg-gradient-to-b from-black/80 via-black/40 to-transparent">
+                <span className="px-3 py-1 rounded-full bg-amber-500/90 text-stone-950 text-[10px] font-extrabold uppercase tracking-wider shadow-md">
+                  Category 01 • Party Menus
+                </span>
+                <button
+                  onClick={() => turnToPage(0)}
+                  className="px-2.5 py-1 rounded-full bg-black/60 hover:bg-black/80 text-amber-200 hover:text-white text-[9px] font-bold border border-amber-400/40 cursor-pointer backdrop-blur"
+                >
+                  ◄ Table of Contents
+                </button>
+              </div>
+
+              {/* Bottom Quick Navigation Bar Overlay */}
+              <div className="relative z-10 p-3 bg-gradient-to-t from-black/90 via-black/60 to-transparent">
+                <div className="flex items-center justify-between text-white">
+                  <div>
+                    <h3 className="text-xs font-serif font-extrabold text-amber-300 tracking-tight">
+                      Party & Celebration Packages
+                    </h3>
+                    <p className="text-[9.5px] text-stone-300">
+                      Rs. 800/= – Rs. 950/= per person • Page 2
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => turnToPage(2)} // Page 3 (Party 01)
+                    className="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs shadow-lg inline-flex items-center gap-1 cursor-pointer transition-transform hover:scale-105"
+                  >
+                    <span>View Menus</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </Page>
+
+          {/* PAGE 3: BIRTHDAY / CORPORATE / SMALL PARTY — MENU 01 */}
           <Page>
             <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
             <div className="absolute -top-12 -left-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
@@ -396,15 +501,24 @@ export default function CateringMenuBook() {
             </div>
 
             <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
-              <div className="text-right pl-28 pt-0.5">
-                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
-                  PARTY MENU 01
-                </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
-                  Classic Menu
-                </h2>
-                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
-                  Rs. 800/= per person
+              
+              {/* ENHANCED HIGH-VISIBILITY CATEGORY HEADER */}
+              <div className="text-right pl-20 pt-0.5 space-y-1">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-900 text-amber-100 font-extrabold text-xs uppercase tracking-wider shadow-sm">
+                  <PartyPopper className="w-3.5 h-3.5 text-amber-400" />
+                  <span>BIRTHDAY & PARTY MENUS</span>
+                </div>
+
+                <div className="pt-0.5">
+                  <span className="text-xs font-serif font-extrabold uppercase tracking-widest text-amber-950 block">
+                    PARTY MENU 01
+                  </span>
+                  <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                    Classic Menu
+                  </h2>
+                  <div className="inline-block mt-0.5 px-3 py-1 rounded-full bg-amber-600 text-white font-extrabold text-xs shadow-xs">
+                    Rs. 800/= per person
+                  </div>
                 </div>
               </div>
 
@@ -425,13 +539,13 @@ export default function CateringMenuBook() {
                 ))}
               </div>
 
-              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
-                Page 2 • Birthday / Party Menus • Madara Catering
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9.5px] font-bold text-amber-900/80 text-center font-sans uppercase tracking-wider">
+                Page 3 • Birthday & Party Menus • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 3: BIRTHDAY / CORPORATE / SMALL PARTY — MENU 02 */}
+          {/* PAGE 4: BIRTHDAY / CORPORATE / SMALL PARTY — MENU 02 */}
           <Page>
             <div className="absolute top-0 left-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
             <div className="absolute -top-12 -right-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
@@ -442,15 +556,24 @@ export default function CateringMenuBook() {
             </div>
 
             <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
-              <div className="text-left pr-28 pt-0.5">
-                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
-                  PARTY MENU 02
-                </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
-                  Special Menu
-                </h2>
-                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
-                  Rs. 950/= per person
+              
+              {/* ENHANCED HIGH-VISIBILITY CATEGORY HEADER */}
+              <div className="text-left pr-20 pt-0.5 space-y-1">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-900 text-amber-100 font-extrabold text-xs uppercase tracking-wider shadow-sm">
+                  <PartyPopper className="w-3.5 h-3.5 text-amber-400" />
+                  <span>BIRTHDAY & PARTY MENUS</span>
+                </div>
+
+                <div className="pt-0.5">
+                  <span className="text-xs font-serif font-extrabold uppercase tracking-widest text-amber-950 block">
+                    PARTY MENU 02
+                  </span>
+                  <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                    Special Menu
+                  </h2>
+                  <div className="inline-block mt-0.5 px-3 py-1 rounded-full bg-amber-600 text-white font-extrabold text-xs shadow-xs">
+                    Rs. 950/= per person
+                  </div>
                 </div>
               </div>
 
@@ -473,13 +596,13 @@ export default function CateringMenuBook() {
                 ))}
               </div>
 
-              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
-                Page 3 • Birthday / Party Menus • Madara Catering
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9.5px] font-bold text-amber-900/80 text-center font-sans uppercase tracking-wider">
+                Page 4 • Birthday & Party Menus • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 4: BIRTHDAY / CORPORATE / SMALL PARTY — MENU 03 */}
+          {/* PAGE 5: BIRTHDAY / CORPORATE / SMALL PARTY — MENU 03 */}
           <Page>
             <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
             <div className="absolute -top-12 -left-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
@@ -490,15 +613,24 @@ export default function CateringMenuBook() {
             </div>
 
             <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
-              <div className="text-right pl-28 pt-0.5">
-                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
-                  PARTY MENU 03
-                </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
-                  Sri Lankan Menu
-                </h2>
-                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
-                  Rs. 950/= per person
+              
+              {/* ENHANCED HIGH-VISIBILITY CATEGORY HEADER */}
+              <div className="text-right pl-20 pt-0.5 space-y-1">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-900 text-amber-100 font-extrabold text-xs uppercase tracking-wider shadow-sm">
+                  <PartyPopper className="w-3.5 h-3.5 text-amber-400" />
+                  <span>BIRTHDAY & PARTY MENUS</span>
+                </div>
+
+                <div className="pt-0.5">
+                  <span className="text-xs font-serif font-extrabold uppercase tracking-widest text-amber-950 block">
+                    PARTY MENU 03
+                  </span>
+                  <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                    Sri Lankan Menu
+                  </h2>
+                  <div className="inline-block mt-0.5 px-3 py-1 rounded-full bg-amber-600 text-white font-extrabold text-xs shadow-xs">
+                    Rs. 950/= per person
+                  </div>
                 </div>
               </div>
 
@@ -520,13 +652,63 @@ export default function CateringMenuBook() {
                 ))}
               </div>
 
-              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
-                Page 4 • Birthday / Party Menus • Madara Catering
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9.5px] font-bold text-amber-900/80 text-center font-sans uppercase tracking-wider">
+                Page 5 • Birthday & Party Menus • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 5: BANA / ALMS-GIVING — MENU 01 */}
+          {/* ============================================================== */}
+          {/* PAGE 6: FULL A4 COVERPAGE OF CATEGORY 2 [pg2.jpg]               */}
+          {/* ============================================================== */}
+          <Page className="full-cover-page">
+            <div className="w-full h-full relative rounded-md overflow-hidden flex flex-col justify-between select-none">
+              <Image
+                src={pg2}
+                alt="Category 2 - Bana & Alms-Giving Menus Cover"
+                fill
+                className="object-cover"
+                priority
+              />
+              
+              {/* Top Bar Overlay */}
+              <div className="relative z-10 p-3 flex items-center justify-between bg-gradient-to-b from-black/80 via-black/40 to-transparent">
+                <span className="px-3 py-1 rounded-full bg-orange-500/90 text-stone-950 text-[10px] font-extrabold uppercase tracking-wider shadow-md">
+                  Category 02 • Bana Menus
+                </span>
+                <button
+                  onClick={() => turnToPage(0)}
+                  className="px-2.5 py-1 rounded-full bg-black/60 hover:bg-black/80 text-amber-200 hover:text-white text-[9px] font-bold border border-amber-400/40 cursor-pointer backdrop-blur"
+                >
+                  ◄ Table of Contents
+                </button>
+              </div>
+
+              {/* Bottom Quick Navigation Bar Overlay */}
+              <div className="relative z-10 p-3 bg-gradient-to-t from-black/90 via-black/60 to-transparent">
+                <div className="flex items-center justify-between text-white">
+                  <div>
+                    <h3 className="text-xs font-serif font-extrabold text-amber-300 tracking-tight">
+                      Bana & Alms-Giving Packages
+                    </h3>
+                    <p className="text-[9.5px] text-stone-300">
+                      Rs. 700/= – Rs. 1,100/= per person • Page 6
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => turnToPage(6)} // Page 7 (Bana 01)
+                    className="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs shadow-lg inline-flex items-center gap-1 cursor-pointer transition-transform hover:scale-105"
+                  >
+                    <span>View Menus</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </Page>
+
+          {/* PAGE 7: BANA / ALMS-GIVING — MENU 01 */}
           <Page>
             <div className="absolute top-0 left-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
             <div className="absolute -top-12 -right-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
@@ -537,15 +719,24 @@ export default function CateringMenuBook() {
             </div>
 
             <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
-              <div className="text-left pr-28 pt-0.5">
-                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
-                  BANA MENU 01
-                </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
-                  Tradition Bana Menu
-                </h2>
-                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
-                  Rs. 700/= per person
+              
+              {/* ENHANCED HIGH-VISIBILITY CATEGORY HEADER */}
+              <div className="text-left pr-20 pt-0.5 space-y-1">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-orange-950 text-amber-100 font-extrabold text-xs uppercase tracking-wider shadow-sm">
+                  <Flower2 className="w-3.5 h-3.5 text-amber-400" />
+                  <span>BANA & ALMS-GIVING MENUS</span>
+                </div>
+
+                <div className="pt-0.5">
+                  <span className="text-xs font-serif font-extrabold uppercase tracking-widest text-amber-950 block">
+                    BANA MENU 01
+                  </span>
+                  <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                    Tradition Bana Menu
+                  </h2>
+                  <div className="inline-block mt-0.5 px-3 py-1 rounded-full bg-orange-600 text-white font-extrabold text-xs shadow-xs">
+                    Rs. 700/= per person
+                  </div>
                 </div>
               </div>
 
@@ -566,13 +757,13 @@ export default function CateringMenuBook() {
                 ))}
               </div>
 
-              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
-                Page 5 • Bana / Alms-Giving • Madara Catering
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9.5px] font-bold text-orange-900/80 text-center font-sans uppercase tracking-wider">
+                Page 7 • Bana & Alms-Giving Menus • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 6: BANA / ALMS-GIVING — MENU 02 */}
+          {/* PAGE 8: BANA / ALMS-GIVING — MENU 02 */}
           <Page>
             <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
             <div className="absolute -top-12 -left-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
@@ -583,18 +774,26 @@ export default function CateringMenuBook() {
             </div>
 
             <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
-              <div className="text-right pl-28 pt-0.5">
-                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
-                  BANA MENU 02
-                </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
-                  Fish Menu
-                </h2>
-                {/* 3 Fish Price Options */}
-                <div className="flex flex-col items-end gap-0.5 mt-0.5 text-[10px] font-bold text-amber-950">
-                  <span className="bg-amber-100/90 px-2 py-0.5 rounded">Bala Fish — Rs. 800/=</span>
-                  <span className="bg-amber-100/90 px-2 py-0.5 rounded">Tuna Fish — Rs. 950/=</span>
-                  <span className="bg-amber-100/90 px-2 py-0.5 rounded">Thalapath Fish — Rs. 1,000/=</span>
+              
+              {/* ENHANCED HIGH-VISIBILITY CATEGORY HEADER */}
+              <div className="text-right pl-20 pt-0.5 space-y-1">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-orange-950 text-amber-100 font-extrabold text-xs uppercase tracking-wider shadow-sm">
+                  <Flower2 className="w-3.5 h-3.5 text-amber-400" />
+                  <span>BANA & ALMS-GIVING MENUS</span>
+                </div>
+
+                <div className="pt-0.5">
+                  <span className="text-xs font-serif font-extrabold uppercase tracking-widest text-amber-950 block">
+                    BANA MENU 02
+                  </span>
+                  <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                    Fish Menu
+                  </h2>
+                  <div className="flex flex-col items-end gap-0.5 mt-0.5 text-[10px] font-extrabold text-stone-900">
+                    <span className="bg-amber-200/90 border border-amber-400 px-2 py-0.5 rounded-full">Bala Fish — Rs. 800/=</span>
+                    <span className="bg-amber-200/90 border border-amber-400 px-2 py-0.5 rounded-full">Tuna Fish — Rs. 950/=</span>
+                    <span className="bg-amber-200/90 border border-amber-400 px-2 py-0.5 rounded-full">Thalapath — Rs. 1,000/=</span>
+                  </div>
                 </div>
               </div>
 
@@ -616,13 +815,13 @@ export default function CateringMenuBook() {
                 ))}
               </div>
 
-              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
-                Page 6 • Bana / Alms-Giving • Madara Catering
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9.5px] font-bold text-orange-900/80 text-center font-sans uppercase tracking-wider">
+                Page 8 • Bana & Alms-Giving Menus • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 7: BANA / ALMS-GIVING — MENU 03 */}
+          {/* PAGE 9: BANA / ALMS-GIVING — MENU 03 */}
           <Page>
             <div className="absolute top-0 left-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
             <div className="absolute -top-12 -right-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
@@ -633,15 +832,24 @@ export default function CateringMenuBook() {
             </div>
 
             <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
-              <div className="text-left pr-28 pt-0.5">
-                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
-                  BANA MENU 03
-                </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
-                  Special Bana Menu
-                </h2>
-                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
-                  Rs. 1,100/= per person
+              
+              {/* ENHANCED HIGH-VISIBILITY CATEGORY HEADER */}
+              <div className="text-left pr-20 pt-0.5 space-y-1">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-orange-950 text-amber-100 font-extrabold text-xs uppercase tracking-wider shadow-sm">
+                  <Flower2 className="w-3.5 h-3.5 text-amber-400" />
+                  <span>BANA & ALMS-GIVING MENUS</span>
+                </div>
+
+                <div className="pt-0.5">
+                  <span className="text-xs font-serif font-extrabold uppercase tracking-widest text-amber-950 block">
+                    BANA MENU 03
+                  </span>
+                  <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                    Special Bana Menu
+                  </h2>
+                  <div className="inline-block mt-0.5 px-3 py-1 rounded-full bg-orange-600 text-white font-extrabold text-xs shadow-xs">
+                    Rs. 1,100/= per person
+                  </div>
                 </div>
               </div>
 
@@ -664,13 +872,63 @@ export default function CateringMenuBook() {
                 ))}
               </div>
 
-              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
-                Page 7 • Bana / Alms-Giving • Madara Catering
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9.5px] font-bold text-orange-900/80 text-center font-sans uppercase tracking-wider">
+                Page 9 • Bana & Alms-Giving Menus • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 8: FUNERAL MENUS — MENU 01 */}
+          {/* ============================================================== */}
+          {/* PAGE 10: FULL A4 COVERPAGE OF CATEGORY 3 [pg3.jpg]              */}
+          {/* ============================================================== */}
+          <Page className="full-cover-page">
+            <div className="w-full h-full relative rounded-md overflow-hidden flex flex-col justify-between select-none">
+              <Image
+                src={pg3}
+                alt="Category 3 - Funeral & Mala Batha Menus Cover"
+                fill
+                className="object-cover"
+                priority
+              />
+              
+              {/* Top Bar Overlay */}
+              <div className="relative z-10 p-3 flex items-center justify-between bg-gradient-to-b from-black/80 via-black/40 to-transparent">
+                <span className="px-3 py-1 rounded-full bg-stone-500/90 text-white text-[10px] font-extrabold uppercase tracking-wider shadow-md">
+                  Category 03 • Funeral Menus
+                </span>
+                <button
+                  onClick={() => turnToPage(0)}
+                  className="px-2.5 py-1 rounded-full bg-black/60 hover:bg-black/80 text-amber-200 hover:text-white text-[9px] font-bold border border-amber-400/40 cursor-pointer backdrop-blur"
+                >
+                  ◄ Table of Contents
+                </button>
+              </div>
+
+              {/* Bottom Quick Navigation Bar Overlay */}
+              <div className="relative z-10 p-3 bg-gradient-to-t from-black/90 via-black/60 to-transparent">
+                <div className="flex items-center justify-between text-white">
+                  <div>
+                    <h3 className="text-xs font-serif font-extrabold text-amber-300 tracking-tight">
+                      Funeral & Mala Batha Packages
+                    </h3>
+                    <p className="text-[9.5px] text-stone-300">
+                      Rs. 490/= – Rs. 1,050/= per person • Page 10
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => turnToPage(10)} // Page 11 (Funeral 01)
+                    className="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs shadow-lg inline-flex items-center gap-1 cursor-pointer transition-transform hover:scale-105"
+                  >
+                    <span>View Menus</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </Page>
+
+          {/* PAGE 11: FUNERAL MENUS — MENU 01 */}
           <Page>
             <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
             <div className="absolute -top-12 -left-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
@@ -681,15 +939,24 @@ export default function CateringMenuBook() {
             </div>
 
             <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
-              <div className="text-right pl-28 pt-0.5">
-                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
-                  FUNERAL MENU 01
-                </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
-                  Traditional Menu
-                </h2>
-                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
-                  Rs. 550/= per person
+              
+              {/* ENHANCED HIGH-VISIBILITY CATEGORY HEADER */}
+              <div className="text-right pl-20 pt-0.5 space-y-1">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-stone-900 text-amber-200 font-extrabold text-xs uppercase tracking-wider shadow-sm border border-stone-700">
+                  <HeartHandshake className="w-3.5 h-3.5 text-amber-400" />
+                  <span>FUNERAL & MALA BATHA MENUS</span>
+                </div>
+
+                <div className="pt-0.5">
+                  <span className="text-xs font-serif font-extrabold uppercase tracking-widest text-stone-900 block">
+                    FUNERAL MENU 01
+                  </span>
+                  <h2 className="font-serif italic font-extrabold text-stone-800 text-xl sm:text-2xl tracking-tight leading-tight">
+                    Traditional Menu
+                  </h2>
+                  <div className="inline-block mt-0.5 px-3 py-1 rounded-full bg-stone-800 text-white font-extrabold text-xs shadow-xs">
+                    Rs. 550/= per person
+                  </div>
                 </div>
               </div>
 
@@ -710,13 +977,13 @@ export default function CateringMenuBook() {
                 ))}
               </div>
 
-              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
-                Page 8 • Funeral Menus • Madara Catering
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9.5px] font-bold text-stone-800 text-center font-sans uppercase tracking-wider">
+                Page 11 • Funeral & Mala Batha Menus • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 9: FUNERAL MENUS — MENU 02 */}
+          {/* PAGE 12: FUNERAL MENUS — MENU 02 */}
           <Page>
             <div className="absolute top-0 left-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
             <div className="absolute -top-12 -right-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
@@ -727,15 +994,24 @@ export default function CateringMenuBook() {
             </div>
 
             <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
-              <div className="text-left pr-28 pt-0.5">
-                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
-                  FUNERAL MENU 02
-                </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
-                  Chicken Menu
-                </h2>
-                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
-                  Rs. 550/= per person
+              
+              {/* ENHANCED HIGH-VISIBILITY CATEGORY HEADER */}
+              <div className="text-left pr-20 pt-0.5 space-y-1">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-stone-900 text-amber-200 font-extrabold text-xs uppercase tracking-wider shadow-sm border border-stone-700">
+                  <HeartHandshake className="w-3.5 h-3.5 text-amber-400" />
+                  <span>FUNERAL & MALA BATHA MENUS</span>
+                </div>
+
+                <div className="pt-0.5">
+                  <span className="text-xs font-serif font-extrabold uppercase tracking-widest text-stone-900 block">
+                    FUNERAL MENU 02
+                  </span>
+                  <h2 className="font-serif italic font-extrabold text-stone-800 text-xl sm:text-2xl tracking-tight leading-tight">
+                    Chicken Menu
+                  </h2>
+                  <div className="inline-block mt-0.5 px-3 py-1 rounded-full bg-stone-800 text-white font-extrabold text-xs shadow-xs">
+                    Rs. 550/= per person
+                  </div>
                 </div>
               </div>
 
@@ -756,13 +1032,13 @@ export default function CateringMenuBook() {
                 ))}
               </div>
 
-              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
-                Page 9 • Funeral Menus • Madara Catering
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9.5px] font-bold text-stone-800 text-center font-sans uppercase tracking-wider">
+                Page 12 • Funeral & Mala Batha Menus • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 10: MALA BATHA MENUS — MENU 01 */}
+          {/* PAGE 13: MALA BATHA MENUS — MENU 01 */}
           <Page>
             <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
             <div className="absolute -top-12 -left-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
@@ -773,15 +1049,24 @@ export default function CateringMenuBook() {
             </div>
 
             <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
-              <div className="text-right pl-28 pt-0.5">
-                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
-                  MALA BATHA 01
-                </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
-                  Basic Menu
-                </h2>
-                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
-                  Rs. 490/= per person
+              
+              {/* ENHANCED HIGH-VISIBILITY CATEGORY HEADER */}
+              <div className="text-right pl-20 pt-0.5 space-y-1">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-stone-900 text-amber-200 font-extrabold text-xs uppercase tracking-wider shadow-sm border border-stone-700">
+                  <HeartHandshake className="w-3.5 h-3.5 text-amber-400" />
+                  <span>FUNERAL & MALA BATHA MENUS</span>
+                </div>
+
+                <div className="pt-0.5">
+                  <span className="text-xs font-serif font-extrabold uppercase tracking-widest text-stone-900 block">
+                    MALA BATHA 01
+                  </span>
+                  <h2 className="font-serif italic font-extrabold text-stone-800 text-xl sm:text-2xl tracking-tight leading-tight">
+                    Basic Menu
+                  </h2>
+                  <div className="inline-block mt-0.5 px-3 py-1 rounded-full bg-stone-800 text-white font-extrabold text-xs shadow-xs">
+                    Rs. 490/= per person
+                  </div>
                 </div>
               </div>
 
@@ -801,13 +1086,13 @@ export default function CateringMenuBook() {
                 ))}
               </div>
 
-              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
-                Page 10 • Mala Batha Menus • Madara Catering
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9.5px] font-bold text-stone-800 text-center font-sans uppercase tracking-wider">
+                Page 13 • Funeral & Mala Batha Menus • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 11: MALA BATHA MENUS — MENU 02 */}
+          {/* PAGE 14: MALA BATHA MENUS — MENU 02 */}
           <Page>
             <div className="absolute top-0 left-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
             <div className="absolute -top-12 -right-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
@@ -818,15 +1103,24 @@ export default function CateringMenuBook() {
             </div>
 
             <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
-              <div className="text-left pr-28 pt-0.5">
-                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
-                  MALA BATHA 02
-                </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
-                  Special Menu
-                </h2>
-                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
-                  Rs. 1,050/= per person
+              
+              {/* ENHANCED HIGH-VISIBILITY CATEGORY HEADER */}
+              <div className="text-left pr-20 pt-0.5 space-y-1">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-stone-900 text-amber-200 font-extrabold text-xs uppercase tracking-wider shadow-sm border border-stone-700">
+                  <HeartHandshake className="w-3.5 h-3.5 text-amber-400" />
+                  <span>FUNERAL & MALA BATHA MENUS</span>
+                </div>
+
+                <div className="pt-0.5">
+                  <span className="text-xs font-serif font-extrabold uppercase tracking-widest text-stone-900 block">
+                    MALA BATHA 02
+                  </span>
+                  <h2 className="font-serif italic font-extrabold text-stone-800 text-xl sm:text-2xl tracking-tight leading-tight">
+                    Special Menu
+                  </h2>
+                  <div className="inline-block mt-0.5 px-3 py-1 rounded-full bg-stone-800 text-white font-extrabold text-xs shadow-xs">
+                    Rs. 1,050/= per person
+                  </div>
                 </div>
               </div>
 
@@ -849,13 +1143,124 @@ export default function CateringMenuBook() {
                 ))}
               </div>
 
-              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
-                Page 11 • Mala Batha Menus • Madara Catering
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9.5px] font-bold text-stone-800 text-center font-sans uppercase tracking-wider">
+                Page 14 • Funeral & Mala Batha Menus • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 12: 100% CUSTOM TAILORED MENU */}
+          {/* PAGE 15: FUNERAL & MALA BATHA SERVICE STANDARDS */}
+          <Page>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(#78716c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
+            <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
+              <div className="text-left pt-0.5 border-b border-amber-900/15 pb-2">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-stone-900 text-amber-200 font-extrabold text-xs uppercase tracking-wider shadow-sm border border-stone-700 mb-1">
+                  <HeartHandshake className="w-3.5 h-3.5 text-amber-400" />
+                  <span>FUNERAL & MALA BATHA MENUS</span>
+                </div>
+                <h2 className="font-serif italic font-extrabold text-stone-800 text-xl sm:text-2xl tracking-tight leading-tight">
+                  Funeral Catering Support
+                </h2>
+                <p className="text-[10px] text-stone-600 mt-0.5">
+                  Our emergency dispatch & dedicated catering service guarantees
+                </p>
+              </div>
+
+              <div className="space-y-2.5 my-auto py-1">
+                <div className="flex items-start gap-2.5">
+                  <div className="w-7 h-7 rounded-lg bg-stone-200 text-stone-800 flex items-center justify-center flex-shrink-0 mt-0.5 font-bold text-xs">
+                    01
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-stone-900">Rapid 2-Hour Express Delivery</h4>
+                    <p className="text-[10px] text-stone-600 leading-relaxed mt-0.5">
+                      Hot thermal containers delivered to funeral homes or residences across Colombo & Gampaha districts.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-2.5">
+                  <div className="w-7 h-7 rounded-lg bg-stone-200 text-stone-800 flex items-center justify-center flex-shrink-0 mt-0.5 font-bold text-xs">
+                    02
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-stone-900">Complete Tableware & Cutlery</h4>
+                    <p className="text-[10px] text-stone-600 leading-relaxed mt-0.5">
+                      Porcelain plates, serving spoons, hot rice warmers, and serviettes provided hassle-free.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-2.5">
+                  <div className="w-7 h-7 rounded-lg bg-stone-200 text-stone-800 flex items-center justify-center flex-shrink-0 mt-0.5 font-bold text-xs">
+                    03
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-stone-900">Flexible Pax Top-up Support</h4>
+                    <p className="text-[10px] text-stone-600 leading-relaxed mt-0.5">
+                      Unexpected guests? Contact our Homagama desk for fast top-up portion dispatches.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9.5px] font-bold text-stone-800 text-center font-sans uppercase tracking-wider">
+                Page 15 • Funeral Support • Madara Catering
+              </div>
+            </div>
+          </Page>
+
+          {/* ============================================================== */}
+          {/* PAGE 16: FULL A4 COVERPAGE OF CATEGORY 4 [pg4.jpg]              */}
+          {/* ============================================================== */}
+          <Page className="full-cover-page">
+            <div className="w-full h-full relative rounded-md overflow-hidden flex flex-col justify-between select-none">
+              <Image
+                src={pg4}
+                alt="Category 4 - Special Services & Live Stations Cover"
+                fill
+                className="object-cover"
+                priority
+              />
+              
+              {/* Top Bar Overlay */}
+              <div className="relative z-10 p-3 flex items-center justify-between bg-gradient-to-b from-black/80 via-black/40 to-transparent">
+                <span className="px-3 py-1 rounded-full bg-emerald-500/90 text-stone-950 text-[10px] font-extrabold uppercase tracking-wider shadow-md">
+                  Category 04 • Special Services
+                </span>
+                <button
+                  onClick={() => turnToPage(0)}
+                  className="px-2.5 py-1 rounded-full bg-black/60 hover:bg-black/80 text-amber-200 hover:text-white text-[9px] font-bold border border-amber-400/40 cursor-pointer backdrop-blur"
+                >
+                  ◄ Table of Contents
+                </button>
+              </div>
+
+              {/* Bottom Quick Navigation Bar Overlay */}
+              <div className="relative z-10 p-3 bg-gradient-to-t from-black/90 via-black/60 to-transparent">
+                <div className="flex items-center justify-between text-white">
+                  <div>
+                    <h3 className="text-xs font-serif font-extrabold text-amber-300 tracking-tight">
+                      Special Services & Live Stations
+                    </h3>
+                    <p className="text-[9.5px] text-stone-300">
+                      Custom Menus & Live On-Site BBQ • Page 16
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => turnToPage(16)} // Page 17 (Custom Menu)
+                    className="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs shadow-lg inline-flex items-center gap-1 cursor-pointer transition-transform hover:scale-105"
+                  >
+                    <span>View Details</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </Page>
+
+          {/* PAGE 17: 100% CUSTOM TAILORED MENU */}
           <Page>
             <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
             <div className="absolute -top-12 -left-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
@@ -866,15 +1271,24 @@ export default function CateringMenuBook() {
             </div>
 
             <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
-              <div className="text-right pl-28 pt-0.5">
-                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
-                  CHEF SPECIAL
-                </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
-                  Custom Menu
-                </h2>
-                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
-                  Tailored Pricing
+              
+              {/* ENHANCED HIGH-VISIBILITY CATEGORY HEADER */}
+              <div className="text-right pl-20 pt-0.5 space-y-1">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-950 text-emerald-100 font-extrabold text-xs uppercase tracking-wider shadow-sm">
+                  <ChefHat className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>SPECIAL SERVICES & STATIONS</span>
+                </div>
+
+                <div className="pt-0.5">
+                  <span className="text-xs font-serif font-extrabold uppercase tracking-widest text-stone-900 block">
+                    CHEF SPECIAL
+                  </span>
+                  <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                    Custom Menu
+                  </h2>
+                  <div className="inline-block mt-0.5 px-3 py-1 rounded-full bg-emerald-700 text-white font-extrabold text-xs shadow-xs">
+                    Tailored Pricing
+                  </div>
                 </div>
               </div>
 
@@ -920,13 +1334,13 @@ export default function CateringMenuBook() {
                 </div>
               </div>
 
-              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
-                Page 12 • Tailored Catering • Madara Catering
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9.5px] font-bold text-emerald-900/80 text-center font-sans uppercase tracking-wider">
+                Page 17 • Special Services • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 13: LIVE ACTION STATIONS */}
+          {/* PAGE 18: LIVE ACTION STATIONS */}
           <Page>
             <div className="absolute top-0 left-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
             <div className="absolute -top-12 -right-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
@@ -937,15 +1351,24 @@ export default function CateringMenuBook() {
             </div>
 
             <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
-              <div className="text-left pr-28 pt-0.5">
-                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
-                  ON-SITE COOKING
-                </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
-                  Live Stations
-                </h2>
-                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
-                  Event Add-Ons
+              
+              {/* ENHANCED HIGH-VISIBILITY CATEGORY HEADER */}
+              <div className="text-left pr-20 pt-0.5 space-y-1">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-950 text-emerald-100 font-extrabold text-xs uppercase tracking-wider shadow-sm">
+                  <ChefHat className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>SPECIAL SERVICES & STATIONS</span>
+                </div>
+
+                <div className="pt-0.5">
+                  <span className="text-xs font-serif font-extrabold uppercase tracking-widest text-stone-900 block">
+                    ON-SITE COOKING
+                  </span>
+                  <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                    Live Stations
+                  </h2>
+                  <div className="inline-block mt-0.5 px-3 py-1 rounded-full bg-emerald-700 text-white font-extrabold text-xs shadow-xs">
+                    Event Add-Ons
+                  </div>
                 </div>
               </div>
 
@@ -990,13 +1413,13 @@ export default function CateringMenuBook() {
                 </div>
               </div>
 
-              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
-                Page 13 • Live Cooking Stations • Madara Catering
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9.5px] font-bold text-emerald-900/80 text-center font-sans uppercase tracking-wider">
+                Page 18 • Special Services • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 14: BUFFET SETUP & DESSERTS */}
+          {/* PAGE 19: BUFFET SETUP & DESSERTS */}
           <Page>
             <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
             <div className="absolute -top-12 -left-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
@@ -1007,15 +1430,24 @@ export default function CateringMenuBook() {
             </div>
 
             <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
-              <div className="text-right pl-28 pt-0.5">
-                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
-                  ALL-INCLUSIVE BUFFET
-                </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
-                  Buffet Extras
-                </h2>
-                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
-                  Setup & Sweets
+              
+              {/* ENHANCED HIGH-VISIBILITY CATEGORY HEADER */}
+              <div className="text-right pl-20 pt-0.5 space-y-1">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-950 text-emerald-100 font-extrabold text-xs uppercase tracking-wider shadow-sm">
+                  <ChefHat className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>SPECIAL SERVICES & STATIONS</span>
+                </div>
+
+                <div className="pt-0.5">
+                  <span className="text-xs font-serif font-extrabold uppercase tracking-widest text-stone-900 block">
+                    ALL-INCLUSIVE BUFFET
+                  </span>
+                  <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                    Buffet Extras
+                  </h2>
+                  <div className="inline-block mt-0.5 px-3 py-1 rounded-full bg-emerald-700 text-white font-extrabold text-xs shadow-xs">
+                    Setup & Sweets
+                  </div>
                 </div>
               </div>
 
@@ -1060,26 +1492,32 @@ export default function CateringMenuBook() {
                 </div>
               </div>
 
-              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
-                Page 14 • Buffet Amenities • Madara Catering
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9.5px] font-bold text-emerald-900/80 text-center font-sans uppercase tracking-wider">
+                Page 19 • Special Services • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 15: QUALITY & SERVICE STANDARDS */}
+          {/* PAGE 20: QUALITY & SERVICE STANDARDS */}
           <Page>
             <div className="absolute top-0 left-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
             <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
-              <div className="text-left pt-0.5 border-b border-amber-900/15 pb-2">
-                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
-                  BANQUET SERVICE ASSURANCE
-                </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
-                  Hospitality Standards
-                </h2>
-                <p className="text-[10px] text-stone-600 mt-0.5">
-                  Our core quality and service commitments for every event
-                </p>
+              
+              {/* ENHANCED HIGH-VISIBILITY CATEGORY HEADER */}
+              <div className="text-left pr-20 pt-0.5 space-y-1">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-950 text-emerald-100 font-extrabold text-xs uppercase tracking-wider shadow-sm">
+                  <ChefHat className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>SPECIAL SERVICES & STATIONS</span>
+                </div>
+
+                <div className="pt-0.5">
+                  <span className="text-xs font-serif font-extrabold uppercase tracking-widest text-stone-900 block">
+                    BANQUET SERVICE ASSURANCE
+                  </span>
+                  <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                    Hospitality Standards
+                  </h2>
+                </div>
               </div>
 
               <div className="space-y-2.5 my-auto py-1">
@@ -1132,13 +1570,63 @@ export default function CateringMenuBook() {
                 </div>
               </div>
 
-              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
-                Page 15 • Quality Standards • Madara Catering
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9.5px] font-bold text-emerald-900/80 text-center font-sans uppercase tracking-wider">
+                Page 20 • Special Services • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 16: HOMAGAMA CATERING DESK & CONTACT */}
+          {/* ============================================================== */}
+          {/* PAGE 21: FULL A4 COVERPAGE / FEATURE FOR CONTACT DESK [pg5.jpg] */}
+          {/* ============================================================== */}
+          <Page className="full-cover-page">
+            <div className="w-full h-full relative rounded-md overflow-hidden flex flex-col justify-between select-none">
+              <Image
+                src={pg5}
+                alt="Category 5 - Special Showcase Cover"
+                fill
+                className="object-cover"
+                priority
+              />
+              
+              {/* Top Bar Overlay */}
+              <div className="relative z-10 p-3 flex items-center justify-between bg-gradient-to-b from-black/80 via-black/40 to-transparent">
+                <span className="px-3 py-1 rounded-full bg-purple-500/90 text-white text-[10px] font-extrabold uppercase tracking-wider shadow-md">
+                  Contact & Special Desk
+                </span>
+                <button
+                  onClick={() => turnToPage(0)}
+                  className="px-2.5 py-1 rounded-full bg-black/60 hover:bg-black/80 text-amber-200 hover:text-white text-[9px] font-bold border border-amber-400/40 cursor-pointer backdrop-blur"
+                >
+                  ◄ Table of Contents
+                </button>
+              </div>
+
+              {/* Bottom Quick Navigation Bar Overlay */}
+              <div className="relative z-10 p-3 bg-gradient-to-t from-black/90 via-black/60 to-transparent">
+                <div className="flex items-center justify-between text-white">
+                  <div>
+                    <h3 className="text-xs font-serif font-extrabold text-amber-300 tracking-tight">
+                      Homagama Catering Hotline
+                    </h3>
+                    <p className="text-[9.5px] text-stone-300">
+                      Direct Bookings & Reservations • Page 21
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => turnToPage(21)} // Page 22 (Contact Info)
+                    className="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs shadow-lg inline-flex items-center gap-1 cursor-pointer transition-transform hover:scale-105"
+                  >
+                    <span>Contact Us</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </Page>
+
+          {/* PAGE 22: HOMAGAMA CATERING DESK & CONTACT (BACK COVER) */}
           <Page>
             <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
             <div className="absolute -top-12 -left-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
@@ -1149,15 +1637,21 @@ export default function CateringMenuBook() {
             </div>
 
             <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
-              <div className="text-right pl-28 pt-0.5">
-                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
-                  HOMAGAMA CATERING DESK
-                </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
-                  Direct Contact
-                </h2>
-                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
-                  Booking & Consultations
+              
+              {/* ENHANCED HIGH-VISIBILITY CATEGORY HEADER */}
+              <div className="text-right pl-20 pt-0.5 space-y-1">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-900 text-emerald-100 font-extrabold text-xs uppercase tracking-wider shadow-sm">
+                  <Phone className="w-3.5 h-3.5 text-emerald-300" />
+                  <span>HOMAGAMA CATERING DESK</span>
+                </div>
+
+                <div className="pt-0.5">
+                  <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                    Direct Contact
+                  </h2>
+                  <div className="inline-block mt-0.5 px-3 py-1 rounded-full bg-emerald-700 text-white font-extrabold text-xs shadow-xs">
+                    Booking & Consultations
+                  </div>
                 </div>
               </div>
 
@@ -1215,8 +1709,14 @@ export default function CateringMenuBook() {
                 </div>
               </div>
 
-              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
-                Page 16 • Contact & Location • Madara Restaurant
+              <div className="pt-1.5 border-t border-amber-900/15 flex items-center justify-between text-[9px] text-stone-500 font-serif">
+                <button 
+                  onClick={() => turnToPage(0)} 
+                  className="text-amber-800 font-sans font-bold hover:underline cursor-pointer"
+                >
+                  ◄ Table of Contents
+                </button>
+                <span>Page 22 • Contact & Back Cover</span>
               </div>
             </div>
           </Page>
