@@ -38,90 +38,90 @@ interface MenuItem {
 
 const HERO_MENU_ITEMS: MenuItem[] = [
   {
-    id: "royal_banquet",
-    titleEn: "ROYAL BANQUET",
-    titleSi: "රාජකීය බුෆේ",
-    subtitleEn: "Luxury Event Catering & Warm Chafers",
-    subtitleSi: "සුපිරි කේටරින් සත්කාරය",
-    descEn: "Full-scale event catering with warm chafing dishes, chinaware, and experienced steward service for 35+ guests.",
-    descSi: "උණුසුම් බුෆේ උපකරණ, පෝසිලේන් පිඟන් සහ පළපුරුදු වේටර් සේවාව සමඟ අසමසම කේටරින් සංග්‍රහය.",
-    priceEn: "LKR 1,850 / pax",
-    priceSi: "රු. 1,850 / අයෙකුට",
+    id: "restaurant_dining",
+    titleEn: "RESTAURANT DINING",
+    titleSi: "ආපනශාලා භෝජන",
+    subtitleEn: "Warm Ambiance & Family Dining in Homagama",
+    subtitleSi: "හෝමාගම පවුලේ රුචිකත්වයට සුපිරි භෝජන",
+    descEn: "Experience premium dine-in hospitality with authentic Sri Lankan & fusion cuisine in a comfortable family atmosphere.",
+    descSi: "පවුලේ සැමට එකට එක්ව රසවිඳිය හැකි සුපිරි ආපනශාලා පරිසරය සහ ප්‍රණීත ආහාර වේලක්.",
+    priceEn: "Dine-In Daily",
+    priceSi: "දිනපතා ආපනශාලාවෙන්",
     image: HeroImg1.src,
     plateImage: HeroImg1.src,
-    categoryEn: "Grand Banquet Package",
-    categorySi: "කේටරින් පැකේජය",
-    href: "/catering-menu",
+    categoryEn: "Restaurant Dining",
+    categorySi: "ආපනශාලා භෝජන",
+    href: "/",
   },
   {
-    id: "mongolian_wok",
-    titleEn: "MONGOLIAN WOK",
-    titleSi: "මොන්ගෝලියන් වොක්",
-    subtitleEn: "Sizzling Live Action Chef Stations",
-    subtitleSi: "සජීවී ගිනි දැල් පිසීම",
-    descEn: "On-site high flame wok chefs crafting customized rice & noodle bowls with fresh meats and veggies.",
-    descSi: "ඔබේ උත්සව භූමියටම පැමිණෙන සජීවී මොන්ගෝලියන් වොක් කුටි සහ ප්‍රණීත බිත්තර, මස්, එළවළු මිශ්‍රණය.",
-    priceEn: "LKR 1,450 / pax",
-    priceSi: "රු. 1,450 / අයෙකුට",
+    id: "take_away",
+    titleEn: "TAKE AWAY",
+    titleSi: "රැගෙන යාමේ ආහාර",
+    subtitleEn: "Piping Hot Packed Meals & Quick Pickup",
+    subtitleSi: "කඩිනමින් පැකට් කළ ප්‍රණීත ආහාර",
+    descEn: "Quick, fresh, and hygienically packed lunch boxes and dinner takeaway meals ready for pickup.",
+    descSi: "නියමිත වෙලාවට උණුසුම්ව සහ පිරිසිදුව පැකට් කළ රසවත් කෑම පාර්සල් කවුන්ටරයෙන්.",
+    priceEn: "Fast Pickup",
+    priceSi: "කඩිනම් කවුන්ටරයෙන්",
     image: HeroImg2.src,
     plateImage: HeroImg2.src,
-    categoryEn: "Live Action Wok",
-    categorySi: "ලයිව් කිචන්",
-    href: "/catering-menu",
+    categoryEn: "Take Away Service",
+    categorySi: "ටේක් අවේ",
+    href: "/",
   },
   {
-    id: "butter_cuttlefish",
-    titleEn: "HOT BUTTER CUTTLEFISH",
-    titleSi: "හොට් බටර් කට්ල්ෆිෂ්",
-    subtitleEn: "Fiery BYOB Evening Lounge Specialty",
-    subtitleSi: "BYOB ප්‍රියතම බයිට්ස්",
-    descEn: "Crispy golden buttered cuttlefish tossed with fresh chili, capsicum, and aromatic spring onions.",
-    descSi: "කිසිදු අමතර කෝකේජ් ගාස්තුවකින් තොරව ඔබේ ප්‍රියතම පානය සමඟ රසවිඳින්නන් සඳහා වූ සුපිරි කටගැස්ම.",
-    priceEn: "LKR 1,650",
-    priceSi: "රු. 1,650",
+    id: "event_catering",
+    titleEn: "EVENT CATERING",
+    titleSi: "උත්සව කේටරින්",
+    subtitleEn: "Weddings, Birthdays & Ceremonial Buffets",
+    subtitleSi: "සාද, බණ හා මල බත මෙනු පැකේජ",
+    descEn: "Full-scale banquet catering with warm chafing dishes, chinaware, and experienced steward service for 35+ guests.",
+    descSi: "උණුසුම් බුෆේ උපකරණ, පෝසිලේන් පිඟන් සහ පළපුරුදු වේටර් සේවාව සමඟ අසමසම කේටරින් සංග්‍රහය.",
+    priceEn: "From Rs. 490/=",
+    priceSi: "රු. 490/= සිට",
     image: HeroImg3.src,
     plateImage: HeroImg3.src,
-    categoryEn: "BYOB Lounge Bites",
-    categorySi: "BYOB විශේෂ කෑම",
+    categoryEn: "Banquet Catering",
+    categorySi: "කේටරින් සේවාව",
     href: "/catering-menu",
   },
   {
-    id: "claypot_biryani",
-    titleEn: "CLAYPOT BIRYANI",
-    titleSi: "මැටි ඇතිලි බිරියානි",
-    subtitleEn: "Aromatic Dum Rice & Roast Chicken",
-    subtitleSi: "සුවඳැති දම් බිරියානි",
-    descEn: "Authentic dum biryani cooked slow in traditional claypots served with mint raitha and roast chicken leg.",
-    descSi: "සාම්ප්‍රදායික මැටි ඇතිලියේ පිසූ සුවඳැති බාස්මතී බිරියානි, බැදපු කුකුළු මස් සහ මින්ට් රයිතා.",
-    priceEn: "LKR 1,350",
-    priceSi: "රු. 1,350",
+    id: "corporate_meals",
+    titleEn: "CORPORATE MEALS",
+    titleSi: "ආයතනික කෑම",
+    subtitleEn: "Office Lunch Boxes & Executive Buffets",
+    subtitleSi: "කාර්යාලීය ආහාර පාර්සල් හා බුෆේ",
+    descEn: "Tailored daily office lunch packs, conference meals, and executive corporate buffet setups.",
+    descSi: "කාර්යාලීය දිවා ආහාර, රැස්වීම් සහ ආයතනික උත්සව සඳහා විශේෂිත මෙනු පැකේජ.",
+    priceEn: "Custom Pax Rates",
+    priceSi: "ආයතනික මිල ගණන්",
     image: HeroImg4.src,
     plateImage: HeroImg4.src,
-    categoryEn: "Heritage Specialties",
-    categorySi: "ප්‍රධාන ආහාර",
+    categoryEn: "Corporate Service",
+    categorySi: "ආයතනික සේවාවන්",
     href: "/catering-menu",
   },
   {
-    id: "artisanal_dessert",
-    titleEn: "STRAWBERRY DESSERT",
-    titleSi: "ස්ට්‍රෝබෙරි අතුරුපස",
-    subtitleEn: "Jaggery Watalappam & Ice Cream",
-    subtitleSi: "නැවුම් අතුරුපස සංග්‍රහය",
-    descEn: "Artisanal desserts featuring Kithul jaggery watalappam, caramel pudding, and fresh fruit salad.",
-    descSi: "කිතුල් පැණි වටලප්පන්, කැරමල් පුඩිං සහ නැවුම් පළතුරු සලාද සමඟ සිසිල් අයිස්ක්‍රීම්.",
-    priceEn: "LKR 450",
-    priceSi: "රු. 450",
+    id: "food_delivery",
+    titleEn: "FOOD DELIVERY",
+    titleSi: "ආහාර බෙදාහැරීම",
+    subtitleEn: "Doorstep Delivery across Homagama & Suburbs",
+    subtitleSi: "ඔබේ නිවසටම කඩිනමින් ගෙනත් දීම",
+    descEn: "Enjoy freshly prepared gourmet meals delivered hot directly to your home or office doorstep.",
+    descSi: "උණුසුම්ව සහ ආරක්ෂිතව ඔබේ නිවසටම හෝ කාර්යාලයටම ආහාර ගෙනැවිත් දීමේ සේවාව.",
+    priceEn: "Doorstep Express",
+    priceSi: "නිවසටම බෙදාහැරීම",
     image: HeroImg5.src,
     plateImage: HeroImg5.src,
-    categoryEn: "Sweet Dessert Platter",
-    categorySi: "අතුරුපස",
-    href: "/catering-menu",
+    categoryEn: "Delivery Service",
+    categorySi: "බෙදාහැරීමේ සේවාව",
+    href: "/",
   },
 ];
 
 export default function ModernHero() {
   const { language } = useLanguage();
-  const [activeId, setActiveId] = useState<string>("royal_banquet");
+  const [activeId, setActiveId] = useState<string>("restaurant_dining");
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
 
   const activeItem = HERO_MENU_ITEMS.find((item) => item.id === activeId) || HERO_MENU_ITEMS[0];
@@ -135,11 +135,11 @@ export default function ModernHero() {
     }, 400);
   };
 
-  const getWhatsAppUrl = (dishTitle: string) => {
+  const getWhatsAppUrl = (serviceTitle: string) => {
     const text =
       language === "si"
-        ? `ආයුබෝවන් Madara Restaurant! මට ${dishTitle} පිළිබඳ තොරතුරු සහ මිල ගණන් දැනගැනීමට අවශ්‍යයි.`
-        : `Hi Madara Restaurant! I am interested in inquiring about ${dishTitle}.`;
+        ? `ආයුබෝවන් Madara Restaurant! මට ${serviceTitle} සේවාව පිළිබඳ තොරතුරු දැනගැනීමට අවශ්‍යයි.`
+        : `Hi Madara Restaurant! I am interested in inquiring about ${serviceTitle}.`;
     return `https://wa.me/${RESTAURANT_INFO.whatsappNumber}?text=${encodeURIComponent(text)}`;
   };
 
@@ -158,9 +158,7 @@ export default function ModernHero() {
           {/* LEFT COLUMN: Clear Static Title ("MADARA CATERING") & Dynamic Selection Metadata */}
           <div className="lg:col-span-4 z-20 space-y-5 text-center lg:text-left">
             
-
-
-            {/* Clear, Simple Static Headline Title - Immediately tells user about Catering Service */}
+            {/* Clear, Simple Static Headline Title */}
             <div>
               <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black font-serif text-stone-900 tracking-tight leading-[0.95] uppercase">
                 {language === "si" ? (
@@ -240,13 +238,13 @@ export default function ModernHero() {
                   <img
                     src={activeItem.plateImage}
                     alt={activeItem.titleEn}
-                    className="w-full h-full rounded-full object-cover  transform scale-110"
+                    className="w-full h-full rounded-full object-cover transform scale-110"
                   />
                 </div>
 
               </div>
 
-              {/* Price & Chef Tag Badge on Plate */}
+              {/* Price & Service Tag Badge on Plate */}
               <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full shadow-md border border-stone-200/80 text-[11px] font-extrabold text-stone-900 uppercase tracking-wider">
                 {language === "si" ? activeItem.priceSi : activeItem.priceEn}
               </div>
@@ -258,7 +256,7 @@ export default function ModernHero() {
           <div className="lg:col-span-4 flex flex-col gap-3 justify-center max-w-md mx-auto lg:max-w-none w-full z-20">
             
             <div className="hidden lg:flex items-center justify-between px-2 pb-1 text-xs font-bold uppercase tracking-wider text-stone-400">
-              <span>{language === "si" ? "විශේෂිත මෙනුව" : "Signature Menu Selection"}</span>
+              <span>{language === "si" ? "අපගේ ප්‍රධාන සේවාවන්" : "Our Featured Services"}</span>
               <span>0{HERO_MENU_ITEMS.findIndex((i) => i.id === activeId) + 1} / 0{HERO_MENU_ITEMS.length}</span>
             </div>
 
@@ -317,7 +315,3 @@ export default function ModernHero() {
     </section>
   );
 }
-
-
-
-
