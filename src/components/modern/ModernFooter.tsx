@@ -44,8 +44,8 @@ export default function ModernFooter() {
 
             <p className="text-xs text-stone-400 leading-relaxed">
               {language === "si"
-                ? "හෝමාගම අග්‍රගන්‍ය කේටරින් සත්කාරය, සජීවී මොන්ගෝලියන් කුටි සහ BYOB ආපනශාලාව."
-                : "Homagama's premier destination for bespoke event catering, live action culinary stations & BYOB dining."}
+                ? "හෝමාගම අග්‍රගන්‍ය කේටරින් සත්කාරය සහ ප්‍රණීත ආපනශාලාව."
+                : "Homagama's premier destination for bespoke event catering and fine dining."}
             </p>
           </div>
 
@@ -61,8 +61,8 @@ export default function ModernFooter() {
                 </Link>
               </li>
               <li>
-                <Link href="/catering-menu" className="hover:text-amber-400 transition-colors">
-                  {language === "si" ? "සම්පූර්ණ කේටරින් මෙනුව" : "Full Catering Menu"}
+                <Link href="/menu" className="hover:text-amber-400 transition-colors">
+                  {language === "si" ? "ආපනශාලා සහ කේටරින් මෙනුව" : "Food & Catering Menu"}
                 </Link>
               </li>
               <li>

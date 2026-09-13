@@ -245,16 +245,16 @@ export default function ModernCareersView() {
                   </div>
 
                   {/* Compact Benefits & Key Tags */}
-                  <div className="pt-2 flex flex-wrap items-center gap-2 text-xs">
+                  <div className="pt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs">
                     <span className="font-bold text-stone-900 mr-1">
                       {language === "si" ? "ප්‍රතිලාභ:" : "Key Benefits:"}
                     </span>
                     {benefitsList.map((b, idx) => (
                       <span
                         key={idx}
-                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200/80 text-[11px] font-semibold"
+                        className="inline-flex items-center gap-1.5 text-stone-600 text-xs font-medium"
                       >
-                        <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-stone-400" />
                         <span>{b}</span>
                       </span>
                     ))}

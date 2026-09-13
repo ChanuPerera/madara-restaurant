@@ -20,7 +20,7 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "Madara Restaurant & Catering Homagama | Wedding, Alms Giving, Bana & Event Catering",
   description:
-    "Homagama's premier catering specialist for Weddings, Alms Giving (දානමය පිංකම්), Bana & Dane, Funeral meals, Birthday celebrations & Corporate events. Live Mongolian wok stations, charcoal BBQ, takeaway & BYOB dining at 191/B/1, Athurugiriya Road, Homagama. Call 0704535815 / 0736535815.",
+    "Homagama's premier catering specialist for Weddings, Alms Giving (දානමය පිංකම්), Bana & Dane, Funeral meals, Birthday celebrations & Corporate events. Live Mongolian wok stations, charcoal BBQ, takeaway & fine dining at 191/B/1, Athurugiriya Road, Homagama. Call 0704535815 / 0736535815.",
   keywords: [
     "Madara Restaurant",
     "Madara Catering Homagama",
@@ -33,7 +33,6 @@ export const metadata: Metadata = {
     "Corporate Event Catering Homagama",
     "Live Action Kitchen Sri Lanka",
     "Mongolian Wok Station Homagama",
-    "BYOB Restaurant Homagama",
     "Athurugiriya Road Restaurant",
     "Food Delivery Homagama",
   ],
@@ -175,14 +174,6 @@ export default function RootLayout({
                 "@type": "Service",
                 "name": "Live Action Cooking Kitchens",
                 "description": "On-site live Mongolian wok, charcoal BBQ, and hoppers/kottu cooking stations.",
-              },
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "BYOB Dining Facility",
-                "description": "Bring Your Own Bottle dining with glassware, ice bucket service, and spicy chaser pairings.",
               },
             },
           ],

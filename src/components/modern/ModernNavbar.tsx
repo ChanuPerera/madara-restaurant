@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useLanguage } from "@/context/LanguageContext";
 import { RESTAURANT_INFO } from "@/data/restaurantData";
 import OrLogo from "@/assets/orlogo-01.png";
@@ -17,6 +18,7 @@ import {
 
 export default function ModernNavbar() {
   const { language, setLanguage } = useLanguage();
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -29,11 +31,18 @@ export default function ModernNavbar() {
   }, []);
 
   const navLinks = [
-    { href: "/catering-menu", labelEn: "Catering Menu", labelSi: "කේටරින් මෙනුව" },
-    { href: "/#menu", labelEn: "Menu", labelSi: "මෙනුව" },
+    { href: "/menu", labelEn: "Menu", labelSi: "මෙනුව" },
+    { href: "/catering", labelEn: "Catering Book", labelSi: "කේටරින් බුක්" },
     { href: "/careers", labelEn: "Careers", labelSi: "රැකියා", isCareer: true },
     { href: "/#contact", labelEn: "Contact", labelSi: "විස්තර" },
   ];
+
+  const isActive = (href: string) => {
+    if (!pathname) return false;
+    if (href === "/") return pathname === "/";
+    if (href.startsWith("/#")) return false;
+    return pathname.startsWith(href);
+  };
 
   const getWhatsAppUrl = () => {
     const text =
@@ -78,6 +87,7 @@ export default function ModernNavbar() {
           {/* Desktop Navigation Links */}
           <nav className="hidden lg:flex items-center gap-6">
             {navLinks.map((link) => {
+              const active = isActive(link.href);
               if (link.isCareer) {
                 return (
                   <Link
@@ -95,7 +105,11 @@ export default function ModernNavbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-xs font-bold transition-colors uppercase tracking-wider text-stone-800 hover:text-amber-600"
+                  className={`text-xs font-bold transition-colors uppercase tracking-wider ${
+                    active
+                      ? "text-amber-700 font-extrabold"
+                      : "text-stone-800 hover:text-amber-600"
+                  }`}
                 >
                   {language === "si" ? link.labelSi : link.labelEn}
                 </Link>
@@ -108,7 +122,7 @@ export default function ModernNavbar() {
             {/* Language Switcher */}
             <button
               onClick={() => setLanguage(language === "en" ? "si" : "en")}
-              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-colors text-stone-800 hover:bg-stone-200/60 border border-stone-300/80"
+              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-colors text-stone-800 hover:bg-stone-200/60 border border-stone-300/80 bg-white/50"
               title="Change Language"
             >
               <Globe className="w-3.5 h-3.5 text-amber-600" />
@@ -118,23 +132,21 @@ export default function ModernNavbar() {
             {/* Phone Call (Hidden on Mobile) */}
             <a
               href={`tel:${RESTAURANT_INFO.phone}`}
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors text-stone-800 hover:bg-stone-200/60"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-stone-800 hover:bg-stone-100 border border-stone-200 bg-white/50 transition-colors"
             >
               <Phone className="w-3.5 h-3.5 text-amber-600" />
-              <span>{RESTAURANT_INFO.phone}</span>
+              <span>{RESTAURANT_INFO.phoneFormatted}</span>
             </a>
 
-            {/* WhatsApp CTA Button */}
+            {/* WhatsApp Direct */}
             <a
               href={getWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold shadow-xs transition-all hover:scale-102"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white transition-colors shadow-xs"
             >
-              <MessageCircle className="w-3.5 h-3.5 fill-white/20" />
-              <span className="hidden sm:inline">
-                {language === "si" ? "විමසීම්" : "WhatsApp"}
-              </span>
+              <MessageCircle className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">{language === "si" ? "විමසන්න" : "Inquire"}</span>
             </a>
 
             {/* Mobile Hamburger Toggle */}
@@ -152,16 +164,23 @@ export default function ModernNavbar() {
         {mobileMenuOpen && (
           <div className="lg:hidden pt-4 pb-3 border-t border-stone-200/30 mt-3 space-y-3">
             <nav className="flex flex-col space-y-2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="px-3 py-2 rounded-lg text-sm font-bold text-stone-800 hover:bg-amber-50 hover:text-amber-700 transition-colors uppercase tracking-wider"
-                >
-                  {language === "si" ? link.labelSi : link.labelEn}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const active = isActive(link.href);
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`px-3 py-2 rounded-lg text-sm font-bold transition-colors uppercase tracking-wider ${
+                      active
+                        ? "text-amber-700 font-extrabold"
+                        : "text-stone-800 hover:bg-amber-50 hover:text-amber-700"
+                    }`}
+                  >
+                    {language === "si" ? link.labelSi : link.labelEn}
+                  </Link>
+                );
+              })}
             </nav>
           </div>
         )}

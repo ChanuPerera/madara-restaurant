@@ -275,43 +275,6 @@ export default function CateringMenuBook() {
           padding: 0 !important;
         }
       `}</style>
-      
-      {/* Light Bar Top Controls */}
-      <div className="w-full flex items-center justify-between mb-4 px-3">
-        <div className="flex items-center gap-2">
-          <BookMarked className="w-5 h-5 text-amber-700" />
-          <span className="font-serif font-bold text-stone-800 text-sm">
-            {language === "si" ? "මාදාරා කේටරින් මෙනු සංග්‍රහය" : "Madara Catering Menu Book"}
-          </span>
-        </div>
-
-        <div className="flex items-center gap-3 text-xs text-stone-700">
-          <button
-            onClick={() => setSoundEnabled(!soundEnabled)}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white hover:bg-stone-100 border border-stone-300 text-stone-800 transition-colors shadow-xs cursor-pointer"
-            title={soundEnabled ? "Mute Flip Sound" : "Enable Flip Sound"}
-          >
-            {soundEnabled ? (
-              <Volume2 className="w-4 h-4 text-amber-600" />
-            ) : (
-              <VolumeX className="w-4 h-4 text-stone-400" />
-            )}
-            <span className="hidden sm:inline font-medium">
-              {soundEnabled ? "Sound ON" : "Sound OFF"}
-            </span>
-          </button>
-
-          <span className="font-semibold text-amber-900 bg-amber-100/80 px-3 py-1.5 rounded-full border border-amber-200">
-            {isMobile
-              ? language === "si"
-                ? `පිටුව ${currentPage + 1} / ${TOTAL_PAGES}`
-                : `Page ${currentPage + 1} of ${TOTAL_PAGES}`
-              : language === "si"
-                ? `පිටුව ${currentPage + 1}-${Math.min(currentPage + 2, TOTAL_PAGES)} / ${TOTAL_PAGES}`
-                : `Pages ${currentPage + 1}-${Math.min(currentPage + 2, TOTAL_PAGES)} of ${TOTAL_PAGES}`}
-          </span>
-        </div>
-      </div>
 
       {/* Main Flipbook Stage Container */}
       <div className="relative w-full flex justify-center items-center py-2 min-h-[480px] sm:min-h-[550px]">
