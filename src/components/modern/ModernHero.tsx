@@ -7,6 +7,7 @@ import HeroImg1 from "@/assets/hero/1.png";
 import HeroImg2 from "@/assets/hero/2.png";
 import HeroImg3 from "@/assets/hero/3.png";
 import HeroImg4 from "@/assets/hero/4.png";
+import HeroImg5 from "@/assets/hero/5.png";
 import { useLanguage } from "@/context/LanguageContext";
 import { RESTAURANT_INFO } from "@/data/restaurantData";
 import { 
@@ -110,8 +111,8 @@ const HERO_MENU_ITEMS: MenuItem[] = [
     descSi: "උණුසුම්ව සහ ආරක්ෂිතව ඔබේ නිවසටම හෝ කාර්යාලයටම ආහාර ගෙනැවිත් දීමේ සේවාව.",
     priceEn: "Doorstep Express",
     priceSi: "නිවසටම බෙදාහැරීම",
-    image: HeroImg1.src,
-    plateImage: HeroImg1.src,
+    image: HeroImg5.src,
+    plateImage: HeroImg5.src,
     categoryEn: "Delivery Service",
     categorySi: "බෙදාහැරීමේ සේවාව",
     href: "/",
