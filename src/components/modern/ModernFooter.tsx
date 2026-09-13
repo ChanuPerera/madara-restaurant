@@ -56,13 +56,18 @@ export default function ModernFooter() {
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <Link href="/catering-menu" className="hover:text-amber-400 transition-colors">
-                  {language === "si" ? "කේටරින් පැකේජ" : "Catering Packages"}
+                <Link href="/catering" className="hover:text-amber-400 transition-colors">
+                  {language === "si" ? "කේටරින් මෙනුව" : "Catering Menu"}
                 </Link>
               </li>
               <li>
                 <Link href="/menu" className="hover:text-amber-400 transition-colors">
-                  {language === "si" ? "ආපනශාලා සහ කේටරින් මෙනුව" : "Food & Catering Menu"}
+                  {language === "si" ? "ආපනශාලා මෙනුව" : "Food Menu"}
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:text-amber-400 transition-colors">
+                  {language === "si" ? "අප ගැන (About Us)" : "About Us"}
                 </Link>
               </li>
               <li>

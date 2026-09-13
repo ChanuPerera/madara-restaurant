@@ -58,10 +58,10 @@ const PILLARS: CateringPillar[] = [
     titleSi: "උපන්දින හා පෞද්ගලික සාද",
     tagEn: "Lively & Vibrant",
     tagSi: "විනෝදජනක",
-    descEn: "Clattering kottu stations, crispy BYOB bites, fiery sizzlers, and customizable buffet options tailored to your guest count.",
+    descEn: "Clattering kottu stations, crispy bites, fiery sizzlers, and customizable buffet options tailored to your guest count.",
     descSi: "උණු උණු චීස් කොත්තු, රසවත් බයිට්ස්, සිස්ලර්ස් සහ මිතුරන් සමඟ විනෝද විය හැකි නම්‍යශීලී පැකේජ.",
-    featuresEn: ["Live Kottu clattering on-site", "BYOB bites & chaser setups", "Flexible minimums from 25 pax"],
-    featuresSi: ["සජීවීව ක්ලැටර් වන කොත්තු කුටිය", "BYOB බයිට්ස් සහ චේසර් සැකසුම්", "අවම 25 දෙනෙකුගේ සිට ඇණවුම්"],
+    featuresEn: ["Live Kottu clattering on-site", "Specialty bites & chaser setups", "Flexible minimums from 25 pax"],
+    featuresSi: ["සජීවීව ක්ලැටර් වන කොත්තු කුටිය", "විශේෂිත බයිට්ස් සහ සෝස් සැකසුම්", "අවම 25 දෙනෙකුගේ සිට ඇණවුම්"],
     image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=800&q=80",
   },
   {
@@ -84,8 +84,8 @@ export default function ModernCateringGrid() {
   const getWhatsAppLink = (pillar: CateringPillar) => {
     const text =
       language === "si"
-        ? `ආයුබෝවන් Madara Restaurant! මම "${pillar.titleSi}" සඳහා කේටරින් පැකේජ සහ මිල ගණන් පිළිබඳව විමසීමට කැමැත්තෙමි.`
-        : `Hi Madara Restaurant! I would like to inquire about catering packages for: "${pillar.titleEn}". Please send available menu options.`;
+        ? `ආයුබෝවන් Madara Restaurant! මම "${pillar.titleSi}" සඳහා කේටරින් පැකේජ සහ මිල ගණන් පිළිබඳව සම්බන්ධ වීමට කැමැත්තෙමි.`
+        : `Hi Madara Restaurant! I would like to contact you regarding catering packages for: "${pillar.titleEn}". Please send available menu options.`;
     return `https://wa.me/${RESTAURANT_INFO.whatsappNumber}?text=${encodeURIComponent(text)}`;
   };
 
@@ -163,15 +163,53 @@ export default function ModernCateringGrid() {
                     href={getWhatsAppLink(pillar)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full py-2.5 px-4 rounded-xl bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all group-hover:bg-amber-600"
+                    className="w-full py-2.5 px-4 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold flex items-center justify-center gap-2 shadow-md shadow-[#25D366]/20 transition-all"
                   >
-                    <MessageCircle className="w-3.5 h-3.5 text-white" />
-                    <span>{language === "si" ? "WhatsApp හරහා විමසන්න" : "Inquire for this Event"}</span>
+                    <MessageCircle className="w-3.5 h-3.5 text-white fill-white/20" />
+                    <span>{language === "si" ? "WhatsApp හරහා සම්බන්ධ වන්න" : "Contact for this Event"}</span>
                   </a>
                 </div>
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Parallax Fixed Background Showcase Banner */}
+        <div 
+          className="mt-16 relative rounded-3xl overflow-hidden bg-fixed bg-cover bg-center shadow-xl py-16 sm:py-20 px-6 sm:px-12 text-center" 
+          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1600&q=80')" }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-stone-950/85 via-stone-950/75 to-amber-950/85 backdrop-blur-[2px]" />
+          <div className="relative z-10 max-w-3xl mx-auto space-y-4 text-white">
+            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-bold uppercase tracking-widest">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Homagama's Most Trusted Caterer</span>
+            </span>
+            <h3 className="text-2xl sm:text-4xl font-serif font-bold leading-tight">
+              {language === "si"
+                ? "ඔබගේ විශේෂ දිනය අමතක නොවන මතකයක් බවට පත් කරන ප්‍රණීතම කේටරින් සත්කාරය"
+                : "Turning Your Special Moments Into Unforgettable Culinary Celebrations"}
+            </h3>
+            <p className="text-stone-300 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
+              {language === "si"
+                ? "650+ උත්සව, 50,000+ තෘප්තිමත් පාරිභෝගිකයින් සහ 100% පිරිසිදුකම මුල් කරගත් ප්‍රමිතිය."
+                : "Over 650 events delivered across Colombo with transparent per-person pricing, fresh local ingredients, and master chef execution."}
+            </p>
+            <div className="pt-3 flex flex-wrap items-center justify-center gap-3">
+              <Link
+                href="/catering"
+                className="px-6 py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md"
+              >
+                {language === "si" ? "කේටරින් මෙනු පොත බලන්න" : "Open Catering Menu Book"}
+              </Link>
+              <Link
+                href="/about"
+                className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold text-xs uppercase tracking-wider transition-all"
+              >
+                {language === "si" ? "අප ගැන වැඩිදුර තොරතුරු" : "Learn About Us"}
+              </Link>
+            </div>
+          </div>
         </div>
 
       </div>

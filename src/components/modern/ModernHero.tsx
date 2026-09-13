@@ -7,7 +7,6 @@ import HeroImg1 from "@/assets/hero/1.png";
 import HeroImg2 from "@/assets/hero/2.png";
 import HeroImg3 from "@/assets/hero/3.png";
 import HeroImg4 from "@/assets/hero/4.png";
-import HeroImg5 from "@/assets/hero/5.png";
 import { useLanguage } from "@/context/LanguageContext";
 import { RESTAURANT_INFO } from "@/data/restaurantData";
 import { 
@@ -111,8 +110,8 @@ const HERO_MENU_ITEMS: MenuItem[] = [
     descSi: "උණුසුම්ව සහ ආරක්ෂිතව ඔබේ නිවසටම හෝ කාර්යාලයටම ආහාර ගෙනැවිත් දීමේ සේවාව.",
     priceEn: "Doorstep Express",
     priceSi: "නිවසටම බෙදාහැරීම",
-    image: HeroImg5.src,
-    plateImage: HeroImg5.src,
+    image: HeroImg1.src,
+    plateImage: HeroImg1.src,
     categoryEn: "Delivery Service",
     categorySi: "බෙදාහැරීමේ සේවාව",
     href: "/",
@@ -139,7 +138,7 @@ export default function ModernHero() {
     const text =
       language === "si"
         ? `ආයුබෝවන් Madara Restaurant! මට ${serviceTitle} සේවාව පිළිබඳ තොරතුරු දැනගැනීමට අවශ්‍යයි.`
-        : `Hi Madara Restaurant! I am interested in inquiring about ${serviceTitle}.`;
+        : `Hi Madara Restaurant! I am interested in contacting you about ${serviceTitle}.`;
     return `https://wa.me/${RESTAURANT_INFO.whatsappNumber}?text=${encodeURIComponent(text)}`;
   };
 
@@ -206,7 +205,7 @@ export default function ModernHero() {
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold shadow-md shadow-[#25D366]/20 transition-all hover:scale-105 active:scale-95"
               >
                 <MessageCircle className="w-4 h-4 fill-white/20" />
-                <span>WhatsApp Inquiry</span>
+                <span>{language === "si" ? "WhatsApp හරහා සම්බන්ධ වන්න" : "Contact via WhatsApp"}</span>
               </a>
 
               <Link

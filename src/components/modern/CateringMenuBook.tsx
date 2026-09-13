@@ -1636,7 +1636,7 @@ export default function CateringMenuBook() {
                   <div className="flex items-center justify-between font-bold text-stone-900 text-xs sm:text-sm">
                     <span className="flex items-center gap-1.5">
                       <Clock className="w-3.5 h-3.5 text-amber-700" />
-                      WhatsApp Inquiry Line
+                      WhatsApp Direct Contact
                     </span>
                     <span className="text-amber-800 font-bold text-xs">Chat</span>
                   </div>

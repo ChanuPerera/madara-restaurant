@@ -193,14 +193,15 @@ export default function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`px-3.5 py-1.5 text-xs xl:text-sm transition-all ${
-                    link.isCareer
-                      ? "bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 text-stone-950 font-black rounded-full shadow-md hover:scale-105 ring-2 ring-amber-400/50 flex items-center gap-1.5 uppercase"
-                      : "font-semibold text-madara-textSecondary hover:text-white hover:bg-white/5 rounded-lg"
-                  }`}
+                  className={`relative px-3.5 py-1.5 text-xs xl:text-sm font-semibold transition-all text-madara-textSecondary hover:text-white hover:bg-white/5 rounded-lg`}
                 >
-                  {link.isCareer && <User className="w-3.5 h-3.5 text-stone-950 fill-stone-950/20" />}
                   <span>{link.name}</span>
+                  {link.isCareer && (
+                    <span className="absolute top-1 right-1 flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-madara-orange opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-madara-orange"></span>
+                    </span>
+                  )}
                 </Link>
               ))}
 
@@ -310,15 +311,17 @@ export default function Navbar() {
                     key={link.name}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`px-4 py-3 rounded-xl text-sm font-semibold transition-all flex items-center justify-between group ${
-                      link.isCareer
-                        ? "bg-madara-amber/15 text-amber-300 border border-amber-500/30 hover:bg-madara-amber/25"
-                        : "text-madara-textSecondary hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10"
-                    }`}
+                    className="px-4 py-3 rounded-xl text-sm font-semibold transition-all flex items-center justify-between group text-madara-textSecondary hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10"
                   >
-                    <div className="flex items-center gap-3">
-                      <Icon className={`w-4 h-4 ${link.isCareer ? "text-amber-400" : "text-madara-orange"}`} />
+                    <div className="flex items-center gap-3 relative">
+                      <Icon className="w-4 h-4 text-madara-orange" />
                       <span>{link.name}</span>
+                      {link.isCareer && (
+                        <span className="flex h-2 w-2 relative ml-1">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-madara-orange opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-madara-orange"></span>
+                        </span>
+                      )}
                     </div>
                     <span className="text-xs text-madara-orange opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
                       →

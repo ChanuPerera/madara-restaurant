@@ -120,13 +120,6 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
             </span>
           </div>
 
-          <a
-            href={`tel:${RESTAURANT_INFO.phone}`}
-            className="hidden sm:inline-flex items-center gap-1.5 font-semibold text-stone-700 hover:text-amber-600 transition-colors"
-          >
-            <Phone className="w-3.5 h-3.5 text-amber-600" />
-            <span>{RESTAURANT_INFO.phoneFormatted}</span>
-          </a>
         </div>
       </div>
 
@@ -291,15 +284,15 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
             {/* CTAs Section */}
             <div className="pt-6 border-t border-stone-200 space-y-3">
               <div className="flex flex-col sm:flex-row gap-3">
-                {/* Primary WhatsApp Order Button */}
+                {/* Primary WhatsApp Order / Contact Button */}
                 <a
                   href={getWhatsAppLink()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 py-3.5 px-5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-md hover:scale-[1.01]"
+                  className="flex-1 py-3.5 px-6 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-sm uppercase tracking-wider transition-all flex items-center justify-center gap-2.5 shadow-md hover:scale-102"
                 >
-                  <MessageCircle className="w-5 h-5 fill-white/20" />
-                  <span>{language === "si" ? "WhatsApp හරහා විමසන්න" : "Order / Inquire via WhatsApp"}</span>
+                  <MessageCircle className="w-5 h-5 fill-white" />
+                  <span>{language === "si" ? "WhatsApp හරහා සම්බන්ධ වන්න" : "Contact via WhatsApp"}</span>
                 </a>
 
                 {/* Direct Hotline Call Button */}

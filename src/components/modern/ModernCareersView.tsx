@@ -49,14 +49,6 @@ export default function ModernCareersView() {
               {language === "si" ? "රැකියා අවස්ථා" : "Careers"}
             </span>
           </Link>
-
-          <a
-            href={`tel:${RESTAURANT_INFO.phone}`}
-            className="hidden sm:inline-flex items-center gap-1.5 font-semibold text-stone-700 hover:text-amber-600 transition-colors"
-          >
-            <Phone className="w-3.5 h-3.5 text-amber-600" />
-            <span>{RESTAURANT_INFO.phone}</span>
-          </a>
         </div>
       </div>
 

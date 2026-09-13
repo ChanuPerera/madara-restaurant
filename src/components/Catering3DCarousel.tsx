@@ -139,10 +139,14 @@ interface Catering3DCarouselProps {
   forceTheme?: "light" | "dark";
 }
 
-export default function Catering3DCarousel({ forceTheme }: Catering3DCarouselProps = {}) {
+export default function Catering3DCarousel({
+  forceTheme,
+}: Catering3DCarouselProps = {}) {
   const { language } = useLanguage();
   const { theme } = useTheme();
-  const isLight = forceTheme ? forceTheme === "light" : theme === "modern-light";
+  const isLight = forceTheme
+    ? forceTheme === "light"
+    : theme === "modern-light";
   const [rotationAngle, setRotationAngle] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [windowWidth, setWindowWidth] = useState<number>(1000);
@@ -232,8 +236,8 @@ export default function Catering3DCarousel({ forceTheme }: Catering3DCarouselPro
   const getWhatsAppLink = (dish: ShowcaseDish) => {
     const text =
       language === "si"
-        ? `ආයුබෝවන් Madara Restaurant! 🍽️ මම මෙම විශේෂ කෑම පිළිබඳව විමසීමට කැමැත්තෙමි: "${dish.nameSi}" (${dish.priceDisplay}). කරුණාකර ලබාගත හැකි වේලාවන් දන්වන්න.`
-        : `Hi Madara Restaurant! 🍽️ I would like to order / inquire about: "${dish.nameEn}" (${dish.priceDisplay}). Please confirm availability.`;
+        ? `ආයුබෝවන් Madara Restaurant! 🍽️ මම මෙම විශේෂ කෑම පිළිබඳව සම්බන්ධ වීමට කැමැත්තෙමි: "${dish.nameSi}" (${dish.priceDisplay}). කරුණාකර ලබාගත හැකි වේලාවන් දන්වන්න.`
+        : `Hi Madara Restaurant! 🍽️ I would like to contact you regarding: "${dish.nameEn}" (${dish.priceDisplay}). Please confirm availability.`;
     return `https://wa.me/${RESTAURANT_INFO.whatsappNumber}?text=${encodeURIComponent(text)}`;
   };
 
@@ -245,34 +249,40 @@ export default function Catering3DCarousel({ forceTheme }: Catering3DCarouselPro
   const radiusX = isMobile ? 220 : isTablet ? 420 : 600; // Carousel X radius: 600
   const radiusY = isMobile ? 56 : isTablet ? 80 : 120; // Increased Y-axis gap for inactive items
   const itemWidth = isMobile ? 150 : isTablet ? 220 : 290;
-  const itemHeight = isMobile ? 150 : isTablet ? 210 : 270;
+  const itemHeight = isMobile ? 150 : isTablet ? 270 : 270;
   const minAlpha = 0.3; // Thumbs minimum alpha: 0.3 from settings screenshot
 
   return (
-    <section className={`py-16 md:py-24 relative overflow-hidden select-none border-b transition-colors duration-500 ${
-      isLight 
-        ? "bg-gradient-to-b from-[#FAF8F5] via-[#FFFFFF] to-[#FAF8F5] border-stone-200/70" 
-        : "bg-[#090a0f] border-white/10"
-    }`}>
+    <section
+      className={`py-16 md:py-24 relative overflow-hidden select-none border-b transition-colors duration-500 ${
+        isLight
+          ? "bg-[#FAF8F5] border-stone-200/70"
+          : "bg-[#090a0f] border-white/10"
+      }`}
+    >
       {/* Ambient Radial Background */}
       {isLight ? (
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-100/40 via-white to-stone-50/50 pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#f37b20]/10 via-transparent to-stone-50/50 pointer-events-none" />
       ) : (
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-950/20 via-[#090a0f] to-[#090a0f] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#f37b20]/15 via-[#090a0f] to-[#090a0f] pointer-events-none" />
       )}
-      <div className={`ambient-glow w-[750px] h-[750px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 blur-[160px] ${
-        isLight ? "bg-amber-400/10" : "bg-amber-500/10"
-      }`} />
+      <div
+        className={`ambient-glow w-[750px] h-[750px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 blur-[160px] ${
+          isLight ? "bg-[#f37b20]/10" : "bg-[#f37b20]/15"
+        }`}
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-36">
-          <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-3 ${
-            isLight
-              ? "bg-amber-500/10 border border-amber-500/30 text-amber-700"
-              : "bg-amber-500/10 border border-amber-500/30 text-amber-400"
-          }`}>
-            <Flame className={`w-4 h-4 ${isLight ? "text-amber-600" : "text-amber-400"}`} />
+          <div
+            className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-3 ${
+              isLight
+                ? "bg-[#f37b20]/10 border border-[#f37b20]/30 text-[#f37b20]"
+                : "bg-[#f37b20]/20 border border-[#f37b20]/40 text-[#f37b20]"
+            }`}
+          >
+            <Flame className="w-4 h-4 text-[#f37b20]" />
             <span>
               {language === "si"
                 ? "3D ආහාර ප්‍රදර්ශනය"
@@ -280,14 +290,22 @@ export default function Catering3DCarousel({ forceTheme }: Catering3DCarouselPro
             </span>
           </div>
 
-          <h2 className={`text-3xl sm:text-5xl font-bold font-serif tracking-tight ${isLight ? "text-stone-900" : "text-white"}`}>
+          <h2
+            className={`text-3xl sm:text-5xl font-bold font-serif tracking-tight ${isLight ? "text-stone-900" : "text-white"}`}
+          >
             {language === "si" ? "විශේෂිත " : "Masterpiece "}
-            <span className={isLight ? "text-gradient-gold" : "text-gradient-orange"}>
+            <span
+              className={
+                isLight ? "text-gradient-gold" : "text-gradient-orange"
+              }
+            >
               {language === "si" ? "ආහාර වට්ටෝරු" : "Culinary Signatures"}
             </span>
           </h2>
 
-          <p className={`mt-3 text-xs sm:text-sm ${isLight ? "text-stone-500" : "text-madara-textMuted"}`}>
+          <p
+            className={`mt-3 text-xs sm:text-sm ${isLight ? "text-stone-500" : "text-madara-textMuted"}`}
+          >
             {language === "si"
               ? "මවුස් එකෙන් ඇදීමෙන් (Mouse Drag) හෝ කාඩ්පත ක්ලික් කිරීමෙන් 3D කැරුසලය කරකවන්න"
               : "Drag left/right with your mouse or swipe to smoothly rotate the 3D ring."}
@@ -368,11 +386,13 @@ export default function Catering3DCarousel({ forceTheme }: Catering3DCarouselPro
 
                   {/* Price Tag for Active Dish */}
                   {isActive && (
-                    <div className={`absolute bottom-2 right-2 sm:bottom-3 sm:right-3 px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-extrabold shadow-lg z-20 ${
-                      isLight
-                        ? "bg-white/95 backdrop-blur-md border border-stone-200 text-stone-900 shadow-stone-300/40"
-                        : "bg-black/85 backdrop-blur-md border border-white/20 text-white"
-                    }`}>
+                    <div
+                      className={`absolute bottom-2 right-2 sm:bottom-3 sm:right-3 px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-extrabold shadow-lg z-20 ${
+                        isLight
+                          ? "bg-white/95 backdrop-blur-md border border-stone-200 text-stone-900 shadow-stone-300/40"
+                          : "bg-black/85 backdrop-blur-md border border-white/20 text-white"
+                      }`}
+                    >
                       {dish.priceDisplay}
                     </div>
                   )}

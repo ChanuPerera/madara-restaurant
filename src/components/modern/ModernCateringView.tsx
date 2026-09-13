@@ -30,8 +30,8 @@ export default function ModernCateringView() {
   const generateGeneralCateringWhatsAppUrl = () => {
     const text =
       language === "si"
-        ? "ආයුබෝවන් Madara Restaurant! මට මෙනු පොත බලා ඉදිරි උත්සවයක් සඳහා කේටරින් සේවාව පිළිබඳව විමසීමට අවශ්‍යයි."
-        : "Hi Madara Restaurant! I was reviewing your catering menu book and would like to inquire about event catering.";
+        ? "ආයුබෝවන් Madara Restaurant! මට මෙනු පොත බලා ඉදිරි උත්සවයක් සඳහා කේටරින් සේවාව පිළිබඳව සම්බන්ධ වීමට අවශ්‍යයි."
+        : "Hi Madara Restaurant! I was reviewing your catering menu book and would like to contact you regarding event catering.";
     return `https://wa.me/${RESTAURANT_INFO.whatsappNumber}?text=${encodeURIComponent(text)}`;
   };
 
@@ -73,11 +73,11 @@ export default function ModernCateringView() {
           <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900">
             {language === "si" ? (
               <>
-                පිටු පෙරලා බලන්න: <span className="text-amber-600">කේටරින් මෙනු පොත</span>
+                පිටු පෙරලා බලන්න: <span className="text-amber-600">කේටරින් මෙනුව</span>
               </>
             ) : (
               <>
-                Flip Through the Pages: <span className="text-amber-600">Madara Banquet Book</span>
+                Flip Through the Pages: <span className="text-amber-600">Catering Menu</span>
               </>
             )}
           </h2>
@@ -85,7 +85,7 @@ export default function ModernCateringView() {
           <p className="max-w-xl mx-auto text-xs sm:text-sm text-stone-500 leading-relaxed">
             {language === "si"
               ? "සැබෑ පොතක පිටු පෙරලනවා වගේම, අපගේ සියලුම කේටරින් පැකේජ, මිල ගණන් සහ විශේෂාංග පිටුවෙන් පිටුව පෙරළමින් පහසුවෙන් අධ්‍යයනය කරන්න."
-              : "Turn pages just like a physical gourmet banquet book to explore our full package selections, itemized curries, and live stations."}
+              : "Turn pages just like a physical gourmet menu book to explore our full package selections, itemized curries, and live stations."}
           </p>
         </div>
 

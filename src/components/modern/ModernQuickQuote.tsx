@@ -71,13 +71,13 @@ export default function ModernQuickQuote() {
             <h2 className="text-2xl sm:text-3xl font-bold font-serif text-stone-900">
               {language === "si" ? "විනාඩියෙන් මිල ගණන් " : "Get an Instant "}
               <span className="text-gradient-gold">
-                {language === "si" ? "විමසන්න" : "WhatsApp Quote"}
+                {language === "si" ? "ලබාගන්න" : "WhatsApp Quote"}
               </span>
             </h2>
             <p className="mt-2 text-xs sm:text-sm text-stone-500">
               {language === "si"
                 ? "ඔබගේ උත්සවයේ තොරතුරු තෝරා ක්ලික් කරන්න. අපගේ කේටරින් කණ්ඩායම සෘජුවම සම්බන්ධ වනු ඇත."
-                : "Select your event specs below to generate an instant, tailored inquiry for our catering manager."}
+                : "Select your event specs below to generate an instant, tailored quote for our catering manager."}
             </p>
           </div>
 
@@ -89,27 +89,27 @@ export default function ModernQuickQuote() {
                 1. {language === "si" ? "උත්සවයේ වර්ගය තෝරන්න:" : "Select Occasion Type:"}
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                {eventTypes.map((item) => (
+                {eventTypes.map((type) => (
                   <button
-                    key={item.id}
+                    key={type.id}
                     type="button"
-                    onClick={() => setEventType(item.id)}
+                    onClick={() => setEventType(type.id)}
                     className={`py-2.5 px-3 rounded-xl text-xs font-bold border transition-all text-center ${
-                      eventType === item.id
-                        ? "bg-stone-900 text-white border-stone-900 shadow-sm"
+                      eventType === type.id
+                        ? "bg-amber-600 text-white border-amber-600 shadow-sm"
                         : "bg-white text-stone-700 border-stone-200 hover:border-stone-300"
                     }`}
                   >
-                    {language === "si" ? item.labelSi : item.labelEn}
+                    {language === "si" ? type.labelSi : type.labelEn}
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Step 2: Guest Count */}
+            {/* Step 2: Pax Options */}
             <div>
               <label className="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-2.5">
-                2. {language === "si" ? "අමුත්තන් සංඛ්‍යාව:" : "Estimated Guest Count:"}
+                2. {language === "si" ? "අමුත්තන් ගණන:" : "Estimated Guest Count:"}
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                 {paxOptions.map((item) => (
@@ -132,7 +132,7 @@ export default function ModernQuickQuote() {
             {/* Step 3: Add-ons */}
             <div>
               <label className="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-2.5">
-                3. {language === "si" ? "අවශ්‍ය අමතර පහසුකම් (විකල්ප):" : "Desired Add-ons (Optional):"}
+                3. {language === "si" ? "අමතර පහසුකම් (Add-Ons):" : "Select Required Add-Ons:"}
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                 {availableAddons.map((item) => {
@@ -168,9 +168,9 @@ export default function ModernQuickQuote() {
                 href={getWhatsAppEstimateUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-sm shadow-md hover:shadow-lg transition-all hover:scale-[1.01]"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-sm shadow-md shadow-[#25D366]/20 hover:shadow-lg transition-all hover:scale-[1.01]"
               >
-                <MessageCircle className="w-5 h-5" />
+                <MessageCircle className="w-5 h-5 fill-white/20" />
                 <span>
                   {language === "si"
                     ? "WhatsApp හරහා ඇස්තමේන්තුව ලබාගන්න"

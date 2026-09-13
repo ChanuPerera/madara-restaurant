@@ -126,8 +126,8 @@ export default function ModernMenuSection() {
   const getWhatsAppOrderLink = (item: MenuItem) => {
     const text =
       language === "si"
-        ? `ආයුබෝවන් Madara Restaurant! 🍽️ මට මෙම ආහාරය ඇණවුම් කිරීමට / විමසීමට අවශ්‍යයි: "${item.nameSi}" (${item.price}).`
-        : `Hi Madara Restaurant! 🍽️ I would like to order / inquire about: "${item.nameEn}" (${item.price}).`;
+        ? `ආයුබෝවන් Madara Restaurant! 🍽️ මට මෙම ආහාරය ඇණවුම් කිරීමට අවශ්‍යයි: "${item.nameSi}" (${item.price}).`
+        : `Hi Madara Restaurant! 🍽️ I would like to order: "${item.nameEn}" (${item.price}).`;
     return `https://wa.me/${RESTAURANT_INFO.whatsappNumber}?text=${encodeURIComponent(text)}`;
   };
 
@@ -222,11 +222,11 @@ export default function ModernMenuSection() {
         {/* View Full Menu CTA */}
         <div className="mt-12 text-center">
           <Link
-            href="/catering-menu"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs sm:text-sm font-bold transition-colors"
+            href="/menu"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-stone-900 hover:bg-stone-800 text-white text-xs sm:text-sm font-bold shadow-md transition-all hover:scale-105"
           >
-            <span>{language === "si" ? "සම්පූර්ණ කේටරින් සහ ආපනශාලා මෙනුව බලන්න" : "Explore Complete Catering & A La Carte Menus"}</span>
-            <ArrowRight className="w-4 h-4 text-amber-600" />
+            <span>{language === "si" ? "සියලුම ආපනශාලා ආහාර (Ala Carte) බලන්න" : "View All Ala Card Items"}</span>
+            <ArrowRight className="w-4 h-4 text-amber-400" />
           </Link>
         </div>
 

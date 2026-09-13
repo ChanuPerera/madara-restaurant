@@ -92,10 +92,10 @@ export default function ModernExperience() {
                   href={getWokBookingUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-2.5 px-4 rounded-xl bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all group-hover:bg-amber-600"
+                  className="w-full py-2.5 px-4 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold flex items-center justify-center gap-2 shadow-md shadow-[#25D366]/20 transition-all"
                 >
-                  <MessageCircle className="w-3.5 h-3.5" />
-                  <span>{language === "si" ? "Live Wok විස්තර ලබාගන්න" : "Inquire About Live Stations"}</span>
+                  <MessageCircle className="w-3.5 h-3.5 fill-white/20" />
+                  <span>{language === "si" ? "Live Wok විස්තර ලබාගන්න" : "Contact About Live Stations"}</span>
                 </a>
               </div>
             </div>
