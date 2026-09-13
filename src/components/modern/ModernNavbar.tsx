@@ -12,7 +12,7 @@ import {
   Menu as MenuIcon, 
   X, 
   Globe,
-  Sparkles
+  User
 } from "lucide-react";
 
 export default function ModernNavbar() {
@@ -47,7 +47,9 @@ export default function ModernNavbar() {
     <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-4 sm:px-6 lg:px-8 py-3">
       <div
         className={`max-w-7xl mx-auto rounded-2xl transition-all duration-300 ${
-          scrolled
+          mobileMenuOpen
+            ? "bg-white shadow-xl border border-stone-200 py-2.5 px-4 sm:px-6 text-stone-900"
+            : scrolled
             ? "bg-white/90 backdrop-blur-md shadow-md border border-stone-200/80 py-2 px-4 sm:px-6 text-stone-900"
             : "bg-transparent border border-transparent py-2.5 px-4 sm:px-6 text-stone-900 shadow-none"
         }`}
@@ -83,7 +85,7 @@ export default function ModernNavbar() {
                     href={link.href}
                     className="px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 text-stone-950 font-black text-xs uppercase tracking-wider shadow-sm hover:scale-105 transition-all flex items-center gap-1.5 ring-2 ring-amber-400/50"
                   >
-                    <Sparkles className="w-3.5 h-3.5 text-stone-950 fill-stone-950/20" />
+                    <User className="w-3.5 h-3.5 text-stone-950 fill-stone-950/20" />
                     <span>{language === "si" ? link.labelSi : link.labelEn}</span>
                   </Link>
                 );

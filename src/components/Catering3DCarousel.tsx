@@ -399,46 +399,6 @@ export default function Catering3DCarousel({ forceTheme }: Catering3DCarouselPro
             );
           })}
         </div>
-
-        {/* Title, Description & WhatsApp Button (Centered below 3D Carousel with NO extra dots/arrows) */}
-        <div className="max-w-xl mx-auto text-center space-y-2 transition-all duration-500">
-          <span className={`text-xs font-bold uppercase tracking-widest block ${
-            isLight ? "text-amber-600" : "text-amber-400"
-          }`}>
-            {language === "si" ? activeDish.categorySi : activeDish.categoryEn}
-          </span>
-
-          <h3 className={`text-2xl sm:text-3xl font-bold font-serif tracking-tight ${
-            isLight ? "text-stone-900" : "text-white"
-          }`}>
-            {language === "si" ? activeDish.nameSi : activeDish.nameEn}
-          </h3>
-
-          <p className={`text-xs sm:text-sm leading-relaxed max-w-md mx-auto ${
-            isLight ? "text-stone-600" : "text-madara-textSecondary"
-          }`}>
-            {language === "si"
-              ? activeDish.descriptionSi
-              : activeDish.descriptionEn}
-          </p>
-
-          {/* WhatsApp Direct Action Button */}
-          <div className="pt-3 flex items-center justify-center">
-            <a
-              href={getWhatsAppLink(activeDish)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-whatsapp px-7 py-3 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2.5 shadow-lg group transition-all duration-300"
-            >
-              <MessageCircle className="w-4.5 h-4.5 text-white" />
-              <span>
-                {language === "si"
-                  ? "WhatsApp හරහා සෘජුවම විමසන්න"
-                  : "Order / Inquire via WhatsApp"}
-              </span>
-            </a>
-          </div>
-        </div>
       </div>
     </section>
   );

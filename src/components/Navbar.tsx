@@ -11,7 +11,7 @@ import {
   MessageCircle, 
   Clock, 
   ChefHat,
-  Briefcase,
+  User,
   UtensilsCrossed,
   Wine,
   Image as ImageIcon,
@@ -56,7 +56,7 @@ export default function Navbar() {
     { name: t("nav.menu"), href: "/#menu", icon: UtensilsCrossed },
     { name: t("nav.partners"), href: "/#partners", icon: Sparkles },
     { name: t("nav.gallery"), href: "/#gallery", icon: ImageIcon },
-    { name: t("nav.careers"), href: "/careers", icon: Briefcase, isCareer: true },
+    { name: t("nav.careers"), href: "/careers", icon: User, isCareer: true },
     { name: t("nav.contact"), href: "/#contact", icon: MapPin },
   ];
 
@@ -105,7 +105,7 @@ export default function Navbar() {
       {/* Main Sticky Navbar */}
       <header
         className={`sticky top-0 z-40 transition-all duration-300 w-full max-w-full ${
-          isScrolled
+          isScrolled || mobileMenuOpen
             ? "bg-madara-dark/95 backdrop-blur-md border-b border-white/10 shadow-2xl py-3"
             : "bg-transparent py-5"
         }`}
@@ -199,7 +199,7 @@ export default function Navbar() {
                       : "font-semibold text-madara-textSecondary hover:text-white hover:bg-white/5 rounded-lg"
                   }`}
                 >
-                  {link.isCareer && <Sparkles className="w-3.5 h-3.5 text-stone-950 fill-stone-950/20" />}
+                  {link.isCareer && <User className="w-3.5 h-3.5 text-stone-950 fill-stone-950/20" />}
                   <span>{link.name}</span>
                 </Link>
               ))}

@@ -64,67 +64,10 @@ export default function ModernCateringView() {
         </div>
       </div>
 
-      {/* Hero Header: Clean, Minimal Text, High Impact */}
-      <section className="pt-4 pb-10 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-200/80 text-amber-800 text-xs font-bold tracking-wide">
-            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-            <span>
-              {language === "si"
-                ? "හෝමාගම අංක 1 කේටරින් සේවාව"
-                : "Homagama's Premier Event Catering"}
-            </span>
-          </div>
-
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-bold text-stone-900 tracking-tight leading-tight">
-            {language === "si" ? (
-              <>
-                උත්සව සඳහා වූ <span className="text-amber-600">කේටරින් මෙනු</span>
-              </>
-            ) : (
-              <>
-                Event Catering, <span className="text-amber-600">Curated to Perfection</span>
-              </>
-            )}
-          </h1>
-
-          <p className="max-w-2xl mx-auto text-sm sm:text-base text-stone-600 leading-relaxed">
-            {language === "si"
-              ? "විනිවිද පෙනෙන පුද්ගලයෙකුට මිල ගණන්, නොමිලේ උණුසුම් බුෆේ උපකරණ සහ වෘත්තීය සේවාව සමඟ ඔබේ උත්සවය අමතක නොවන අත්දැකීමක් කරන්න."
-              : "Transparent per-person packages, on-site chafing warmers, live stations, and dedicated stewards for gatherings of 35+ guests across Homagama & Colombo."}
-          </p>
-
-          {/* Quick Metric Pills */}
-          <div className="pt-2 flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 text-xs font-semibold text-stone-700">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-stone-200/80 shadow-2xs">
-              <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
-              <span>{language === "si" ? "නොමිලේ බුෆේ භාජන සැකසුම" : "Free Buffet Setup & Warmers"}</span>
-            </div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-stone-200/80 shadow-2xs">
-              <Clock className="w-3.5 h-3.5 text-amber-600" />
-              <span>{language === "si" ? "නියමිත වේලාවට පැමිණීම" : "Strict On-Time Guarantee"}</span>
-            </div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-stone-200/80 shadow-2xs">
-              <Users className="w-3.5 h-3.5 text-amber-600" />
-              <span>{language === "si" ? "අවම 35 දෙනෙකුගෙන්" : "From 35 Persons"}</span>
-            </div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-stone-200/80 shadow-2xs">
-              <Flame className="w-3.5 h-3.5 text-amber-600" />
-              <span>{language === "si" ? "සජීවී කුටි (Live Stations)" : "Live Wok & BBQ Stations"}</span>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Interactive 3D Catering Menu Flipbook */}
       <section id="menu-book" className="py-12 px-4 sm:px-6 lg:px-8 scroll-mt-20">
         <div className="max-w-7xl mx-auto space-y-3 text-center mb-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-200/80 text-amber-800 text-xs font-bold tracking-wide shadow-2xs">
-            <BookOpen className="w-3.5 h-3.5 text-amber-600" />
-            <span>
-              {language === "si" ? "පිටු පෙරලන අතථ්‍ය මෙනු පොත" : "Interactive Virtual Menu Book"}
-            </span>
-          </div>
 
           <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900">
             {language === "si" ? (
