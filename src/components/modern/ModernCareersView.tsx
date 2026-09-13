@@ -94,7 +94,7 @@ export default function ModernCareersView() {
           <div className="pt-2 flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 text-xs font-semibold text-stone-700">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-stone-200/80 shadow-2xs">
               <Briefcase className="w-4 h-4 text-amber-600" />
-              <span>{language === "si" ? "5ක් විවෘත රැකියා" : "5 Open Roles"}</span>
+              <span>{language === "si" ? `${JOB_VACANCIES.length}ක් විවෘත රැකියා` : `${JOB_VACANCIES.length} Open Roles`}</span>
             </div>
             <div className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-stone-200/80 shadow-2xs">
               <UtensilsCrossed className="w-4 h-4 text-emerald-600" />
@@ -135,8 +135,12 @@ export default function ModernCareersView() {
 
           <div className="space-y-6">
             {JOB_VACANCIES.map((job) => {
-              const waText = `Hi Madara Restaurant! 👋\n\nI am interested in applying for the *${job.title} (${job.sinhalaTitle})* position.\n\nHere are my details:\n- *Name:*\n- *Contact Number:*\n- *Location:*\n- *Years of Experience:*\n\nPlease let me know when I can attend an interview. Thank you!`;
+              const waText = `Hi Madara Restaurant! 👋\n\nI am interested in applying for the *${job.title} (${job.sinhalaTitle})* position in Homagama.\n\nHere are my details:\n- *Name:*\n- *Contact Number:*\n- *Location:*\n- *Years of Experience:*\n\nPlease let me know when I can attend an interview. Thank you!`;
               const waUrl = `https://wa.me/${RESTAURANT_INFO.whatsappNumber}?text=${encodeURIComponent(waText)}`;
+
+              const responsibilitiesList = language === "si" && job.responsibilitiesSi ? job.responsibilitiesSi : job.responsibilities;
+              const requirementsList = language === "si" && job.requirementsSi ? job.requirementsSi : job.requirements;
+              const benefitsList = language === "si" && job.benefitsSi ? job.benefitsSi : job.benefits;
 
               return (
                 <div
@@ -202,15 +206,50 @@ export default function ModernCareersView() {
 
                   {/* Concise Overview */}
                   <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
-                    {job.overview}
+                    {language === "si" && job.overviewSi ? job.overviewSi : job.overview}
                   </p>
+
+                  {/* Responsibilities & Requirements Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+                    {/* Responsibilities */}
+                    <div className="bg-amber-50/40 rounded-2xl p-4 border border-amber-200/60 space-y-2">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-amber-950 flex items-center gap-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-amber-700" />
+                        <span>{language === "si" ? "වගකීම් (Responsibilities)" : "Key Responsibilities"}</span>
+                      </h4>
+                      <ul className="space-y-1.5 text-xs text-stone-700">
+                        {responsibilitiesList.map((resp, rIdx) => (
+                          <li key={rIdx} className="flex items-start gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-600 flex-shrink-0 mt-1.5" />
+                            <span className="leading-relaxed">{resp}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Requirements */}
+                    <div className="bg-stone-50 rounded-2xl p-4 border border-stone-200/80 space-y-2">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-stone-900 flex items-center gap-1.5">
+                        <BadgeCheck className="w-3.5 h-3.5 text-amber-600" />
+                        <span>{language === "si" ? "අවශ්‍යතා (Requirements)" : "Requirements & Skills"}</span>
+                      </h4>
+                      <ul className="space-y-1.5 text-xs text-stone-700">
+                        {requirementsList.map((req, qIdx) => (
+                          <li key={qIdx} className="flex items-start gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-stone-500 flex-shrink-0 mt-1.5" />
+                            <span className="leading-relaxed">{req}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
 
                   {/* Compact Benefits & Key Tags */}
                   <div className="pt-2 flex flex-wrap items-center gap-2 text-xs">
                     <span className="font-bold text-stone-900 mr-1">
                       {language === "si" ? "ප්‍රතිලාභ:" : "Key Benefits:"}
                     </span>
-                    {job.benefits.map((b, idx) => (
+                    {benefitsList.map((b, idx) => (
                       <span
                         key={idx}
                         className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200/80 text-[11px] font-semibold"

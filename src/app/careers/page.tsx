@@ -6,14 +6,16 @@ import ModernCareersView from "@/components/modern/ModernCareersView";
 export const metadata: Metadata = {
   title: "Careers & Job Vacancies | Madara Restaurant & Catering Homagama",
   description:
-    "We are hiring! Join Madara Restaurant in Homagama. Immediate job vacancies for Chinese Chef, Rice & Curry Chef, Kitchen Helper, Waiter / Steward, and Cleaning Staff. Attractive salary & meals provided. Apply today via WhatsApp or Call 0704535815.",
+    "We are hiring! Join Madara Restaurant in Homagama. Immediate job vacancies for Kottu Chef, Chinese Chef, Rice & Curry Chef (Bulk Cooking), Kitchen Helper, Cleaner, and Waiter. Attractive salary & meals provided. Apply today via WhatsApp or Call 0704535815.",
   keywords: [
     "Restaurant Jobs Homagama",
+    "Kottu Chef Vacancy Homagama",
     "Chinese Chef Vacancy Homagama",
     "Rice and Curry Cook Jobs Sri Lanka",
+    "Bulk Cooking Chef Vacancy",
     "Kitchen Helper Jobs Homagama",
+    "Cleaner Vacancies Homagama",
     "Waiter Jobs Homagama",
-    "Cleaning Staff Vacancies Colombo",
     "Madara Restaurant Careers",
     "Hotel and Catering Jobs Sri Lanka",
   ],
@@ -23,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Careers & Job Vacancies | Madara Restaurant Homagama",
     description:
-      "Join our passionate culinary and catering team in Homagama. Vacancies for Chinese Chef, Rice & Curry Chef, Kitchen Helper, Waiter, and Cleaning Staff. Apply now!",
+      "Join our passionate culinary and catering team in Homagama. Vacancies for Kottu Chef, Chinese Chef, Rice & Curry Chef (Bulk Cooking), Kitchen Helper, Cleaner, and Waiter. Apply now!",
     url: "https://madararestaurant.lk/careers/",
     siteName: "Madara Restaurant",
     images: [

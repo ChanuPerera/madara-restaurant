@@ -12,7 +12,13 @@ import {
   Phone, 
   MapPin, 
   Clock, 
-  BookMarked
+  BookMarked,
+  ShieldCheck,
+  Flame,
+  Award,
+  UtensilsCrossed,
+  Sparkles,
+  CheckCircle2
 } from "lucide-react";
 
 interface PageProps {
@@ -40,7 +46,7 @@ const Page = React.forwardRef<HTMLDivElement, PageProps>(({ children, className 
 
 Page.displayName = "Page";
 
-// High-resolution food images for realistic round platters & cutouts
+// High-resolution food images for realistic corner platters
 const FOOD_IMAGES = {
   friedRice: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=600&q=80",
   chickenDevel: "https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=600&q=80",
@@ -58,6 +64,8 @@ const FOOD_IMAGES = {
   warmer: "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=600&q=80",
   chickenDrumsticks: "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=600&q=80",
 };
+
+const TOTAL_PAGES = 16;
 
 export default function CateringMenuBook() {
   const { language } = useLanguage();
@@ -79,7 +87,7 @@ export default function CateringMenuBook() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Soft paper flip sound
+  // Soft realistic paper flip sound
   const playPageFlipSound = () => {
     if (!soundEnabled) return;
     try {
@@ -165,19 +173,43 @@ export default function CateringMenuBook() {
     );
   }
 
-  // Table of Contents items inside Page 1
-  const tocItems = [
-    { num: "01", titleEn: "Classic Party Feast", titleSi: "ක්ලැසික් සාද මෙනුව", page: 2 },
-    { num: "02", titleEn: "Special Party Feast", titleSi: "ස්පෙෂල් සාද මෙනුව", page: 3 },
-    { num: "03", titleEn: "Sri Lankan Heritage Spread", titleSi: "දේශීය සාද මෙනුව", page: 4 },
-    { num: "04", titleEn: "Traditional Bana Dane", titleSi: "දානමය මෙනුව", page: 5 },
-    { num: "05", titleEn: "Sacred Fish Dane Feast", titleSi: "මත්ස්‍ය දානමය මෙනුව", page: 6 },
-    { num: "06", titleEn: "Comfort Funeral Wake", titleSi: "අවමංගල්‍ය මෙනුව", page: 7 },
-    { num: "07", titleEn: "Traditional Mala Batha", titleSi: "පාරම්පරික මල බත", page: 8 },
-    { num: "08", titleEn: "100% Custom Tailored Menu", titleSi: "ඔබට අවශ්‍ය පරිදි මෙනු", page: 9 },
-    { num: "09", titleEn: "Live Action Wok & BBQ", titleSi: "සජීවී මොන්ගෝලියන් කුටි", page: 10 },
-    { num: "10", titleEn: "Buffet Setup & Desserts", titleSi: "බුෆේ, බීම හා අතුරුපස", page: 11 },
-    { num: "11", titleEn: "Contact & Location", titleSi: "ඇමතුම් හා විස්තර", page: 12 },
+  // Structured Table of Contents categories
+  const tocSections = [
+    {
+      category: language === "si" ? "සාද මෙනු" : "Party Menus",
+      items: [
+        { num: "01", name: "Menu 01 — Classic Menu", price: "Rs. 800/=", page: 2 },
+        { num: "02", name: "Menu 02 — Special Menu", price: "Rs. 950/=", page: 3 },
+        { num: "03", name: "Menu 03 — Sri Lankan Menu", price: "Rs. 950/=", page: 4 },
+      ]
+    },
+    {
+      category: language === "si" ? "බණ හා දානමය මෙනු" : "Bana / Alms-Giving",
+      items: [
+        { num: "04", name: "Menu 01 — Tradition Bana Menu", price: "Rs. 700/=", page: 5 },
+        { num: "05", name: "Menu 02 — Fish Menu", price: "Rs. 800 - 1,000/=", page: 6 },
+        { num: "06", name: "Menu 03 — Special Bana Menu", price: "Rs. 1,100/=", page: 7 },
+      ]
+    },
+    {
+      category: language === "si" ? "අවමංගල්‍ය හා මල බත මෙනු" : "Funeral & Mala Batha",
+      items: [
+        { num: "07", name: "Funeral 01 — Traditional Menu", price: "Rs. 550/=", page: 8 },
+        { num: "08", name: "Funeral 02 — Chicken Menu", price: "Rs. 550/=", page: 9 },
+        { num: "09", name: "Mala Batha 01 — Basic Menu", price: "Rs. 490/=", page: 10 },
+        { num: "10", name: "Mala Batha 02 — Special Menu", price: "Rs. 1,050/=", page: 11 },
+      ]
+    },
+    {
+      category: language === "si" ? "විශේෂ සේවාවන් හා ඇමතුම්" : "Special Services & Contact",
+      items: [
+        { num: "11", name: "100% Custom Tailored Menu", price: "Custom", page: 12 },
+        { num: "12", name: "Live Action Wok & BBQ Stations", price: "Live", page: 13 },
+        { num: "13", name: "Buffet Setup & Artisanal Desserts", price: "Extras", page: 14 },
+        { num: "14", name: "Catering Standards & Inclusions", price: "Info", page: 15 },
+        { num: "15", name: "Homagama Catering Desk & Hotline", price: "Contact", page: 16 },
+      ]
+    }
   ];
 
   return (
@@ -194,8 +226,8 @@ export default function CateringMenuBook() {
           height: 100%;
           display: flex;
           flex-direction: column;
-          justify-space: space-between;
-          padding: 18px;
+          justify-content: space-between;
+          padding: 16px sm:padding: 18px;
           box-sizing: border-box;
           position: relative;
           overflow: hidden;
@@ -207,7 +239,7 @@ export default function CateringMenuBook() {
         <div className="flex items-center gap-2">
           <BookMarked className="w-5 h-5 text-amber-700" />
           <span className="font-serif font-bold text-stone-800 text-sm">
-            {language === "si" ? "මාදාරා කේටරින් මෙනු සංග්‍රහය" : "Madara Event Menu Catalog"}
+            {language === "si" ? "මාදාරා කේටරින් මෙනු සංග්‍රහය" : "Madara Catering Menu Book"}
           </span>
         </div>
 
@@ -230,11 +262,11 @@ export default function CateringMenuBook() {
           <span className="font-semibold text-amber-900 bg-amber-100/80 px-3 py-1.5 rounded-full border border-amber-200">
             {isMobile
               ? language === "si"
-                ? `පිටුව ${currentPage + 1} / 12`
-                : `Page ${currentPage + 1} of 12`
+                ? `පිටුව ${currentPage + 1} / ${TOTAL_PAGES}`
+                : `Page ${currentPage + 1} of ${TOTAL_PAGES}`
               : language === "si"
-                ? `පිටුව ${currentPage + 1}-${Math.min(currentPage + 2, 12)} / 12`
-                : `Pages ${currentPage + 1}-${Math.min(currentPage + 2, 12)} of 12`}
+                ? `පිටුව ${currentPage + 1}-${Math.min(currentPage + 2, TOTAL_PAGES)} / ${TOTAL_PAGES}`
+                : `Pages ${currentPage + 1}-${Math.min(currentPage + 2, TOTAL_PAGES)} of ${TOTAL_PAGES}`}
           </span>
         </div>
       </div>
@@ -259,9 +291,9 @@ export default function CateringMenuBook() {
         {/* Right Navigation Arrow */}
         <button
           onClick={handleNext}
-          disabled={isMobile ? currentPage >= 11 : currentPage >= 10}
+          disabled={isMobile ? currentPage >= TOTAL_PAGES - 1 : currentPage >= TOTAL_PAGES - 2}
           className={`absolute right-0 sm:right-2 top-1/2 -translate-y-1/2 z-30 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/90 backdrop-blur border border-stone-300 text-stone-800 flex items-center justify-center transition-all ${
-            (isMobile ? currentPage >= 11 : currentPage >= 10)
+            (isMobile ? currentPage >= TOTAL_PAGES - 1 : currentPage >= TOTAL_PAGES - 2)
               ? "opacity-20 cursor-not-allowed"
               : "hover:scale-110 hover:bg-amber-600 hover:text-white cursor-pointer shadow-lg"
           }`}
@@ -299,862 +331,844 @@ export default function CateringMenuBook() {
           showPageCorners={true}
           disableFlipByClick={false}
         >
-          {/* PAGE 1: TABLE OF CONTENTS (Inside Book Left Page) */}
+          {/* PAGE 1: TABLE OF CONTENTS */}
           <Page>
-            <div className="w-full h-full flex flex-col justify-between font-sans">
-              <div className="border-b border-amber-900/15 pb-3">
-                <span className="text-[10px] font-serif font-bold uppercase tracking-widest text-amber-800">
+            <div className="w-full h-full flex flex-col justify-between font-sans p-3">
+              <div className="border-b border-amber-900/15 pb-2">
+                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-800 block">
                   MADARA CATERING
                 </span>
-                <h3 className="font-serif font-extrabold text-stone-900 text-2xl tracking-tight mt-0.5">
+                <h3 className="font-serif font-extrabold text-stone-900 text-xl sm:text-2xl tracking-tight">
                   {language === "si" ? "මෙනු පටුන" : "Table of Contents"}
                 </h3>
-                <p className="text-[11px] text-stone-500 mt-0.5">
-                  {language === "si" ? "පිටුවකට යාමට ක්ලික් කරන්න" : "Click any section to open page"}
-                </p>
               </div>
 
-              <div className="space-y-1.5 my-auto py-2">
-                {tocItems.map((item) => (
-                  <button
-                    key={item.num}
-                    onClick={() => turnToPage(item.page - 1)}
-                    className="w-full flex items-center justify-between py-1 px-1.5 rounded-md hover:bg-amber-100/50 text-left transition-colors group cursor-pointer"
-                  >
-                    <div className="flex items-center gap-2.5 overflow-hidden">
-                      <span className="text-xs font-mono font-bold text-amber-800 group-hover:text-amber-950">
-                        {item.num}
-                      </span>
-                      <span className="text-xs font-bold text-stone-800 group-hover:text-stone-950 truncate">
-                        {language === "si" ? item.titleSi : item.titleEn}
-                      </span>
-                    </div>
-                    <span className="text-[11px] font-mono font-semibold text-amber-900/70 group-hover:text-amber-900 flex-shrink-0 ml-2">
-                      Pg {item.page}
+              <div className="space-y-2.5 my-auto py-1">
+                {tocSections.map((section, sIdx) => (
+                  <div key={sIdx} className="space-y-1">
+                    <span className="text-[9px] font-bold uppercase tracking-wider text-amber-900/80 block border-b border-amber-900/10 pb-0.5">
+                      {section.category}
                     </span>
-                  </button>
+                    <div className="space-y-0.5">
+                      {section.items.map((item) => (
+                        <button
+                          key={item.num}
+                          onClick={() => turnToPage(item.page - 1)}
+                          className="w-full flex items-center justify-between py-0.5 px-1 rounded hover:bg-amber-100/60 text-left transition-colors group cursor-pointer"
+                        >
+                          <div className="flex items-center gap-1.5 overflow-hidden">
+                            <span className="text-[10px] font-mono font-bold text-amber-800 group-hover:text-amber-950 w-4">
+                              {item.num}
+                            </span>
+                            <span className="text-[11px] font-medium text-stone-800 group-hover:text-stone-950 truncate">
+                              {item.name}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-1.5 flex-shrink-0 ml-1">
+                            <span className="text-[10px] font-semibold text-stone-500">
+                              {item.price}
+                            </span>
+                            <span className="text-[9px] font-mono text-amber-800 group-hover:underline">
+                              p.{item.page}
+                            </span>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 ))}
               </div>
 
-              <div className="pt-2 border-t border-amber-900/15 text-[10px] text-stone-500 text-center font-serif">
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
                 Page 1 • Table of Contents
               </div>
             </div>
           </Page>
 
-          {/* PAGE 2: CLASSIC PARTY FEAST */}
+          {/* PAGE 2: BIRTHDAY / CORPORATE / SMALL PARTY — MENU 01 */}
           <Page>
-            {/* Halftone Dot Matrix Texture */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
-
-            {/* Big Round Food Cutout Platter (Top Left Corner Bleed) */}
-            <div className="absolute -top-12 -left-12 w-56 h-56 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0">
-              <img src={FOOD_IMAGES.riceSpread} alt="Fried Rice Platter" className="w-full h-full object-cover" />
+            <div className="absolute -top-12 -left-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
+              <img src={FOOD_IMAGES.riceSpread} alt="Rice Spread" className="w-full h-full object-cover" />
+            </div>
+            <div className="absolute -bottom-8 -right-8 w-40 h-40 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
+              <img src={FOOD_IMAGES.chickenDevel} alt="Chicken Devel" className="w-full h-full object-cover" />
             </div>
 
-            {/* Second Food Cutout Platter (Bottom Right Corner Bleed) */}
-            <div className="absolute -bottom-8 -right-8 w-44 h-44 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0">
-              <img src={FOOD_IMAGES.chickenDevel} alt="Spicy Chicken" className="w-full h-full object-cover" />
-            </div>
-
-            <div className="w-full h-full flex flex-col justify-between relative z-10">
-              <div className="text-right pl-36 pt-1">
-                <span className="text-[10px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
+            <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
+              <div className="text-right pl-28 pt-0.5">
+                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
                   PARTY MENU 01
                 </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-2xl sm:text-3xl tracking-tight leading-none mt-0.5">
-                  Classic Feast
+                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                  Classic Menu
                 </h2>
-              </div>
-
-              <div className="space-y-3 my-auto py-2 pr-2">
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Keeri Samba Fried Rice</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">LKR 800</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Fragrant keeri samba rice wok-tossed with fresh eggs, scallions, and signature spices.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Spicy Chicken Devel</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Crispy chicken chunks tossed with bell peppers, onions, and fiery sweet-chilli glaze.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Hot Butter Mushroom</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Golden button mushrooms flash-fried in garlic butter and crushed red chili flakes.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Vegetable Chopsy</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Garden-fresh carrots, cabbage, baby corn, and beans wok-seared in light soy glaze.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Crispy Fish Cutlets</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Breaded tuna croquettes spiced with black pepper and roasted island herbs.
-                  </p>
+                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
+                  Rs. 800/= per person
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-amber-900/15 text-[10px] text-stone-500 text-center font-serif">
-                Page 2 • Madara Catering
+              <div className="space-y-1.5 my-auto py-1 pr-1">
+                {[
+                  "Egg Fried Rice – Keeri Samba",
+                  "Chicken Devel",
+                  "Hot Butter Mushroom / Brinjal Moju",
+                  "Vegetable Chopsy",
+                  "Chilli Paste",
+                  "Fish Cutlet",
+                  "Papadam",
+                ].map((dish, idx) => (
+                  <div key={idx} className="flex items-center gap-2 text-stone-800 text-xs font-semibold py-1 border-b border-stone-200/60 last:border-b-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-600 flex-shrink-0" />
+                    <span className="tracking-tight">{dish}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
+                Page 2 • Birthday / Party Menus • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 3: SPECIAL PARTY FEAST */}
+          {/* PAGE 3: BIRTHDAY / CORPORATE / SMALL PARTY — MENU 02 */}
           <Page>
-            {/* Halftone Dot Matrix Texture */}
             <div className="absolute top-0 left-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
-
-            {/* Big Round Food Cutout Platter (Top Right Corner Bleed) */}
-            <div className="absolute -top-12 -right-12 w-56 h-56 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0">
-              <img src={FOOD_IMAGES.noodles} alt="Wok Noodles Platter" className="w-full h-full object-cover" />
+            <div className="absolute -top-12 -right-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
+              <img src={FOOD_IMAGES.noodles} alt="Noodles Spread" className="w-full h-full object-cover" />
+            </div>
+            <div className="absolute -bottom-8 -left-8 w-40 h-40 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
+              <img src={FOOD_IMAGES.chickenDrumsticks} alt="Chilli Chicken" className="w-full h-full object-cover" />
             </div>
 
-            {/* Second Food Cutout Platter (Bottom Left Corner Bleed) */}
-            <div className="absolute -bottom-8 -left-8 w-44 h-44 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0">
-              <img src={FOOD_IMAGES.chickenDrumsticks} alt="Grilled Chicken" className="w-full h-full object-cover" />
-            </div>
-
-            <div className="w-full h-full flex flex-col justify-between relative z-10">
-              <div className="text-left pr-36 pt-1">
-                <span className="text-[10px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
+            <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
+              <div className="text-left pr-28 pt-0.5">
+                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
                   PARTY MENU 02
                 </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-2xl sm:text-3xl tracking-tight leading-none mt-0.5">
-                  Special Feast
+                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                  Special Menu
                 </h2>
-              </div>
-
-              <div className="space-y-3 my-auto py-2 pl-2">
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Egg Rice & Noodles</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">LKR 950</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Dual main spread of seasoned egg fried rice and wok-tossed egg noodles with scallions.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Spicy Chilli Chicken</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Succulent chicken chunks sauteed with capsicum, tomatoes, and rich chili glaze.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Potato Baji & Moju</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Deep-fried sweet & sour eggplant moju paired with spiced potato temper.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Mixed Vegetables</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Sautéd seasonal vegetables with garlic, ginger, and aromatic house seasonings.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Fish Cutlets & Sambal</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Crispy tuna cutlets accompanied by crunchy caramelized onion and Maldive fish sambal.
-                  </p>
+                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
+                  Rs. 950/= per person
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-amber-900/15 text-[10px] text-stone-500 text-center font-serif">
-                Page 3 • Madara Catering
+              <div className="space-y-1 my-auto py-1 pl-1">
+                {[
+                  "Egg Fried Rice / White Rice",
+                  "Egg Noodles",
+                  "Chilli Chicken",
+                  "Potato Baji",
+                  "Stir-Fried Vegetables",
+                  "Brinjal Moju",
+                  "Fish Cutlet",
+                  "Fried Onion & Maldive Fish Sambal",
+                  "Papadam",
+                ].map((dish, idx) => (
+                  <div key={idx} className="flex items-center gap-2 text-stone-800 text-xs font-semibold py-0.5 border-b border-stone-200/60 last:border-b-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-600 flex-shrink-0" />
+                    <span className="tracking-tight">{dish}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
+                Page 3 • Birthday / Party Menus • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 4: SRI LANKAN HERITAGE SPREAD */}
+          {/* PAGE 4: BIRTHDAY / CORPORATE / SMALL PARTY — MENU 03 */}
           <Page>
-            {/* Halftone Dot Matrix Texture */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
-
-            {/* Big Round Food Cutout Platter (Top Left Corner Bleed) */}
-            <div className="absolute -top-12 -left-12 w-56 h-56 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0">
-              <img src={FOOD_IMAGES.yellowRice} alt="Yellow Rice Platter" className="w-full h-full object-cover" />
+            <div className="absolute -top-12 -left-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
+              <img src={FOOD_IMAGES.yellowRice} alt="Yellow Rice" className="w-full h-full object-cover" />
+            </div>
+            <div className="absolute -bottom-8 -right-8 w-40 h-40 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
+              <img src={FOOD_IMAGES.cutlet} alt="Cutlet" className="w-full h-full object-cover" />
             </div>
 
-            {/* Second Food Cutout Platter (Bottom Right Corner Bleed) */}
-            <div className="absolute -bottom-8 -right-8 w-44 h-44 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0">
-              <img src={FOOD_IMAGES.riceSpread} alt="Curry Spread" className="w-full h-full object-cover" />
-            </div>
-
-            <div className="w-full h-full flex flex-col justify-between relative z-10">
-              <div className="text-right pl-36 pt-1">
-                <span className="text-[10px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
+            <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
+              <div className="text-right pl-28 pt-0.5">
+                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
                   PARTY MENU 03
                 </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-2xl sm:text-3xl tracking-tight leading-none mt-0.5">
-                  Heritage Spread
+                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                  Sri Lankan Menu
                 </h2>
-              </div>
-
-              <div className="space-y-3 my-auto py-2 pr-2">
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Fragrant Yellow Rice</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">LKR 950</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Basmati rice cooked in coconut milk, turmeric, cardamom, cloves, and ghee.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Rich Chicken Kuruma</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Slow-cooked chicken in thick coconut cream gravy infused with roasted island spices.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Brinjal Moju & Salad</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Authentic sweet-tangy eggplants with green chillies and fresh garden salad.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Dhaal & Potato Temper</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Creamy red lentils tempered with mustard seeds and spicy potato aloo.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Fish Cutlets & Papadam</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Traditional Sri Lankan spicy fish cutlets served with crunchy papadam.
-                  </p>
+                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
+                  Rs. 950/= per person
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-amber-900/15 text-[10px] text-stone-500 text-center font-serif">
-                Page 4 • Madara Catering
+              <div className="space-y-1.5 my-auto py-1 pr-1">
+                {[
+                  "Yellow Rice",
+                  "Chicken Kuruma",
+                  "Mixed Vegetable Salad",
+                  "Brinjal Moju",
+                  "Dhaal Curry",
+                  "Potato Tempered",
+                  "Fish Cutlet",
+                  "Papadam",
+                ].map((dish, idx) => (
+                  <div key={idx} className="flex items-center gap-2 text-stone-800 text-xs font-semibold py-0.5 border-b border-stone-200/60 last:border-b-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-600 flex-shrink-0" />
+                    <span className="tracking-tight">{dish}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
+                Page 4 • Birthday / Party Menus • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 5: TRADITIONAL BANA DANE */}
+          {/* PAGE 5: BANA / ALMS-GIVING — MENU 01 */}
           <Page>
-            {/* Halftone Dot Matrix Texture */}
             <div className="absolute top-0 left-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
-
-            {/* Big Round Food Cutout Platter (Top Right Corner Bleed) */}
-            <div className="absolute -top-12 -right-12 w-56 h-56 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0">
+            <div className="absolute -top-12 -right-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
               <img src={FOOD_IMAGES.stringHoppers} alt="String Hoppers" className="w-full h-full object-cover" />
             </div>
-
-            {/* Second Food Cutout Platter (Bottom Left Corner Bleed) */}
-            <div className="absolute -bottom-8 -left-8 w-44 h-44 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0">
-              <img src={FOOD_IMAGES.riceSpread} alt="Country Rice" className="w-full h-full object-cover" />
+            <div className="absolute -bottom-8 -left-8 w-40 h-40 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
+              <img src={FOOD_IMAGES.riceSpread} alt="Rice" className="w-full h-full object-cover" />
             </div>
 
-            <div className="w-full h-full flex flex-col justify-between relative z-10">
-              <div className="text-left pr-36 pt-1">
-                <span className="text-[10px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
+            <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
+              <div className="text-left pr-28 pt-0.5">
+                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
                   BANA MENU 01
                 </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-2xl sm:text-3xl tracking-tight leading-none mt-0.5">
-                  Traditional Dane
+                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                  Tradition Bana Menu
                 </h2>
-              </div>
-
-              <div className="space-y-3 my-auto py-2 pl-2">
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Red & White Rice</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">LKR 700</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Nutritious Sri Lankan country red rice and fluffy steamed white rice.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Fresh String Hoppers</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Soft, freshly steamed rice flour string hoppers served hot.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Chicken Red Curry</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Traditional Sri Lankan red chicken curry simmered in roasted spices.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Seeni & Pol Sambal</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Sweet caramelized onion seeni sambal and fresh coconut pol sambal.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Dhaal & Green Beans</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Tempered yellow lentil dhaal curry and fresh green bean curry.
-                  </p>
+                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
+                  Rs. 700/= per person
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-amber-900/15 text-[10px] text-stone-500 text-center font-serif">
-                Page 5 • Madara Catering
+              <div className="space-y-1.5 my-auto py-1 pl-1">
+                {[
+                  "Red Rice / White Rice",
+                  "String Hoppers",
+                  "Chicken Red Curry",
+                  "Seeni Sambal",
+                  "Pol Sambal",
+                  "Dhaal Curry",
+                  "Bean Curry",
+                ].map((dish, idx) => (
+                  <div key={idx} className="flex items-center gap-2 text-stone-800 text-xs font-semibold py-1 border-b border-stone-200/60 last:border-b-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-600 flex-shrink-0" />
+                    <span className="tracking-tight">{dish}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
+                Page 5 • Bana / Alms-Giving • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 6: SACRED FISH DANE FEAST */}
+          {/* PAGE 6: BANA / ALMS-GIVING — MENU 02 */}
           <Page>
-            {/* Halftone Dot Matrix Texture */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
-
-            {/* Big Round Food Cutout Platter (Top Left Corner Bleed) */}
-            <div className="absolute -top-12 -left-12 w-56 h-56 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0">
+            <div className="absolute -top-12 -left-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
               <img src={FOOD_IMAGES.fishCurry} alt="Fish Ambul Thiyal" className="w-full h-full object-cover" />
             </div>
-
-            {/* Second Food Cutout Platter (Bottom Right Corner Bleed) */}
-            <div className="absolute -bottom-8 -right-8 w-44 h-44 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0">
+            <div className="absolute -bottom-8 -right-8 w-40 h-40 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
               <img src={FOOD_IMAGES.riceSpread} alt="Country Red Rice" className="w-full h-full object-cover" />
             </div>
 
-            <div className="w-full h-full flex flex-col justify-between relative z-10">
-              <div className="text-right pl-36 pt-1">
-                <span className="text-[10px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
+            <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
+              <div className="text-right pl-28 pt-0.5">
+                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
                   BANA MENU 02
                 </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-2xl sm:text-3xl tracking-tight leading-none mt-0.5">
-                  Sacred Fish Dane
+                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                  Fish Menu
                 </h2>
-              </div>
-
-              <div className="space-y-3 my-auto py-2 pr-2">
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Fish Ambul Thiyal</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">LKR 800-1000</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Goraka-blackened sour fish cooked in claypot (Bala, Tuna, or Thalapath).
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Country Red & White Rice</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Healthy indigenous red rice and polished white rice.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Dhaal & Bean Curry</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Rich yellow dhaal curry and fresh long beans tempered with coconut cream.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Potato Tempered</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Spiced potatoes sauteed with dried chillies, onions, and mustard seeds.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Gotukola Cashew Sambal</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Crispy gotukola leaves tossed with roasted cashews and lime dressing.
-                  </p>
+                {/* 3 Fish Price Options */}
+                <div className="flex flex-col items-end gap-0.5 mt-0.5 text-[10px] font-bold text-amber-950">
+                  <span className="bg-amber-100/90 px-2 py-0.5 rounded">Bala Fish — Rs. 800/=</span>
+                  <span className="bg-amber-100/90 px-2 py-0.5 rounded">Tuna Fish — Rs. 950/=</span>
+                  <span className="bg-amber-100/90 px-2 py-0.5 rounded">Thalapath Fish — Rs. 1,000/=</span>
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-amber-900/15 text-[10px] text-stone-500 text-center font-serif">
-                Page 6 • Madara Catering
+              <div className="space-y-1 my-auto py-1 pr-1">
+                {[
+                  "White Rice & Red Rice",
+                  "Fish Ambul Thiyal",
+                  "Dhaal Curry",
+                  "Bean Curry",
+                  "Potato Tempered",
+                  "Fried Gotukola, Onion & Cashew Sambal",
+                  "Fish Cutlet",
+                  "Papadam & Chilli Pods",
+                ].map((dish, idx) => (
+                  <div key={idx} className="flex items-center gap-2 text-stone-800 text-xs font-semibold py-0.5 border-b border-stone-200/60 last:border-b-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-600 flex-shrink-0" />
+                    <span className="tracking-tight">{dish}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
+                Page 6 • Bana / Alms-Giving • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 7: COMFORT FUNERAL WAKE */}
+          {/* PAGE 7: BANA / ALMS-GIVING — MENU 03 */}
           <Page>
-            {/* Halftone Dot Matrix Texture */}
             <div className="absolute top-0 left-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
-
-            {/* Big Round Food Cutout Platter (Top Right Corner Bleed) */}
-            <div className="absolute -top-12 -right-12 w-56 h-56 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0">
-              <img src={FOOD_IMAGES.fishCurry} alt="Linna Fish Curry" className="w-full h-full object-cover" />
+            <div className="absolute -top-12 -right-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
+              <img src={FOOD_IMAGES.friedRice} alt="Fried Rice" className="w-full h-full object-cover" />
+            </div>
+            <div className="absolute -bottom-8 -left-8 w-40 h-40 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
+              <img src={FOOD_IMAGES.chickenDevel} alt="Fried Chicken Curry" className="w-full h-full object-cover" />
             </div>
 
-            {/* Second Food Cutout Platter (Bottom Left Corner Bleed) */}
-            <div className="absolute -bottom-8 -left-8 w-44 h-44 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0">
-              <img src={FOOD_IMAGES.yellowRice} alt="Comfort White Rice" className="w-full h-full object-cover" />
-            </div>
-
-            <div className="w-full h-full flex flex-col justify-between relative z-10">
-              <div className="text-left pr-36 pt-1">
-                <span className="text-[10px] font-serif font-bold uppercase tracking-widest text-stone-600 block">
-                  MEMORIAL WAKE
+            <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
+              <div className="text-left pr-28 pt-0.5">
+                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
+                  BANA MENU 03
                 </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-2xl sm:text-3xl tracking-tight leading-none mt-0.5">
-                  Comfort Wake
+                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                  Special Bana Menu
                 </h2>
-              </div>
-
-              <div className="space-y-3 my-auto py-2 pl-2">
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Linna Fish Curry</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">LKR 550</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Fresh Linna fish simmered in thick roasted coconut curry gravy.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">White & Red Rice</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Hot steamed white rice and wholesome country red rice.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Dhaal & Potato Temper</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Homestyle red lentil curry and spicy tempered potatoes.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Long Bean Curry</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Tender long beans cooked in mild coconut milk.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Kos / Mannyok Mallum</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Traditional jackfruit or manioc mallum with shredded coconut.
-                  </p>
+                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
+                  Rs. 1,100/= per person
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-amber-900/15 text-[10px] text-stone-500 text-center font-serif">
-                Page 7 • Madara Catering
+              <div className="space-y-1 my-auto py-1 pl-1">
+                {[
+                  "Fried Rice",
+                  "White Rice",
+                  "Fried Chicken Curry",
+                  "Chickpea Curry",
+                  "Vegetable Chopsy / Vegetable Salad",
+                  "Potato Tempered",
+                  "Umbalakada Sambal",
+                  "Fish Cutlet",
+                  "Papadam & Chilli Pods",
+                ].map((dish, idx) => (
+                  <div key={idx} className="flex items-center gap-2 text-stone-800 text-xs font-semibold py-0.5 border-b border-stone-200/60 last:border-b-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-600 flex-shrink-0" />
+                    <span className="tracking-tight">{dish}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
+                Page 7 • Bana / Alms-Giving • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 8: TRADITIONAL MALA BATHA */}
+          {/* PAGE 8: FUNERAL MENUS — MENU 01 */}
           <Page>
-            {/* Halftone Dot Matrix Texture */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
-
-            {/* Big Round Food Cutout Platter (Top Left Corner Bleed) */}
-            <div className="absolute -top-12 -left-12 w-56 h-56 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0">
-              <img src={FOOD_IMAGES.fishCurry} alt="Katta Karawala Curry" className="w-full h-full object-cover" />
+            <div className="absolute -top-12 -left-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
+              <img src={FOOD_IMAGES.fishCurry} alt="Linna Fish" className="w-full h-full object-cover" />
+            </div>
+            <div className="absolute -bottom-8 -right-8 w-40 h-40 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
+              <img src={FOOD_IMAGES.riceSpread} alt="Rice" className="w-full h-full object-cover" />
             </div>
 
-            {/* Second Food Cutout Platter (Bottom Right Corner Bleed) */}
-            <div className="absolute -bottom-8 -right-8 w-44 h-44 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0">
+            <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
+              <div className="text-right pl-28 pt-0.5">
+                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
+                  FUNERAL MENU 01
+                </span>
+                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                  Traditional Menu
+                </h2>
+                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
+                  Rs. 550/= per person
+                </div>
+              </div>
+
+              <div className="space-y-1.5 my-auto py-1 pr-1">
+                {[
+                  "White Rice & Red Rice",
+                  "Linna Fish Curry",
+                  "Dhaal Curry",
+                  "Potato Tempered",
+                  "Long Bean Curry",
+                  "Kos Mallum / Mannyok Mallum",
+                  "Papadam",
+                ].map((dish, idx) => (
+                  <div key={idx} className="flex items-center gap-2 text-stone-800 text-xs font-semibold py-1 border-b border-stone-200/60 last:border-b-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-600 flex-shrink-0" />
+                    <span className="tracking-tight">{dish}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
+                Page 8 • Funeral Menus • Madara Catering
+              </div>
+            </div>
+          </Page>
+
+          {/* PAGE 9: FUNERAL MENUS — MENU 02 */}
+          <Page>
+            <div className="absolute top-0 left-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
+            <div className="absolute -top-12 -right-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
+              <img src={FOOD_IMAGES.chickenDrumsticks} alt="Chicken Curry" className="w-full h-full object-cover" />
+            </div>
+            <div className="absolute -bottom-8 -left-8 w-40 h-40 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
+              <img src={FOOD_IMAGES.riceSpread} alt="Rice" className="w-full h-full object-cover" />
+            </div>
+
+            <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
+              <div className="text-left pr-28 pt-0.5">
+                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
+                  FUNERAL MENU 02
+                </span>
+                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                  Chicken Menu
+                </h2>
+                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
+                  Rs. 550/= per person
+                </div>
+              </div>
+
+              <div className="space-y-1.5 my-auto py-1 pl-1">
+                {[
+                  "White Rice & Red Rice",
+                  "Chicken Curry",
+                  "Potato Curry",
+                  "Gotukola Sambal",
+                  "Polos Maluwa / Mannyok Maluwa",
+                  "Mango / Amberella Maluwa",
+                  "Papadam",
+                ].map((dish, idx) => (
+                  <div key={idx} className="flex items-center gap-2 text-stone-800 text-xs font-semibold py-1 border-b border-stone-200/60 last:border-b-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-600 flex-shrink-0" />
+                    <span className="tracking-tight">{dish}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
+                Page 9 • Funeral Menus • Madara Catering
+              </div>
+            </div>
+          </Page>
+
+          {/* PAGE 10: MALA BATHA MENUS — MENU 01 */}
+          <Page>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
+            <div className="absolute -top-12 -left-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
+              <img src={FOOD_IMAGES.fishCurry} alt="Katta Karawala" className="w-full h-full object-cover" />
+            </div>
+            <div className="absolute -bottom-8 -right-8 w-40 h-40 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
               <img src={FOOD_IMAGES.riceSpread} alt="Steamed Rice" className="w-full h-full object-cover" />
             </div>
 
-            <div className="w-full h-full flex flex-col justify-between relative z-10">
-              <div className="text-right pl-36 pt-1">
-                <span className="text-[10px] font-serif font-bold uppercase tracking-widest text-stone-600 block">
-                  TRADITIONAL MEMORIAL
+            <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
+              <div className="text-right pl-28 pt-0.5">
+                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
+                  MALA BATHA 01
                 </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-2xl sm:text-3xl tracking-tight leading-none mt-0.5">
-                  Mala Batha
+                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                  Basic Menu
                 </h2>
-              </div>
-
-              <div className="space-y-3 my-auto py-2 pr-2">
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Steamed White Rice</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">LKR 490</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Warm, fluffy white rice cooked to perfection.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Katta Karawala Curry</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Deep-flavored dry fish karawala curry cooked with onions and chillies.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Village Wattakka Curry</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Sweet pumpkin wattakka curry in creamy coconut gravy.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Fresh Cucumber Salad</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Refreshing sliced cucumber salad with green chillies and lime juice.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Beans & Papadam</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Included</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Spicy tempered green beans accompanied by crunchy papadam.
-                  </p>
+                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
+                  Rs. 490/= per person
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-amber-900/15 text-[10px] text-stone-500 text-center font-serif">
-                Page 8 • Madara Catering
+              <div className="space-y-1.5 my-auto py-1 pr-1">
+                {[
+                  "White Rice",
+                  "Katta Karawala Curry",
+                  "Wattakka Curry",
+                  "Cucumber Salad",
+                  "Bean Tempered",
+                  "Papadam",
+                ].map((dish, idx) => (
+                  <div key={idx} className="flex items-center gap-2 text-stone-800 text-xs font-semibold py-1 border-b border-stone-200/60 last:border-b-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-600 flex-shrink-0" />
+                    <span className="tracking-tight">{dish}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
+                Page 10 • Mala Batha Menus • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 9: 100% CUSTOM TAILORED MENU */}
+          {/* PAGE 11: MALA BATHA MENUS — MENU 02 */}
           <Page>
-            {/* Halftone Dot Matrix Texture */}
             <div className="absolute top-0 left-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
-
-            {/* Big Round Food Cutout Platter (Top Right Corner Bleed) */}
-            <div className="absolute -top-12 -right-12 w-56 h-56 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0">
-              <img src={FOOD_IMAGES.seafood} alt="Seafood Platter" className="w-full h-full object-cover" />
+            <div className="absolute -top-12 -right-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
+              <img src={FOOD_IMAGES.fishCurry} alt="Katta Karawala & Ambul Thiyal" className="w-full h-full object-cover" />
+            </div>
+            <div className="absolute -bottom-8 -left-8 w-40 h-40 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
+              <img src={FOOD_IMAGES.riceSpread} alt="Rice Spread" className="w-full h-full object-cover" />
             </div>
 
-            {/* Second Food Cutout Platter (Bottom Left Corner Bleed) */}
-            <div className="absolute -bottom-8 -left-8 w-44 h-44 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0">
-              <img src={FOOD_IMAGES.bbqGrill} alt="Charcoal BBQ Grill" className="w-full h-full object-cover" />
+            <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
+              <div className="text-left pr-28 pt-0.5">
+                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
+                  MALA BATHA 02
+                </span>
+                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                  Special Menu
+                </h2>
+                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
+                  Rs. 1,050/= per person
+                </div>
+              </div>
+
+              <div className="space-y-1 my-auto py-1 pl-1">
+                {[
+                  "White Rice & Red Rice",
+                  "Katta Karawala Curry",
+                  "Wattakka Curry",
+                  "Cucumber Salad",
+                  "Bean Tempered",
+                  "Fish Ambul Thiyal / Chicken Curry",
+                  "Kos Mallum / Mannyok Mallum",
+                  "Fried Gotukola, Rata Kajju Sambal",
+                  "Papadam",
+                ].map((dish, idx) => (
+                  <div key={idx} className="flex items-center gap-2 text-stone-800 text-xs font-semibold py-0.5 border-b border-stone-200/60 last:border-b-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-600 flex-shrink-0" />
+                    <span className="tracking-tight">{dish}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
+                Page 11 • Mala Batha Menus • Madara Catering
+              </div>
+            </div>
+          </Page>
+
+          {/* PAGE 12: 100% CUSTOM TAILORED MENU */}
+          <Page>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
+            <div className="absolute -top-12 -left-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
+              <img src={FOOD_IMAGES.seafood} alt="Seafood" className="w-full h-full object-cover" />
+            </div>
+            <div className="absolute -bottom-8 -right-8 w-40 h-40 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
+              <img src={FOOD_IMAGES.bbqGrill} alt="BBQ" className="w-full h-full object-cover" />
             </div>
 
-            <div className="w-full h-full flex flex-col justify-between relative z-10">
-              <div className="text-left pr-36 pt-1">
-                <span className="text-[10px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
+            <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
+              <div className="text-right pl-28 pt-0.5">
+                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
                   CHEF SPECIAL
                 </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-2xl sm:text-3xl tracking-tight leading-none mt-0.5">
-                  Custom Feast
+                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                  Custom Menu
                 </h2>
-              </div>
-
-              <div className="space-y-3 my-auto py-2 pl-2">
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Custom Biryani & Ghee Rice</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Custom</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Hyderabad dum biryani, fragrant ghee rice, or Mongolian wok fried rice.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Seafood & Meat Specialties</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Custom</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Garlic butter prawns, cuttlefish black curry, & devilled mutton.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Live Wok & BBQ Stations</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Custom</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    On-site live action wok and charcoal BBQ setups for large gatherings.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Artisanal Desserts</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Custom</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Watalappam, caramel pudding, fruit platters, & ice cream bars.
-                  </p>
+                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
+                  Tailored Pricing
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-amber-900/15 text-[10px] text-stone-500 text-center font-serif">
-                Page 9 • Madara Catering
+              <div className="space-y-2.5 my-auto py-1 pr-1">
+                <div>
+                  <div className="font-bold text-stone-900 text-xs sm:text-sm flex items-center justify-between">
+                    <span>Biryani & Ghee Rice Spread</span>
+                    <span className="text-amber-700 text-[11px] font-semibold">Custom</span>
+                  </div>
+                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
+                    Hyderabad mutton/chicken dum biryani, fragrant ghee rice, or Mongolian wok fried rice.
+                  </p>
+                </div>
+
+                <div>
+                  <div className="font-bold text-stone-900 text-xs sm:text-sm flex items-center justify-between">
+                    <span>Seafood & Meat Specialties</span>
+                    <span className="text-amber-700 text-[11px] font-semibold">Custom</span>
+                  </div>
+                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
+                    Garlic butter prawns, spicy Jaffna crab, cuttlefish black curry, & devilled mutton.
+                  </p>
+                </div>
+
+                <div>
+                  <div className="font-bold text-stone-900 text-xs sm:text-sm flex items-center justify-between">
+                    <span>Vegetarian Delicacies</span>
+                    <span className="text-amber-700 text-[11px] font-semibold">Custom</span>
+                  </div>
+                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
+                    Cashew nut & green pea curry, paneer butter masala, polos maluwa, & tempered dhal.
+                  </p>
+                </div>
+
+                <div>
+                  <div className="font-bold text-stone-900 text-xs sm:text-sm flex items-center justify-between">
+                    <span>Chef Consultation</span>
+                    <span className="text-amber-700 text-[11px] font-semibold">Free</span>
+                  </div>
+                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
+                    Direct one-on-one menu planning with our Executive Chef based on your exact budget.
+                  </p>
+                </div>
+              </div>
+
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
+                Page 12 • Tailored Catering • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 10: LIVE ACTION STATIONS */}
+          {/* PAGE 13: LIVE ACTION STATIONS */}
           <Page>
-            {/* Halftone Dot Matrix Texture */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
-
-            {/* Big Round Food Cutout Platter (Top Left Corner Bleed) */}
-            <div className="absolute -top-12 -left-12 w-56 h-56 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0">
-              <img src={FOOD_IMAGES.bbqGrill} alt="Charcoal BBQ Grill" className="w-full h-full object-cover" />
+            <div className="absolute top-0 left-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
+            <div className="absolute -top-12 -right-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
+              <img src={FOOD_IMAGES.bbqGrill} alt="Charcoal BBQ" className="w-full h-full object-cover" />
             </div>
-
-            {/* Second Food Cutout Platter (Bottom Right Corner Bleed) */}
-            <div className="absolute -bottom-8 -right-8 w-44 h-44 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0">
+            <div className="absolute -bottom-8 -left-8 w-40 h-40 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
               <img src={FOOD_IMAGES.kottu} alt="Cheese Kottu" className="w-full h-full object-cover" />
             </div>
 
-            <div className="w-full h-full flex flex-col justify-between relative z-10">
-              <div className="text-right pl-36 pt-1">
-                <span className="text-[10px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
-                  ON-SITE LIVE COOKING
+            <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
+              <div className="text-left pr-28 pt-0.5">
+                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
+                  ON-SITE COOKING
                 </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-2xl sm:text-3xl tracking-tight leading-none mt-0.5">
-                  Live Action
+                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                  Live Stations
                 </h2>
-              </div>
-
-              <div className="space-y-3 my-auto py-2 pr-2">
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Live Mongolian Wok</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Live Add-On</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    High-flame live wok chef tossing custom rice, noodles, veggies, and meats.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Charcoal BBQ Grills</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Live Add-On</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Sizzling grilled chicken drumsticks, sausages, and sweet corn on skewers.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Cheese Kottu Bar</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Live Add-On</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Hand-clattered kottu rotti chopped live with molten cheddar cheese.
-                  </p>
+                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
+                  Event Add-Ons
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-amber-900/15 text-[10px] text-stone-500 text-center font-serif">
-                Page 10 • Madara Catering
+              <div className="space-y-3 my-auto py-1 pl-1">
+                <div>
+                  <div className="font-bold text-stone-900 text-xs sm:text-sm flex items-center justify-between">
+                    <span className="flex items-center gap-1.5">
+                      <Flame className="w-3.5 h-3.5 text-amber-700" />
+                      Live Mongolian Wok
+                    </span>
+                    <span className="text-amber-700 text-[11px] font-semibold">Live Add-On</span>
+                  </div>
+                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
+                    High-flame live wok chef tossing custom noodles, basmati rice, crispy vegetables, and meats.
+                  </p>
+                </div>
+
+                <div>
+                  <div className="font-bold text-stone-900 text-xs sm:text-sm flex items-center justify-between">
+                    <span className="flex items-center gap-1.5">
+                      <Flame className="w-3.5 h-3.5 text-amber-700" />
+                      Charcoal BBQ Grills
+                    </span>
+                    <span className="text-amber-700 text-[11px] font-semibold">Live Add-On</span>
+                  </div>
+                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
+                    Sizzling chicken drumsticks, seasoned pork skewers, garlic butter prawns, & sausages.
+                  </p>
+                </div>
+
+                <div>
+                  <div className="font-bold text-stone-900 text-xs sm:text-sm flex items-center justify-between">
+                    <span className="flex items-center gap-1.5">
+                      <Flame className="w-3.5 h-3.5 text-amber-700" />
+                      Cheese Kottu Bar
+                    </span>
+                    <span className="text-amber-700 text-[11px] font-semibold">Live Add-On</span>
+                  </div>
+                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
+                    Traditional clattering rotti chopped live with spicy gravy and rich melted cheddar.
+                  </p>
+                </div>
+              </div>
+
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
+                Page 13 • Live Cooking Stations • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 11: BUFFET SETUP & DESSERTS */}
+          {/* PAGE 14: BUFFET SETUP & DESSERTS */}
           <Page>
-            {/* Halftone Dot Matrix Texture */}
-            <div className="absolute top-0 left-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
-
-            {/* Big Round Food Cutout Platter (Top Right Corner Bleed) */}
-            <div className="absolute -top-12 -right-12 w-56 h-56 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
+            <div className="absolute -top-12 -left-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
               <img src={FOOD_IMAGES.warmer} alt="Chafing Warmers" className="w-full h-full object-cover" />
             </div>
-
-            {/* Second Food Cutout Platter (Bottom Left Corner Bleed) */}
-            <div className="absolute -bottom-8 -left-8 w-44 h-44 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0">
-              <img src={FOOD_IMAGES.dessert} alt="Artisan Desserts" className="w-full h-full object-cover" />
+            <div className="absolute -bottom-8 -right-8 w-40 h-40 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
+              <img src={FOOD_IMAGES.dessert} alt="Desserts" className="w-full h-full object-cover" />
             </div>
 
-            <div className="w-full h-full flex flex-col justify-between relative z-10">
-              <div className="text-left pr-36 pt-1">
-                <span className="text-[10px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
+            <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
+              <div className="text-right pl-28 pt-0.5">
+                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
                   ALL-INCLUSIVE BUFFET
                 </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-2xl sm:text-3xl tracking-tight leading-none mt-0.5">
+                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
                   Buffet Extras
                 </h2>
-              </div>
-
-              <div className="space-y-3 my-auto py-2 pl-2">
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Roll-Top Warmers</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">FREE</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Heavy-duty stainless steel chafing warmers & porcelain tableware.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Welcome Drink Bar</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Add-On</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Chilled passion fruit cordial, iced lime-mint coolers, & rose falooda.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-baseline font-bold text-stone-900 text-xs sm:text-sm">
-                    <span className="tracking-tight">Artisanal Desserts</span>
-                    <span className="text-stone-950 font-serif font-bold text-xs sm:text-sm">Add-On</span>
-                  </div>
-                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Jaggery watalappam, caramel pudding, & fresh fruit salad with ice cream.
-                  </p>
+                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
+                  Setup & Sweets
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-amber-900/15 text-[10px] text-stone-500 text-center font-serif">
-                Page 11 • Madara Catering
+              <div className="space-y-3 my-auto py-1 pr-1">
+                <div>
+                  <div className="font-bold text-stone-900 text-xs sm:text-sm flex items-center justify-between">
+                    <span className="flex items-center gap-1.5">
+                      <UtensilsCrossed className="w-3.5 h-3.5 text-amber-700" />
+                      Roll-Top Chafing Warmers
+                    </span>
+                    <span className="text-amber-700 text-[11px] font-semibold">FREE Included</span>
+                  </div>
+                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
+                    Stainless steel roll-top warmers, serving spoons, porcelain plates, & serviettes.
+                  </p>
+                </div>
+
+                <div>
+                  <div className="font-bold text-stone-900 text-xs sm:text-sm flex items-center justify-between">
+                    <span className="flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-amber-700" />
+                      Welcome Drinks Bar
+                    </span>
+                    <span className="text-amber-700 text-[11px] font-semibold">Add-On</span>
+                  </div>
+                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
+                    Chilled passion fruit cordial, iced lime-mint splash, and sweet rose falooda with basil seeds.
+                  </p>
+                </div>
+
+                <div>
+                  <div className="font-bold text-stone-900 text-xs sm:text-sm flex items-center justify-between">
+                    <span className="flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-amber-700" />
+                      Artisanal Desserts
+                    </span>
+                    <span className="text-amber-700 text-[11px] font-semibold">Add-On</span>
+                  </div>
+                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
+                    Authentic jaggery watalappam, smooth caramel pudding, and fresh fruit salad with vanilla ice cream.
+                  </p>
+                </div>
+              </div>
+
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
+                Page 14 • Buffet Amenities • Madara Catering
               </div>
             </div>
           </Page>
 
-          {/* PAGE 12: CONTACT & LOCATION */}
+          {/* PAGE 15: QUALITY & SERVICE STANDARDS */}
           <Page>
-            {/* Halftone Dot Matrix Texture */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
+            <div className="absolute top-0 left-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
+            <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
+              <div className="text-left pt-0.5 border-b border-amber-900/15 pb-2">
+                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
+                  BANQUET SERVICE ASSURANCE
+                </span>
+                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                  Hospitality Standards
+                </h2>
+                <p className="text-[10px] text-stone-600 mt-0.5">
+                  Our core quality and service commitments for every event
+                </p>
+              </div>
 
-            {/* Big Round Food Cutout Platter (Top Left Corner Bleed) */}
-            <div className="absolute -top-12 -left-12 w-56 h-56 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0">
+              <div className="space-y-2.5 my-auto py-1">
+                <div className="flex items-start gap-2.5">
+                  <div className="w-7 h-7 rounded-lg bg-amber-100/90 text-amber-800 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <ShieldCheck className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-stone-900">100% Quality & Hygiene Standard</h4>
+                    <p className="text-[10px] text-stone-600 leading-relaxed mt-0.5">
+                      Strict temperature control, certified food handling, and fresh produce sourced daily.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-2.5">
+                  <div className="w-7 h-7 rounded-lg bg-amber-100/90 text-amber-800 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Clock className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-stone-900">Punctual On-Site Setup Guarantee</h4>
+                    <p className="text-[10px] text-stone-600 leading-relaxed mt-0.5">
+                      Our catering van arrives up to 2 hours prior to ensure food is piping hot and ready.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-2.5">
+                  <div className="w-7 h-7 rounded-lg bg-amber-100/90 text-amber-800 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Award className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-stone-900">Uniformed Stewards & Coordination</h4>
+                    <p className="text-[10px] text-stone-600 leading-relaxed mt-0.5">
+                      Dedicated service stewards manage the buffet lines, replenishing dishes seamlessly.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-2.5">
+                  <div className="w-7 h-7 rounded-lg bg-amber-100/90 text-amber-800 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <CheckCircle2 className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-stone-900">Flexible Pax Minimums</h4>
+                    <p className="text-[10px] text-stone-600 leading-relaxed mt-0.5">
+                      Standard package orders starting from 35 guests, with custom packages scalable to 1,000+.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
+                Page 15 • Quality Standards • Madara Catering
+              </div>
+            </div>
+          </Page>
+
+          {/* PAGE 16: HOMAGAMA CATERING DESK & CONTACT */}
+          <Page>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(#ea580c_1px,transparent_1px)] [background-size:12px_12px] opacity-15 pointer-events-none" />
+            <div className="absolute -top-12 -left-12 w-52 h-52 rounded-full overflow-hidden shadow-2xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
               <img src={FOOD_IMAGES.welcomeDrink} alt="Welcome Drink" className="w-full h-full object-cover" />
             </div>
-
-            {/* Second Food Cutout Platter (Bottom Right Corner Bleed) */}
-            <div className="absolute -bottom-8 -right-8 w-44 h-44 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0">
+            <div className="absolute -bottom-8 -right-8 w-40 h-40 rounded-full overflow-hidden shadow-xl border-4 border-amber-100/80 z-0 opacity-25 pointer-events-none">
               <img src={FOOD_IMAGES.riceSpread} alt="Catering Desk" className="w-full h-full object-cover" />
             </div>
 
-            <div className="w-full h-full flex flex-col justify-between relative z-10">
-              <div className="text-right pl-36 pt-1">
-                <span className="text-[10px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
+            <div className="w-full h-full flex flex-col justify-between relative z-10 p-3">
+              <div className="text-right pl-28 pt-0.5">
+                <span className="text-[9px] font-serif font-bold uppercase tracking-widest text-amber-900 block">
                   HOMAGAMA CATERING DESK
                 </span>
-                <h2 className="font-serif italic font-extrabold text-amber-600 text-2xl sm:text-3xl tracking-tight leading-none mt-0.5">
-                  Madara Desk
+                <h2 className="font-serif italic font-extrabold text-amber-600 text-xl sm:text-2xl tracking-tight leading-tight">
+                  Direct Contact
                 </h2>
+                <div className="inline-block mt-0.5 px-2.5 py-0.5 rounded-full bg-amber-900/10 text-amber-950 font-bold text-xs">
+                  Booking & Consultations
+                </div>
               </div>
 
-              <div className="space-y-3 my-auto py-2 pr-2">
+              <div className="space-y-3 my-auto py-1 pr-1">
                 <div>
                   <div className="flex items-center justify-between font-bold text-stone-900 text-xs sm:text-sm">
                     <span className="flex items-center gap-1.5">
                       <Phone className="w-3.5 h-3.5 text-amber-700" />
                       Direct Catering Hotline
                     </span>
-                    <span className="text-stone-950 font-serif font-bold text-xs">Call Us</span>
+                    <span className="text-amber-800 font-bold text-xs">Call Us</span>
                   </div>
                   <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
                     {RESTAURANT_INFO.phoneFormatted} / {RESTAURANT_INFO.secondaryPhoneFormatted}
@@ -1164,10 +1178,23 @@ export default function CateringMenuBook() {
                 <div>
                   <div className="flex items-center justify-between font-bold text-stone-900 text-xs sm:text-sm">
                     <span className="flex items-center gap-1.5">
+                      <Clock className="w-3.5 h-3.5 text-amber-700" />
+                      WhatsApp Inquiry Line
+                    </span>
+                    <span className="text-amber-800 font-bold text-xs">Chat</span>
+                  </div>
+                  <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
+                    {RESTAURANT_INFO.whatsappFormatted} (Instant Quotes & Menu Customization)
+                  </p>
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between font-bold text-stone-900 text-xs sm:text-sm">
+                    <span className="flex items-center gap-1.5">
                       <MapPin className="w-3.5 h-3.5 text-amber-700" />
                       Restaurant Address
                     </span>
-                    <span className="text-stone-950 font-serif font-bold text-xs">Homagama</span>
+                    <span className="text-amber-800 font-bold text-xs">Homagama</span>
                   </div>
                   <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5 line-clamp-2">
                     {RESTAURANT_INFO.address}
@@ -1178,18 +1205,18 @@ export default function CateringMenuBook() {
                   <div className="flex items-center justify-between font-bold text-stone-900 text-xs sm:text-sm">
                     <span className="flex items-center gap-1.5">
                       <Clock className="w-3.5 h-3.5 text-amber-700" />
-                      Operating Hours
+                      Consultation Hours
                     </span>
-                    <span className="text-stone-950 font-serif font-bold text-xs">Daily</span>
+                    <span className="text-amber-800 font-bold text-xs">Daily</span>
                   </div>
                   <p className="text-[10px] text-stone-600 leading-relaxed font-sans mt-0.5">
-                    Open 7 days a week from 6:30 AM – 10:30 PM for consultations.
+                    Open 7 days a week from 6:30 AM – 10:30 PM for event reservations.
                   </p>
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-amber-900/15 text-[10px] text-stone-500 text-center font-serif">
-                Page 12 • Contact & Location
+              <div className="pt-1.5 border-t border-amber-900/15 text-[9px] text-stone-500 text-center font-serif">
+                Page 16 • Contact & Location • Madara Restaurant
               </div>
             </div>
           </Page>
@@ -1197,7 +1224,7 @@ export default function CateringMenuBook() {
         </HTMLFlipBook>
       </div>
 
-      {/* Bottom hint text */}
+      {/* Bottom navigation hint bar */}
       <div className="text-center mt-3 text-xs text-stone-500 flex items-center justify-center gap-2">
         <span>{language === "si" ? "පිටුවක් පෙරලීමට ඊතල හෝ පිටුවේ කොන ක්ලික් කරන්න" : "Click page corners or arrow buttons to turn pages"}</span>
         <span className="hidden sm:inline text-stone-400">•</span>
