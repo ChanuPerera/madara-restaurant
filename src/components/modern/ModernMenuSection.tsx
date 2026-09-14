@@ -3,133 +3,40 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
-import { RESTAURANT_INFO } from "@/data/restaurantData";
+import { RESTAURANT_INFO, MENU_ITEMS, MenuItem as DataMenuItem } from "@/data/restaurantData";
 import { UtensilsCrossed, MessageCircle, ArrowRight, Flame } from "lucide-react";
-
-interface MenuItem {
-  id: string;
-  category: "wok" | "biryani" | "bites" | "kottu";
-  nameEn: string;
-  nameSi: string;
-  price: string;
-  descEn: string;
-  descSi: string;
-  image: string;
-  spicy?: boolean;
-}
-
-const MENU_ITEMS: MenuItem[] = [
-  {
-    id: "wok-1",
-    category: "wok",
-    nameEn: "Special Seafood Mongolian Wok",
-    nameSi: "විශේෂ සීෆුඩ් මොන්ගෝලියන් වොක්",
-    price: "LKR 1,850",
-    descEn: "High-flame wok tossed with cuttlefish, prawns, fresh greens & signature spicy oyster glaze.",
-    descSi: "දැල්ලෝ, ඉස්සෝ සහ නැවුම් එළවළු සජීවී ගිනි දැල් මැද තෙම්පරාදු කළ විශේෂ මොන්ගෝලියන් බත්.",
-    image: "https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=600&q=80",
-    spicy: true,
-  },
-  {
-    id: "wok-2",
-    category: "wok",
-    nameEn: "Triple Meat Grand Mongolian",
-    nameSi: "ත්‍රිත්ව මස් මොන්ගෝලියන් රයිස්",
-    price: "LKR 1,950",
-    descEn: "Chicken, roast pork & beef strips tossed with noodles or rice and wok chili paste.",
-    descSi: "චිකන්, පෝර්ක් සහ බීෆ් සමඟ සකසන ලද රසවත් මොන්ගෝලියන් බත් හෝ නූඩ්ල්ස්.",
-    image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=600&q=80",
-    spicy: true,
-  },
-  {
-    id: "biryani-1",
-    category: "biryani",
-    nameEn: "Royal Claypot Chicken Dum Biryani",
-    nameSi: "රාජකීය මැටි ඇතිලි චිකන් බිරියානි",
-    price: "LKR 2,450",
-    descEn: "Aromatic slow-dum basmati rice with whole marinated chicken leg, mint sambol & gravy.",
-    descSi: "සුවඳැති බාස්මතී බිරියානි, බැදපු චිකන්, තම්බපු බිත්තරය සහ මින්ට් සම්බෝල සමඟ.",
-    image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    id: "biryani-2",
-    category: "biryani",
-    nameEn: "Lagoon Prawns Biryani Pot",
-    nameSi: "කලපු ඉස්සෝ බිරියානි පොට්",
-    price: "LKR 2,650",
-    descEn: "Sealed claypot fragrant rice layered with spiced jumbo lagoon prawns & boiled eggs.",
-    descSi: "නැවුම් කලපු ඉස්සන් යොදා රස ගැන්වූ සුවඳවත් රාජකීය බිරියානි සංග්‍රහය.",
-    image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    id: "bites-1",
-    category: "bites",
-    nameEn: "Fiery Hot Butter Cuttlefish (HBC)",
-    nameSi: "හොට් බටර් දැල්ලෝ (HBC)",
-    price: "LKR 1,950",
-    descEn: "Crispy batter fried cuttlefish tossed in savory garlic butter, leeks & chili flakes.",
-    descSi: "කරස් ගා හැපෙන බටර් දැල්ලෝ සහ බැදපු මිරිස් කරල් - අංක එකේ BYOB තේරීම.",
-    image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80",
-    spicy: true,
-  },
-  {
-    id: "bites-2",
-    category: "bites",
-    nameEn: "Black Pepper Beef Sizzler Plate",
-    nameSi: "බ්ලැක් පෙපර් බීෆ් සිස්ලර්",
-    price: "LKR 1,750",
-    descEn: "Tender beef slices sizzled on iron plates with coarse black pepper & scallions.",
-    descSi: "උණුසුම් යකඩ තැටියේ පිළිගන්වන කළු ගම්මිරිස් රසැති බීෆ් බයිට් එක.",
-    image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80",
-    spicy: true,
-  },
-  {
-    id: "kottu-1",
-    category: "kottu",
-    nameEn: "Molten Cheese Mixed Meat Kottu",
-    nameSi: "මීට් මික්ස් චීස් කොත්තු",
-    price: "LKR 1,650",
-    descEn: "Clattered hot roti with chicken, beef, fresh vegetables smothered in rich cheddar cream.",
-    descSi: "උණු උණු යකඩ තැටියේ කෙටූ රොටී, මස් වර්ග සහ උඩින් හැලූ උණු චීස් තට්ටුව.",
-    image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    id: "kottu-2",
-    category: "kottu",
-    nameEn: "Lagoon Seafood Sizzling Kottu",
-    nameSi: "සීෆුඩ් සිස්ලින් කොත්තු",
-    price: "LKR 1,850",
-    descEn: "Crispy clattered flatbread with prawns, cuttlefish, egg & spicy roast curry sauce.",
-    descSi: "නැවුම් ඉස්සෝ සහ දැල්ලෝ සුවඳැති කුළුබඩු කරියක් සමඟ කොත්තු කර පිළිගන්වයි.",
-    image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=600&q=80",
-    spicy: true,
-  },
-];
 
 export default function ModernMenuSection() {
   const { language } = useLanguage();
-  const [activeTab, setActiveTab] = useState<"all" | "wok" | "biryani" | "bites" | "kottu">("all");
+  const [activeTab, setActiveTab] = useState<string>("all");
 
   const tabs = [
     { id: "all", labelEn: "All Highlights", labelSi: "සියල්ල" },
-    { id: "wok", labelEn: "Mongolian Wok", labelSi: "මොන්ගෝලියන්" },
-    { id: "biryani", labelEn: "Dum Biryani", labelSi: "බිරියානි" },
-    { id: "bites", labelEn: "BYOB Bites", labelSi: "BYOB බයිට්ස්" },
-    { id: "kottu", labelEn: "Cheese Kottu", labelSi: "කොත්තු" },
+    { id: "fried_rice_basmathi", labelEn: "Fried Rice", labelSi: "ෆ්‍රයිඩ් රයිස්" },
+    { id: "koththu", labelEn: "Koththu", labelSi: "කොත්තු" },
+    { id: "side_chicken", labelEn: "Chicken Sides", labelSi: "චිකන්" },
+    { id: "side_seafood", labelEn: "Seafood Sides", labelSi: "සීෆුඩ්" },
   ];
+
+  const featuredList = MENU_ITEMS.slice(0, 12);
 
   const filteredItems =
     activeTab === "all"
-      ? MENU_ITEMS
+      ? featuredList
       : MENU_ITEMS.filter((item) => item.category === activeTab);
 
-  const getWhatsAppOrderLink = (item: MenuItem) => {
+  const getWhatsAppOrderLink = (item: DataMenuItem) => {
+    const title = language === "si" && item.sinhalaName ? item.sinhalaName : item.name;
+    const priceDisplay = item.portions && item.portions.length > 0
+      ? `Rs. ${item.portions[0].priceLKR.toLocaleString()}/=`
+      : `Rs. ${item.priceLKR.toLocaleString()}/=`;
     const text =
       language === "si"
-        ? `ආයුබෝවන් Madara Restaurant! 🍽️ මට මෙම ආහාරය ඇණවුම් කිරීමට අවශ්‍යයි: "${item.nameSi}" (${item.price}).`
-        : `Hi Madara Restaurant! 🍽️ I would like to order: "${item.nameEn}" (${item.price}).`;
+        ? `ආයුබෝවන් Madara Restaurant! 🍽️ මට මෙම ආහාරය ඇණවුම් කිරීමට අවශ්‍යයි: "${title}" (${priceDisplay}).`
+        : `Hi Madara Restaurant! 🍽️ I would like to order: "${title}" (${priceDisplay}).`;
     return `https://wa.me/${RESTAURANT_INFO.whatsappNumber}?text=${encodeURIComponent(text)}`;
   };
+
 
   return (
     <section id="menu" className="py-20 bg-white border-b border-stone-200/80 scroll-mt-20">
@@ -181,16 +88,13 @@ export default function ModernMenuSection() {
               <div className="relative h-44 w-full overflow-hidden">
                 <img
                   src={item.image}
-                  alt={language === "si" ? item.nameSi : item.nameEn}
+                  alt={language === "si" && item.sinhalaName ? item.sinhalaName : item.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                {item.spicy && (
-                  <div className="absolute top-3 left-3 bg-red-500 text-white p-1 rounded-full shadow-sm" title="Spicy">
-                    <Flame className="w-3.5 h-3.5" />
-                  </div>
-                )}
                 <div className="absolute bottom-3 right-3 bg-stone-900/90 backdrop-blur-md text-white px-2.5 py-1 rounded-lg text-xs font-extrabold shadow-sm">
-                  {item.price}
+                  {item.portions && item.portions.length > 0
+                    ? `Rs. ${item.portions[0].priceLKR.toLocaleString()}/=`
+                    : `Rs. ${item.priceLKR.toLocaleString()}/=`}
                 </div>
               </div>
 
@@ -198,10 +102,10 @@ export default function ModernMenuSection() {
               <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
                 <div>
                   <h3 className="font-serif font-bold text-stone-900 text-base group-hover:text-amber-700 transition-colors line-clamp-1">
-                    {language === "si" ? item.nameSi : item.nameEn}
+                    {language === "si" && item.sinhalaName ? item.sinhalaName : item.name}
                   </h3>
                   <p className="mt-1 text-xs text-stone-500 line-clamp-2 leading-relaxed">
-                    {language === "si" ? item.descSi : item.descEn}
+                    {item.description}
                   </p>
                 </div>
 

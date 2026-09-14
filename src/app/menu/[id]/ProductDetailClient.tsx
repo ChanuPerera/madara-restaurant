@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { 
   MenuItem, 
+  MenuItemPortion,
   CateringPackageDetail, 
   RESTAURANT_INFO,
   CATERING_CATEGORIES
@@ -24,7 +25,7 @@ import {
   ShieldCheck, 
   Utensils, 
   Check,
-  AlertTriangle
+  AlertCircle
 } from "lucide-react";
 
 export type UnifiedProduct = 
@@ -43,12 +44,27 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
   const isRestaurant = product.kind === "restaurant";
   const item = product.data;
 
+  // Portion Selection state if restaurant dish has portions
+  const restaurantItem = isRestaurant ? (item as MenuItem) : null;
+  const [selectedPortion, setSelectedPortion] = useState<MenuItemPortion | null>(
+    restaurantItem && restaurantItem.portions && restaurantItem.portions.length > 0
+      ? restaurantItem.portions[0]
+      : null
+  );
+
   // Single Language display
   const title = language === "si" && item.sinhalaName ? item.sinhalaName : (isRestaurant ? (item as MenuItem).name : (item as CateringPackageDetail).packageName);
   const description = isRestaurant ? (item as MenuItem).description : (item as CateringPackageDetail).tagline;
   const categoryName = product.categoryName;
-  const priceDisplay = isRestaurant ? `Rs. ${(item as MenuItem).priceLKR.toLocaleString()}/=` : (item as CateringPackageDetail).priceDisplay;
-  const portionOrMin = isRestaurant ? (item as MenuItem).portion : `Min ${(item as CateringPackageDetail).minGuests} Guests Required`;
+  
+  const currentPriceLKR = selectedPortion ? selectedPortion.priceLKR : (isRestaurant ? (item as MenuItem).priceLKR : null);
+  const priceDisplay = isRestaurant
+    ? `Rs. ${currentPriceLKR?.toLocaleString()}/=`
+    : (item as CateringPackageDetail).priceDisplay;
+
+  const portionOrMin = selectedPortion
+    ? selectedPortion.label
+    : (isRestaurant ? (item as MenuItem).portion : `Min ${(item as CateringPackageDetail).minGuests} Guests Required`);
 
   // Image source
   let imageUrl = "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&q=80";
@@ -62,9 +78,13 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
   // Allergens (ONLY IF PRESENT)
   const allergens = item.allergens || [];
 
-  // Highlights list
+  // Highlights list (Including Allergens inside Dish Highlights)
   const highlightsList = isRestaurant
-    ? [(item as MenuItem).portion, ...((item as MenuItem).tags || [])]
+    ? [
+        (item as MenuItem).portion,
+        ...((item as MenuItem).tags || []),
+        `Allergens: ${allergens && allergens.length > 0 ? allergens.join(", ") : "None"}`
+      ]
     : (item as CateringPackageDetail).highlights || [];
 
   // Menu sections if catering
@@ -72,7 +92,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
 
   const getWhatsAppLink = () => {
     const currentUrl = typeof window !== "undefined" ? window.location.href : `https://madararestaurant.lk/menu/${item.id}`;
-    const text = `Hi Madara Restaurant! I am viewing your online menu and interested in:\n\n*${title}* (${priceDisplay})\nURL: ${currentUrl}\n\nPlease share availability and ordering details.`;
+    const text = `Hi Madara Restaurant! I am viewing your online menu and interested in:\n\n*${title}* (${priceDisplay}${selectedPortion ? ` - ${selectedPortion.label}` : ""})\nURL: ${currentUrl}\n\nPlease share availability and ordering details.`;
     return `https://wa.me/${RESTAURANT_INFO.whatsappNumber}?text=${encodeURIComponent(text)}`;
   };
 
@@ -194,40 +214,54 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
               </h1>
 
               {/* Price & Portion Box */}
-              <div className="p-4 sm:p-5 bg-amber-500/10 rounded-2xl border border-amber-300/80 mb-6 flex items-center justify-between gap-4">
-                <div>
-                  <span className="block text-xs uppercase tracking-wider text-stone-600 font-semibold mb-0.5">
-                    {language === "si" ? "මිල (Price)" : "Price"}
-                  </span>
-                  <span className="text-2xl sm:text-3xl font-black text-amber-900 tracking-tight">
-                    {priceDisplay}
-                  </span>
-                </div>
-                <div className="text-right">
-                  <span className="block text-xs uppercase tracking-wider text-stone-600 font-semibold mb-0.5">
-                    {language === "si" ? "ප්‍රමාණය" : "Portion"}
-                  </span>
-                  <span className="text-xs sm:text-sm font-bold text-stone-800 bg-white px-3 py-1.5 rounded-lg border border-stone-300 shadow-xs">
-                    {portionOrMin}
-                  </span>
-                </div>
-              </div>
-
-              {/* ALLERGEN WARNING LABEL - ONLY IF ALLERGENS EXIST */}
-              {allergens && allergens.length > 0 && (
-                <div className="p-4 bg-amber-50 border-l-4 border-amber-600 rounded-r-2xl mb-6 flex items-start gap-3 text-stone-900 shadow-xs">
-                  <AlertTriangle className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+              <div className="p-4 sm:p-5 bg-amber-500/10 rounded-2xl border border-amber-300/80 mb-6">
+                <div className="flex items-center justify-between gap-4">
                   <div>
-                    <span className="block text-xs font-bold uppercase tracking-wider text-amber-900">
-                      {language === "si" ? "ආසාත්මිකතා අනතුරු ඇඟවීම (Allergen Warning)" : "Allergen Warning"}
+                    <span className="block text-xs uppercase tracking-wider text-stone-600 font-semibold mb-0.5">
+                      {language === "si" ? "මිල (Price)" : "Price"}
                     </span>
-                    <span className="text-xs font-semibold text-stone-700 mt-0.5 block">
-                      {language === "si" ? "මෙම ආහාරයේ ආසාත්මිකතා ඇතුළත් විය හැක: " : "Contains potential allergens: "}
-                      <strong className="text-amber-950 font-bold">{allergens.join(", ")}</strong>
+                    <span className="text-2xl sm:text-3xl font-black text-amber-900 tracking-tight">
+                      {priceDisplay}
+                    </span>
+                  </div>
+                  <div className="text-right">
+                    <span className="block text-xs uppercase tracking-wider text-stone-600 font-semibold mb-0.5">
+                      {language === "si" ? "ප්‍රමාණය" : "Portion"}
+                    </span>
+                    <span className="text-xs sm:text-sm font-bold text-stone-800 bg-white px-3 py-1.5 rounded-lg border border-stone-300 shadow-xs">
+                      {portionOrMin}
                     </span>
                   </div>
                 </div>
-              )}
+
+                {/* Portion Selector Buttons if item has portions */}
+                {restaurantItem && restaurantItem.portions && restaurantItem.portions.length > 0 && (
+                  <div className="mt-4 pt-3 border-t border-amber-300/60">
+                    <span className="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-2">
+                      {language === "si" ? "ප්‍රමාණය තෝරන්න" : "Select Portion Size"}
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      {restaurantItem.portions.map((p) => {
+                        const isSelected = selectedPortion?.size === p.size;
+                        return (
+                          <button
+                            key={p.size}
+                            type="button"
+                            onClick={() => setSelectedPortion(p)}
+                            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${
+                              isSelected
+                                ? "bg-amber-600 text-white border-amber-600 shadow-sm"
+                                : "bg-white text-stone-800 border-stone-300 hover:bg-amber-50"
+                            }`}
+                          >
+                            {p.label} — Rs. {p.priceLKR.toLocaleString()}/=
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
 
               {/* Description */}
               <div className="mb-6">
@@ -246,12 +280,26 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
                     {isRestaurant ? (language === "si" ? "විශේෂාංග" : "Dish Highlights") : (language === "si" ? "ඇතුළත් දෑ" : "Included Menu Items")}
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {highlightsList.map((hl, idx) => (
-                      <div key={idx} className="flex items-center gap-2 p-2.5 rounded-xl bg-white border border-stone-200 text-xs font-semibold text-stone-800 shadow-xs">
-                        <CheckCircle2 className="w-4 h-4 text-amber-600 shrink-0" />
-                        <span>{hl}</span>
-                      </div>
-                    ))}
+                    {highlightsList.map((hl, idx) => {
+                      const isAllergen = hl.startsWith("Allergens:");
+                      return (
+                        <div
+                          key={idx}
+                          className={`flex items-center gap-2 p-2.5 rounded-xl border text-xs font-semibold shadow-xs ${
+                            isAllergen
+                              ? "bg-amber-50 border-amber-300 text-amber-950 font-bold sm:col-span-2"
+                              : "bg-white border-stone-200 text-stone-800"
+                          }`}
+                        >
+                          {isAllergen ? (
+                            <AlertCircle className="w-4 h-4 text-amber-700 shrink-0" />
+                          ) : (
+                            <CheckCircle2 className="w-4 h-4 text-amber-600 shrink-0" />
+                          )}
+                          <span>{hl}</span>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}

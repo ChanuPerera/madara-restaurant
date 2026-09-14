@@ -32,9 +32,11 @@ export default function MenuCatalogClient() {
       id: item.id,
       name: item.name,
       sinhalaName: item.sinhalaName,
-      category: item.category, // rice, kottu, other
+      category: item.category,
       categoryLabel: MENU_CATEGORIES.find(c => c.id === item.category)?.name || "Other",
-      priceDisplay: `Rs. ${item.priceLKR.toLocaleString()}/=`,
+      priceDisplay: item.portions && item.portions.length > 0
+        ? `Rs. ${item.portions[0].priceLKR.toLocaleString()} – ${item.portions[item.portions.length - 1].priceLKR.toLocaleString()}/=`
+        : `Rs. ${item.priceLKR.toLocaleString()}/=`,
       priceValue: item.priceLKR,
       portion: item.portion,
       description: item.description,
@@ -47,7 +49,7 @@ export default function MenuCatalogClient() {
   // Filtered items based on active category & search
   const filteredItems = useMemo(() => {
     return cardItems.filter((item) => {
-      // Category Filter (Rice, Kottu, Other)
+      // Category Filter
       if (selectedCategory !== "all" && item.category !== selectedCategory) {
         return false;
       }
@@ -103,8 +105,8 @@ export default function MenuCatalogClient() {
           </h1>
           <p className="mt-2.5 text-sm sm:text-base text-stone-600 max-w-xl mx-auto leading-relaxed">
             {language === "si"
-              ? "හෝමාගම මදාරා ආපනශාලාවේ ප්‍රණීත බත්, කොත්තු, ෂෝටීස් සහ විශේෂ කෑම වර්ග."
-              : "Delicious freshly cooked Rice, Kottu, Shorties & Special Dishes at Madara Restaurant Homagama."}
+              ? "හෝමාගම මදාරා ආපනශාලාවේ ප්‍රණීත බත්, කොත්තු, අතුරු පස සහ විශේෂ කෑම වර්ග."
+              : "Delicious freshly cooked Rice, Kottu, Side Dishes & Special Items at Madara Restaurant Homagama."}
           </p>
 
           {/* Search Bar */}
@@ -115,7 +117,7 @@ export default function MenuCatalogClient() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={language === "si" ? "කෑම වර්ග, බත්, කොත්තු සොයන්න..." : "Search Rice, Kottu, Shorties..."}
+                placeholder={language === "si" ? "කෑම වර්ග, බත්, කොත්තු සොයන්න..." : "Search Rice, Kottu, Side Dishes..."}
                 className="w-full pl-11 pr-4 py-2.5 bg-white border border-stone-300 rounded-2xl text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all text-xs sm:text-sm shadow-xs"
               />
               {searchQuery && (
@@ -130,52 +132,29 @@ export default function MenuCatalogClient() {
           </div>
         </section>
 
-        {/* Categories: All, Rice, Kottu, Other */}
+        {/* Dynamic Category Filter Chips */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
           <div className="flex items-center gap-2 justify-center flex-wrap">
-            <button
-              onClick={() => setSelectedCategory("all")}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
-                selectedCategory === "all"
-                  ? "bg-amber-600 text-white border-amber-600 shadow-xs"
-                  : "bg-white text-stone-700 border-stone-300 hover:bg-stone-100"
-              }`}
-            >
-              {language === "si" ? "සියලු කෑම (All)" : "All Dishes"}
-            </button>
-
-            <button
-              onClick={() => setSelectedCategory("rice")}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
-                selectedCategory === "rice"
-                  ? "bg-amber-600 text-white border-amber-600 shadow-xs"
-                  : "bg-white text-stone-700 border-stone-300 hover:bg-stone-100"
-              }`}
-            >
-              🍚 {language === "si" ? "බත් (Rice)" : "Rice"}
-            </button>
-
-            <button
-              onClick={() => setSelectedCategory("kottu")}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
-                selectedCategory === "kottu"
-                  ? "bg-amber-600 text-white border-amber-600 shadow-xs"
-                  : "bg-white text-stone-700 border-stone-300 hover:bg-stone-100"
-              }`}
-            >
-              🍲 {language === "si" ? "කොත්තු (Kottu)" : "Kottu"}
-            </button>
-
-            <button
-              onClick={() => setSelectedCategory("other")}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
-                selectedCategory === "other"
-                  ? "bg-amber-600 text-white border-amber-600 shadow-xs"
-                  : "bg-white text-stone-700 border-stone-300 hover:bg-stone-100"
-              }`}
-            >
-              🍽️ {language === "si" ? "වෙනත් (Other / Shorties)" : "Other"}
-            </button>
+            {MENU_CATEGORIES.map((cat) => {
+              const isSelected = selectedCategory === cat.id;
+              const count = cat.id === "all" ? MENU_ITEMS.length : MENU_ITEMS.filter(i => i.category === cat.id).length;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all border flex items-center gap-1.5 ${
+                    isSelected
+                      ? "bg-amber-600 text-white border-amber-600 shadow-xs"
+                      : "bg-white text-stone-700 border-stone-300 hover:bg-stone-100"
+                  }`}
+                >
+                  <span>{language === "si" && cat.sinhalaName ? cat.sinhalaName : cat.name}</span>
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${isSelected ? "bg-black/30 text-white" : "bg-stone-100 text-stone-600"}`}>
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </section>
 
