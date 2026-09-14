@@ -1,42 +1,29 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
-import { RESTAURANT_INFO, MENU_ITEMS, MenuItem as DataMenuItem } from "@/data/restaurantData";
-import { UtensilsCrossed, MessageCircle, ArrowRight, Flame } from "lucide-react";
+import { MENU_ITEMS } from "@/data/restaurantData";
+import { ArrowRight, ChevronRight } from "lucide-react";
 
 export default function ModernMenuSection() {
   const { language } = useLanguage();
   const [activeTab, setActiveTab] = useState<string>("all");
 
   const tabs = [
-    { id: "all", labelEn: "All Highlights", labelSi: "සියල්ල" },
-    { id: "fried_rice_basmathi", labelEn: "Fried Rice", labelSi: "ෆ්‍රයිඩ් රයිස්" },
-    { id: "koththu", labelEn: "Koththu", labelSi: "කොත්තු" },
-    { id: "side_chicken", labelEn: "Chicken Sides", labelSi: "චිකන්" },
-    { id: "side_seafood", labelEn: "Seafood Sides", labelSi: "සීෆුඩ්" },
+    { id: "all", labelEn: "All Dishes", labelSi: "සියලුම කෑම" },
+    { id: "rice", labelEn: "Rice", labelSi: "බත්" },
+    { id: "kottu", labelEn: "Kottu", labelSi: "කොත්තු" },
+    { id: "other", labelEn: "Other", labelSi: "වෙනත්" },
   ];
 
-  const featuredList = MENU_ITEMS.slice(0, 12);
-
-  const filteredItems =
-    activeTab === "all"
-      ? featuredList
-      : MENU_ITEMS.filter((item) => item.category === activeTab);
-
-  const getWhatsAppOrderLink = (item: DataMenuItem) => {
-    const title = language === "si" && item.sinhalaName ? item.sinhalaName : item.name;
-    const priceDisplay = item.portions && item.portions.length > 0
-      ? `Rs. ${item.portions[0].priceLKR.toLocaleString()}/=`
-      : `Rs. ${item.priceLKR.toLocaleString()}/=`;
-    const text =
-      language === "si"
-        ? `ආයුබෝවන් Madara Restaurant! 🍽️ මට මෙම ආහාරය ඇණවුම් කිරීමට අවශ්‍යයි: "${title}" (${priceDisplay}).`
-        : `Hi Madara Restaurant! 🍽️ I would like to order: "${title}" (${priceDisplay}).`;
-    return `https://wa.me/${RESTAURANT_INFO.whatsappNumber}?text=${encodeURIComponent(text)}`;
-  };
-
+  // 8 items display max
+  const filteredItems = useMemo(() => {
+    if (activeTab === "all") {
+      return MENU_ITEMS.slice(0, 8);
+    }
+    return MENU_ITEMS.filter((item) => item.category === activeTab).slice(0, 8);
+  }, [activeTab]);
 
   return (
     <section id="menu" className="py-20 bg-white border-b border-stone-200/80 scroll-mt-20">
@@ -60,12 +47,12 @@ export default function ModernMenuSection() {
           </p>
         </div>
 
-        {/* Category Tabs */}
+        {/* Category Tabs: All, Rice, Kottu, Other */}
         <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
           {tabs.map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
+              onClick={() => setActiveTab(tab.id)}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                 activeTab === tab.id
                   ? "bg-stone-900 text-white shadow-sm scale-105"
@@ -77,50 +64,56 @@ export default function ModernMenuSection() {
           ))}
         </div>
 
-        {/* Items Grid */}
+        {/* Items Grid (8 items max, linked directly to product detail page) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredItems.map((item) => (
-            <div
-              key={item.id}
-              className="bg-stone-50/50 rounded-2xl overflow-hidden border border-stone-200/70 hover:border-amber-400/50 hover:bg-white hover:shadow-md transition-all duration-300 flex flex-col group"
-            >
-              {/* Image */}
-              <div className="relative h-44 w-full overflow-hidden">
-                <img
-                  src={item.image}
-                  alt={language === "si" && item.sinhalaName ? item.sinhalaName : item.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute bottom-3 right-3 bg-stone-900/90 backdrop-blur-md text-white px-2.5 py-1 rounded-lg text-xs font-extrabold shadow-sm">
-                  {item.portions && item.portions.length > 0
-                    ? `Rs. ${item.portions[0].priceLKR.toLocaleString()}/=`
-                    : `Rs. ${item.priceLKR.toLocaleString()}/=`}
-                </div>
-              </div>
+          {filteredItems.map((item) => {
+            const title = language === "si" && item.sinhalaName ? item.sinhalaName : item.name;
+            const priceDisplay = item.portions && item.portions.length > 0
+              ? `Rs. ${item.portions[0].priceLKR.toLocaleString()}/=`
+              : `Rs. ${item.priceLKR.toLocaleString()}/=`;
 
-              {/* Info */}
-              <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
-                <div>
-                  <h3 className="font-serif font-bold text-stone-900 text-base group-hover:text-amber-700 transition-colors line-clamp-1">
-                    {language === "si" && item.sinhalaName ? item.sinhalaName : item.name}
-                  </h3>
-                  <p className="mt-1 text-xs text-stone-500 line-clamp-2 leading-relaxed">
-                    {item.description}
-                  </p>
+            return (
+              <Link
+                key={item.id}
+                href={`/menu/${item.id}`}
+                className="bg-stone-50/50 rounded-2xl overflow-hidden border border-stone-200/70 hover:border-amber-400/80 hover:bg-white hover:shadow-lg transition-all duration-300 flex flex-col group cursor-pointer"
+              >
+                {/* Image */}
+                <div className="relative h-44 w-full overflow-hidden bg-stone-100">
+                  <img
+                    src={item.image}
+                    alt={title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  {item.subCategory && (
+                    <div className="absolute top-3 left-3 bg-stone-900/80 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-sm">
+                      {item.subCategory}
+                    </div>
+                  )}
+                  <div className="absolute bottom-3 right-3 bg-stone-900/90 backdrop-blur-md text-white px-2.5 py-1 rounded-lg text-xs font-extrabold shadow-sm">
+                    {priceDisplay}
+                  </div>
                 </div>
 
-                <a
-                  href={getWhatsAppOrderLink(item)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-2 px-3 rounded-lg bg-white hover:bg-[#25D366] hover:text-white text-stone-800 border border-stone-200 hover:border-transparent text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-2xs"
-                >
-                  <MessageCircle className="w-3.5 h-3.5" />
-                  <span>{language === "si" ? "ඇණවුම් කරන්න" : "Order on WhatsApp"}</span>
-                </a>
-              </div>
-            </div>
-          ))}
+                {/* Info */}
+                <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
+                  <div>
+                    <h3 className="font-serif font-bold text-stone-900 text-base group-hover:text-amber-700 transition-colors line-clamp-1">
+                      {title}
+                    </h3>
+                    <p className="mt-1 text-xs text-stone-500 line-clamp-2 leading-relaxed">
+                      {item.description}
+                    </p>
+                  </div>
+
+                  <div className="pt-2 border-t border-stone-200/60 flex items-center justify-between text-xs font-bold text-amber-700 group-hover:text-amber-600">
+                    <span>{language === "si" ? "විස්තර බලන්න" : "View Details"}</span>
+                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
         </div>
 
         {/* View Full Menu CTA */}
@@ -129,7 +122,7 @@ export default function ModernMenuSection() {
             href="/menu"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-stone-900 hover:bg-stone-800 text-white text-xs sm:text-sm font-bold shadow-md transition-all hover:scale-105"
           >
-            <span>{language === "si" ? "සියලුම ආපනශාලා ආහාර (Ala Carte) බලන්න" : "View All Ala Card Items"}</span>
+            <span>{language === "si" ? "සියලුම ආපනශාලා ආහාර මෙනුව බලන්න" : "View Full Menu Catalog"}</span>
             <ArrowRight className="w-4 h-4 text-amber-400" />
           </Link>
         </div>
