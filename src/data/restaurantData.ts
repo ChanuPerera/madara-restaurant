@@ -6,6 +6,14 @@ import menuImg5 from "@/assets/3dmenu/5.png";
 import menuImg6 from "@/assets/3dmenu/6.png";
 import menuImg7 from "@/assets/3dmenu/7.png";
 
+import vegFrBasmathiImg from "@/assets/restaurant_menu/Vegetable_Fried_Rice_Basmathi.png";
+import eggFrBasmathiImg from "@/assets/restaurant_menu/Egg_Fried_Rice_Basmathi.png";
+import chickenFrBasmathiImg from "@/assets/restaurant_menu/Chicken_Fried_Rice_Basmathi.png";
+import seafoodFrBasmathiImg from "@/assets/restaurant_menu/Seafood_Fried_Rice_Basmathi.png";
+import mixFrBasmathiImg from "@/assets/restaurant_menu/Mix_Fried_Rice_Basmathi.png";
+import nasiGorengBasmathiImg from "@/assets/restaurant_menu/Nasi_Goreng_Basmathi.png";
+import vegFrKiriSambaImg from "@/assets/restaurant_menu/Vegetable_Fried_Rice_KiriSamba.png";
+
 export interface MenuItemPortion {
   size: string;
   label: string;
@@ -694,7 +702,7 @@ export const MENU_ITEMS: MenuItem[] = [
       { size: "M", label: "Medium Portion (M)", priceLKR: 1000 },
       { size: "L", label: "Large Portion (L)", priceLKR: 1550 },
     ],
-    image: menuImg1.src,
+    image: vegFrBasmathiImg.src,
     tags: ["Basmathi", "Vegetable", "Fried Rice"],
     allergens: ["Sesame", "Soy", "Gluten"],
     isVegetarian: true,
@@ -713,7 +721,7 @@ export const MENU_ITEMS: MenuItem[] = [
       { size: "M", label: "Medium Portion (M)", priceLKR: 1250 },
       { size: "L", label: "Large Portion (L)", priceLKR: 1800 },
     ],
-    image: menuImg1.src,
+    image: eggFrBasmathiImg.src,
     tags: ["Basmathi", "Egg", "Fried Rice"],
     allergens: ["Egg", "Sesame", "Soy", "Gluten"],
   },
@@ -731,7 +739,7 @@ export const MENU_ITEMS: MenuItem[] = [
       { size: "M", label: "Medium Portion (M)", priceLKR: 1350 },
       { size: "L", label: "Large Portion (L)", priceLKR: 2000 },
     ],
-    image: menuImg1.src,
+    image: chickenFrBasmathiImg.src,
     tags: ["Basmathi", "Chicken", "Fried Rice"],
     allergens: ["Sesame", "Soy", "Gluten"],
   },
@@ -749,7 +757,7 @@ export const MENU_ITEMS: MenuItem[] = [
       { size: "M", label: "Medium Portion (M)", priceLKR: 1550 },
       { size: "L", label: "Large Portion (L)", priceLKR: 2200 },
     ],
-    image: menuImg1.src,
+    image: seafoodFrBasmathiImg.src,
     tags: ["Basmathi", "Seafood", "Fish, Prawn & Cuttlefish"],
     allergens: ["Seafood/Crustaceans", "Sesame", "Soy", "Gluten"],
   },
@@ -767,7 +775,7 @@ export const MENU_ITEMS: MenuItem[] = [
       { size: "M", label: "Medium Portion (M)", priceLKR: 1700 },
       { size: "L", label: "Large Portion (L)", priceLKR: 2350 },
     ],
-    image: menuImg1.src,
+    image: mixFrBasmathiImg.src,
     tags: ["Basmathi", "Mixed Proteins", "Chef Special"],
     allergens: ["Egg", "Seafood/Crustaceans", "Sesame", "Soy", "Gluten"],
   },
@@ -785,7 +793,7 @@ export const MENU_ITEMS: MenuItem[] = [
       { size: "M", label: "Medium Portion (M)", priceLKR: 1700 },
       { size: "L", label: "Large Portion (L)", priceLKR: 2350 },
     ],
-    image: menuImg1.src,
+    image: nasiGorengBasmathiImg.src,
     tags: ["Indonesian Style", "Spicy Sweet", "Nasi Goreng"],
     allergens: ["Egg", "Seafood/Crustaceans (paste)", "Sesame", "Soy", "Gluten", "Pineapple"],
   },
@@ -805,7 +813,7 @@ export const MENU_ITEMS: MenuItem[] = [
       { size: "M", label: "Medium Portion (M)", priceLKR: 800 },
       { size: "L", label: "Large Portion (L)", priceLKR: 1350 },
     ],
-    image: menuImg1.src,
+    image: vegFrKiriSambaImg.src,
     tags: ["Kiri Samba", "Vegetable", "Short Grain"],
     allergens: ["Sesame", "Soy", "Gluten"],
     isVegetarian: true,
