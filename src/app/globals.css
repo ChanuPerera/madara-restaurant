@@ -2,8 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Quicksand';
+  src: url('/fonts/quicksand-latin.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('/fonts/quicksand-latin-ext.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('/fonts/quicksand-vietnamese.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   :root {
+    --font-quicksand: 'Quicksand', sans-serif;
+    --font-outfit: 'Quicksand', sans-serif;
+    --font-playfair: 'Quicksand', sans-serif;
     --bg-dark: #111318;
     --bg-surface: #181a22;
     --bg-surface-elevated: #1e202a;
@@ -30,12 +57,13 @@
     overflow-x: hidden;
     max-width: 100vw;
     width: 100%;
+    font-family: 'Quicksand', var(--font-quicksand), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
 
   body {
     background-color: var(--bg-dark);
     color: var(--text-main);
-    font-family: var(--font-outfit), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: 'Quicksand', var(--font-quicksand), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     overflow-x: hidden;
     max-width: 100vw;
     width: 100%;

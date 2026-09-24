@@ -26,8 +26,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-outfit)", "system-ui", "sans-serif"],
-        serif: ["var(--font-playfair)", "Georgia", "serif"],
+        sans: ["Quicksand", "var(--font-quicksand)", "system-ui", "sans-serif"],
+        serif: ["Quicksand", "var(--font-quicksand)", "Georgia", "serif"],
+        quicksand: ["Quicksand", "var(--font-quicksand)", "sans-serif"],
       },
       boxShadow: {
         "glow-orange": "0 0 20px -5px rgba(217, 119, 6, 0.15)",

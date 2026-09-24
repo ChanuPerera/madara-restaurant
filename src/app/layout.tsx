@@ -1,19 +1,29 @@
 import type { Metadata } from "next";
-import { Outfit, Playfair_Display } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { RESTAURANT_INFO } from "@/data/restaurantData";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 
-const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-outfit",
-  display: "swap",
-});
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
+const quicksand = localFont({
+  src: [
+    {
+      path: "../../public/fonts/quicksand-latin.woff2",
+      weight: "300 700",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/quicksand-latin-ext.woff2",
+      weight: "300 700",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/quicksand-vietnamese.woff2",
+      weight: "300 700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-quicksand",
   display: "swap",
 });
 
@@ -183,7 +193,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${outfit.variable} ${playfair.variable}`}>
+    <html lang="en" className={`${quicksand.variable} ${quicksand.className}`}>
       <head>
         <script
           type="application/ld+json"
