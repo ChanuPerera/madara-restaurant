@@ -8,6 +8,7 @@ import {
   MENU_CATEGORIES, 
   RESTAURANT_INFO
 } from "@/data/restaurantData";
+import { useMenuItems } from "@/services/menuService";
 import { useLanguage } from "@/context/LanguageContext";
 import ModernNavbar from "@/components/modern/ModernNavbar";
 import ModernFooter from "@/components/modern/ModernFooter";
@@ -18,17 +19,19 @@ import {
   ChevronRight, 
   Info,
   ArrowLeft,
-  Phone
+  Phone,
+  Radio
 } from "lucide-react";
 
 export default function MenuCatalogClient() {
   const { language } = useLanguage();
+  const { items: liveMenuItems, isLive } = useMenuItems();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
 
-  // Restaurant menu items only (No catering packages)
+  // Restaurant menu items mapped from Firebase Firestore (with fallback)
   const cardItems = useMemo(() => {
-    return MENU_ITEMS.map((item) => ({
+    return liveMenuItems.map((item) => ({
       id: item.id,
       name: item.name,
       sinhalaName: item.sinhalaName,
@@ -44,7 +47,7 @@ export default function MenuCatalogClient() {
       tags: item.tags,
       allergens: item.allergens || []
     }));
-  }, []);
+  }, [liveMenuItems]);
 
   // Filtered items based on active category & search
   const filteredItems = useMemo(() => {
@@ -132,12 +135,12 @@ export default function MenuCatalogClient() {
           </div>
         </section>
 
-        {/* Dynamic Category Filter Chips */}
+        {/* Dynamic Category Filter Chips & Live Indicator */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
           <div className="flex items-center gap-2 justify-center flex-wrap">
             {MENU_CATEGORIES.map((cat) => {
               const isSelected = selectedCategory === cat.id;
-              const count = cat.id === "all" ? MENU_ITEMS.length : MENU_ITEMS.filter(i => i.category === cat.id).length;
+              const count = cat.id === "all" ? liveMenuItems.length : liveMenuItems.filter(i => i.category === cat.id).length;
               return (
                 <button
                   key={cat.id}
@@ -156,6 +159,14 @@ export default function MenuCatalogClient() {
               );
             })}
           </div>
+          {isLive && (
+            <div className="flex justify-center mt-3">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200/80 shadow-2xs">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>{language === "si" ? "සජීවී CMS මෙනුව සක්‍රියයි" : "Live CMS Menu Active"}</span>
+              </span>
+            </div>
+          )}
         </section>
 
         {/* Product Cards Grid */}

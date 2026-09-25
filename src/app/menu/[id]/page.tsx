@@ -10,6 +10,7 @@ import {
   MenuItem,
   CateringPackageDetail
 } from "@/data/restaurantData";
+import { getDishFallbackImage } from "@/utils/menuUtils";
 import ProductDetailClient, { UnifiedProduct } from "./ProductDetailClient";
 
 interface PageProps {
@@ -64,7 +65,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   let imageUrl = "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&q=80";
   if (isRest) {
-    imageUrl = (item as MenuItem).image;
+    const dish = item as MenuItem;
+    imageUrl = dish.image?.trim() || getDishFallbackImage(dish.category, dish.subCategory);
   } else {
     const cat = CATERING_CATEGORIES.find((c) => c.id === (item as CateringPackageDetail).categoryId);
     if (cat) imageUrl = cat.image;

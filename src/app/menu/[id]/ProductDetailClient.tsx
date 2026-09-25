@@ -10,6 +10,7 @@ import {
   RESTAURANT_INFO,
   CATERING_CATEGORIES
 } from "@/data/restaurantData";
+import { getDishFallbackImage } from "@/services/menuService";
 import { useLanguage } from "@/context/LanguageContext";
 import ModernNavbar from "@/components/modern/ModernNavbar";
 import ModernFooter from "@/components/modern/ModernFooter";
@@ -66,10 +67,11 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
     ? selectedPortion.label
     : (isRestaurant ? (item as MenuItem).portion : `Min ${(item as CateringPackageDetail).minGuests} Guests Required`);
 
-  // Image source
+  // Image source (with fallback if empty)
   let imageUrl = "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&q=80";
   if (isRestaurant) {
-    imageUrl = (item as MenuItem).image;
+    const dish = item as MenuItem;
+    imageUrl = dish.image?.trim() || getDishFallbackImage(dish.category, dish.subCategory);
   } else {
     const cat = CATERING_CATEGORIES.find(c => c.id === (item as CateringPackageDetail).categoryId);
     if (cat) imageUrl = cat.image;
@@ -403,8 +405,10 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
                 const relTitle = language === "si" && relItem.sinhalaName ? relItem.sinhalaName : (relIsRest ? (relItem as MenuItem).name : (relItem as CateringPackageDetail).packageName);
                 const relPrice = relIsRest ? `Rs. ${(relItem as MenuItem).priceLKR.toLocaleString()}/=` : (relItem as CateringPackageDetail).priceDisplay;
                 let relImg = "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80";
-                if (relIsRest) relImg = (relItem as MenuItem).image;
-                else {
+                if (relIsRest) {
+                  const m = relItem as MenuItem;
+                  relImg = m.image?.trim() || getDishFallbackImage(m.category, m.subCategory);
+                } else {
                   const cat = CATERING_CATEGORIES.find(c => c.id === (relItem as CateringPackageDetail).categoryId);
                   if (cat) relImg = cat.image;
                 }

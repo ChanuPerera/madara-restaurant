@@ -4,10 +4,12 @@ import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import { MENU_ITEMS } from "@/data/restaurantData";
+import { useMenuItems } from "@/services/menuService";
 import { ArrowRight, ChevronRight } from "lucide-react";
 
 export default function ModernMenuSection() {
   const { language } = useLanguage();
+  const { items: liveMenuItems } = useMenuItems();
   const [activeTab, setActiveTab] = useState<string>("all");
 
   const tabs = [
@@ -20,10 +22,10 @@ export default function ModernMenuSection() {
   // 8 items display max
   const filteredItems = useMemo(() => {
     if (activeTab === "all") {
-      return MENU_ITEMS.slice(0, 8);
+      return liveMenuItems.slice(0, 8);
     }
-    return MENU_ITEMS.filter((item) => item.category === activeTab).slice(0, 8);
-  }, [activeTab]);
+    return liveMenuItems.filter((item) => item.category === activeTab).slice(0, 8);
+  }, [activeTab, liveMenuItems]);
 
   return (
     <section id="menu" className="py-20 bg-white border-b border-stone-200/80 scroll-mt-20">

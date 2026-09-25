@@ -1,0 +1,1794 @@
+[
+  {
+    "id": "fr-bas-veg",
+    "name": "Vegetable Fried Rice (Basmathi)",
+    "sinhalaName": "එළවළු ෆ්‍රයිඩ් රයිස් (බස්මති)",
+    "category": "rice",
+    "categoryLabel": "Rice",
+    "subCategory": "Fried Rice (Basmathi)",
+    "priceLKR": 550,
+    "priceDisplay": "Rs. 550 – 1,550/=",
+    "description": "Steamed basmathi rice tossed with mixed vegetables.",
+    "portion": "S: 550 | M: 1,000 | L: 1,550",
+    "portions": [
+      {
+        "size": "S",
+        "label": "Small Portion (S)",
+        "priceLKR": 550
+      },
+      {
+        "size": "M",
+        "label": "Medium Portion (M)",
+        "priceLKR": 1000
+      },
+      {
+        "size": "L",
+        "label": "Large Portion (L)",
+        "priceLKR": 1550
+      }
+    ],
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Basmathi",
+      "Vegetable",
+      "Fried Rice"
+    ],
+    "allergens": [
+      "Sesame",
+      "Soy",
+      "Gluten"
+    ],
+    "isVegetarian": true
+  },
+  {
+    "id": "fr-bas-egg",
+    "name": "Egg Fried Rice (Basmathi)",
+    "sinhalaName": "බිත්තර ෆ්‍රයිඩ් රයිස් (බස්මති)",
+    "category": "rice",
+    "categoryLabel": "Rice",
+    "subCategory": "Fried Rice (Basmathi)",
+    "priceLKR": 670,
+    "priceDisplay": "Rs. 670 – 1,800/=",
+    "description": "Steamed basmathi rice tossed with scrambled egg pieces.",
+    "portion": "S: 670 | M: 1,250 | L: 1,800",
+    "portions": [
+      {
+        "size": "S",
+        "label": "Small Portion (S)",
+        "priceLKR": 670
+      },
+      {
+        "size": "M",
+        "label": "Medium Portion (M)",
+        "priceLKR": 1250
+      },
+      {
+        "size": "L",
+        "label": "Large Portion (L)",
+        "priceLKR": 1800
+      }
+    ],
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Basmathi",
+      "Egg",
+      "Fried Rice"
+    ],
+    "allergens": [
+      "Egg",
+      "Sesame",
+      "Soy",
+      "Gluten"
+    ]
+  },
+  {
+    "id": "fr-bas-chicken",
+    "name": "Chicken Fried Rice (Basmathi)",
+    "sinhalaName": "චිකන් ෆ්‍රයිඩ් රයිස් (බස්මති)",
+    "category": "rice",
+    "categoryLabel": "Rice",
+    "subCategory": "Fried Rice (Basmathi)",
+    "priceLKR": 700,
+    "priceDisplay": "Rs. 700 – 2,000/=",
+    "description": "Steamed basmathi rice tossed with diced chicken.",
+    "portion": "S: 700 | M: 1,350 | L: 2,000",
+    "portions": [
+      {
+        "size": "S",
+        "label": "Small Portion (S)",
+        "priceLKR": 700
+      },
+      {
+        "size": "M",
+        "label": "Medium Portion (M)",
+        "priceLKR": 1350
+      },
+      {
+        "size": "L",
+        "label": "Large Portion (L)",
+        "priceLKR": 2000
+      }
+    ],
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Basmathi",
+      "Chicken",
+      "Fried Rice"
+    ],
+    "allergens": [
+      "Sesame",
+      "Soy",
+      "Gluten"
+    ]
+  },
+  {
+    "id": "fr-bas-seafood",
+    "name": "Seafood Fried Rice (Basmathi)",
+    "sinhalaName": "සීෆුඩ් ෆ්‍රයිඩ් රයිස් (බස්මති)",
+    "category": "rice",
+    "categoryLabel": "Rice",
+    "subCategory": "Fried Rice (Basmathi)",
+    "priceLKR": 800,
+    "priceDisplay": "Rs. 800 – 2,200/=",
+    "description": "Steamed basmathi rice tossed with mixed seafood fish, prawn and cuttlefish.",
+    "portion": "S: 800 | M: 1,550 | L: 2,200",
+    "portions": [
+      {
+        "size": "S",
+        "label": "Small Portion (S)",
+        "priceLKR": 800
+      },
+      {
+        "size": "M",
+        "label": "Medium Portion (M)",
+        "priceLKR": 1550
+      },
+      {
+        "size": "L",
+        "label": "Large Portion (L)",
+        "priceLKR": 2200
+      }
+    ],
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Basmathi",
+      "Seafood",
+      "Fish, Prawn & Cuttlefish"
+    ],
+    "allergens": [
+      "Seafood/Crustaceans",
+      "Sesame",
+      "Soy",
+      "Gluten"
+    ]
+  },
+  {
+    "id": "fr-bas-mix",
+    "name": "Mix Fried Rice (Basmathi)",
+    "sinhalaName": "මික්ස් ෆ්‍රයිඩ් රයිස් (බස්මති)",
+    "category": "rice",
+    "categoryLabel": "Rice",
+    "subCategory": "Fried Rice (Basmathi)",
+    "priceLKR": 850,
+    "priceDisplay": "Rs. 850 – 2,350/=",
+    "description": "Steamed basmathi rice combined with a mix of seafood, chicken and sausages and egg.",
+    "portion": "S: 850 | M: 1,700 | L: 2,350",
+    "portions": [
+      {
+        "size": "S",
+        "label": "Small Portion (S)",
+        "priceLKR": 850
+      },
+      {
+        "size": "M",
+        "label": "Medium Portion (M)",
+        "priceLKR": 1700
+      },
+      {
+        "size": "L",
+        "label": "Large Portion (L)",
+        "priceLKR": 2350
+      }
+    ],
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Basmathi",
+      "Mixed Proteins",
+      "Chef Special"
+    ],
+    "allergens": [
+      "Egg",
+      "Seafood/Crustaceans",
+      "Sesame",
+      "Soy",
+      "Gluten"
+    ]
+  },
+  {
+    "id": "fr-bas-nasi",
+    "name": "Nasi Goreng (Basmathi)",
+    "sinhalaName": "නාසි ගෝරෙන් (බස්මති)",
+    "category": "rice",
+    "categoryLabel": "Rice",
+    "subCategory": "Fried Rice (Basmathi)",
+    "priceLKR": 850,
+    "priceDisplay": "Rs. 850 – 2,350/=",
+    "description": "Indonesian-style steamed rice with a sweet-savory chili paste flavor profile.",
+    "portion": "S: 850 | M: 1,700 | L: 2,350",
+    "portions": [
+      {
+        "size": "S",
+        "label": "Small Portion (S)",
+        "priceLKR": 850
+      },
+      {
+        "size": "M",
+        "label": "Medium Portion (M)",
+        "priceLKR": 1700
+      },
+      {
+        "size": "L",
+        "label": "Large Portion (L)",
+        "priceLKR": 2350
+      }
+    ],
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Indonesian Style",
+      "Spicy Sweet",
+      "Nasi Goreng"
+    ],
+    "allergens": [
+      "Egg",
+      "Seafood/Crustaceans (paste)",
+      "Sesame",
+      "Soy",
+      "Gluten",
+      "Pineapple"
+    ]
+  },
+  {
+    "id": "fr-ks-veg",
+    "name": "Vegetable Fried Rice (Kiri Samba)",
+    "sinhalaName": "එළවළු ෆ්‍රයිඩ් රයිස් (කිරි සම්බා)",
+    "category": "rice",
+    "categoryLabel": "Rice",
+    "subCategory": "Fried Rice (Kiri Samba)",
+    "priceLKR": 450,
+    "priceDisplay": "Rs. 450 – 1,350/=",
+    "description": "Traditional short-grain Kiri Samba rice stir-fried with mixed vegetables.",
+    "portion": "S: 450 | M: 800 | L: 1,350",
+    "portions": [
+      {
+        "size": "S",
+        "label": "Small Portion (S)",
+        "priceLKR": 450
+      },
+      {
+        "size": "M",
+        "label": "Medium Portion (M)",
+        "priceLKR": 800
+      },
+      {
+        "size": "L",
+        "label": "Large Portion (L)",
+        "priceLKR": 1350
+      }
+    ],
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Kiri Samba",
+      "Vegetable",
+      "Short Grain"
+    ],
+    "allergens": [
+      "Sesame",
+      "Soy",
+      "Gluten"
+    ],
+    "isVegetarian": true
+  },
+  {
+    "id": "fr-ks-egg",
+    "name": "Egg Fried Rice (Kiri Samba)",
+    "sinhalaName": "බිත්තර ෆ්‍රයිඩ් රයිස් (කිරි සම්බා)",
+    "category": "rice",
+    "categoryLabel": "Rice",
+    "subCategory": "Fried Rice (Kiri Samba)",
+    "priceLKR": 550,
+    "priceDisplay": "Rs. 550 – 1,420/=",
+    "description": "Short-grain Kiri Samba fried rice with scrambled egg.",
+    "portion": "S: 550 | M: 1,050 | L: 1,420",
+    "portions": [
+      {
+        "size": "S",
+        "label": "Small Portion (S)",
+        "priceLKR": 550
+      },
+      {
+        "size": "M",
+        "label": "Medium Portion (M)",
+        "priceLKR": 1050
+      },
+      {
+        "size": "L",
+        "label": "Large Portion (L)",
+        "priceLKR": 1420
+      }
+    ],
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Kiri Samba",
+      "Egg",
+      "Short Grain"
+    ],
+    "allergens": [
+      "Egg",
+      "Sesame",
+      "Soy",
+      "Gluten"
+    ]
+  },
+  {
+    "id": "fr-ks-chicken",
+    "name": "Chicken Fried Rice (Kiri Samba)",
+    "sinhalaName": "චිකන් ෆ්‍රයිඩ් රයිස් (කිරි සම්බා)",
+    "category": "rice",
+    "categoryLabel": "Rice",
+    "subCategory": "Fried Rice (Kiri Samba)",
+    "priceLKR": 600,
+    "priceDisplay": "Rs. 600 – 1,800/=",
+    "description": "Short-grain Kiri Samba fried rice with chicken pieces.",
+    "portion": "S: 600 | M: 1,200 | L: 1,800",
+    "portions": [
+      {
+        "size": "S",
+        "label": "Small Portion (S)",
+        "priceLKR": 600
+      },
+      {
+        "size": "M",
+        "label": "Medium Portion (M)",
+        "priceLKR": 1200
+      },
+      {
+        "size": "L",
+        "label": "Large Portion (L)",
+        "priceLKR": 1800
+      }
+    ],
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Kiri Samba",
+      "Chicken",
+      "Short Grain"
+    ],
+    "allergens": [
+      "Sesame",
+      "Soy",
+      "Gluten"
+    ]
+  },
+  {
+    "id": "fr-ks-seafood",
+    "name": "Seafood Fried Rice (Kiri Samba)",
+    "sinhalaName": "සීෆුඩ් ෆ්‍රයිඩ් රයිස් (කිරි සම්බා)",
+    "category": "rice",
+    "categoryLabel": "Rice",
+    "subCategory": "Fried Rice (Kiri Samba)",
+    "priceLKR": 700,
+    "priceDisplay": "Rs. 700 – 2,050/=",
+    "description": "Short-grain Kiri Samba fried rice with mixed seafood.",
+    "portion": "S: 700 | M: 1,350 | L: 2,050",
+    "portions": [
+      {
+        "size": "S",
+        "label": "Small Portion (S)",
+        "priceLKR": 700
+      },
+      {
+        "size": "M",
+        "label": "Medium Portion (M)",
+        "priceLKR": 1350
+      },
+      {
+        "size": "L",
+        "label": "Large Portion (L)",
+        "priceLKR": 2050
+      }
+    ],
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Kiri Samba",
+      "Seafood",
+      "Short Grain"
+    ],
+    "allergens": [
+      "Seafood/Crustaceans",
+      "Sesame",
+      "Soy",
+      "Gluten"
+    ]
+  },
+  {
+    "id": "fr-ks-mix",
+    "name": "Mix Fried Rice (Kiri Samba)",
+    "sinhalaName": "මික්ස් ෆ්‍රයිඩ් රයිස් (කිරි සම්බා)",
+    "category": "rice",
+    "categoryLabel": "Rice",
+    "subCategory": "Fried Rice (Kiri Samba)",
+    "priceLKR": 750,
+    "priceDisplay": "Rs. 750 – 2,100/=",
+    "description": "Short-grain Kiri Samba fried rice loaded with mixed proteins - chicken, seafood, sausage and egg.",
+    "portion": "S: 750 | M: 1,550 | L: 2,100",
+    "portions": [
+      {
+        "size": "S",
+        "label": "Small Portion (S)",
+        "priceLKR": 750
+      },
+      {
+        "size": "M",
+        "label": "Medium Portion (M)",
+        "priceLKR": 1550
+      },
+      {
+        "size": "L",
+        "label": "Large Portion (L)",
+        "priceLKR": 2100
+      }
+    ],
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Kiri Samba",
+      "Mixed Proteins",
+      "Short Grain"
+    ],
+    "allergens": [
+      "Egg",
+      "Seafood/Crustaceans",
+      "Sesame",
+      "Soy",
+      "Gluten"
+    ]
+  },
+  {
+    "id": "chopsy-veg",
+    "name": "Vegetable Rice (Chopsy)",
+    "sinhalaName": "එළවළු චොප්සි බත් (බස්මති)",
+    "category": "rice",
+    "categoryLabel": "Rice",
+    "subCategory": "Chopsy Rice (Basmathi)",
+    "priceLKR": 1450,
+    "priceDisplay": "Rs. 1,450 – 2,250/=",
+    "description": "Basmathi rice served with a vegetable chop suey gravy/stir-fry.",
+    "portion": "M: 1,450 | L: 2,250",
+    "portions": [
+      {
+        "size": "M",
+        "label": "Medium Portion (M)",
+        "priceLKR": 1450
+      },
+      {
+        "size": "L",
+        "label": "Large Portion (L)",
+        "priceLKR": 2250
+      }
+    ],
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Chopsy Rice",
+      "Vegetable",
+      "Chop Suey Gravy"
+    ],
+    "allergens": [
+      "Soy",
+      "Gluten",
+      "Sesame"
+    ],
+    "isVegetarian": true
+  },
+  {
+    "id": "chopsy-chicken",
+    "name": "Chicken Rice (Chopsy)",
+    "sinhalaName": "චිකන් චොප්සි බත් (බස්මති)",
+    "category": "rice",
+    "categoryLabel": "Rice",
+    "subCategory": "Chopsy Rice (Basmathi)",
+    "priceLKR": 1550,
+    "priceDisplay": "Rs. 1,550 – 2,350/=",
+    "description": "Basmathi rice served with chicken chop suey gravy/stir-fry.",
+    "portion": "M: 1,550 | L: 2,350",
+    "portions": [
+      {
+        "size": "M",
+        "label": "Medium Portion (M)",
+        "priceLKR": 1550
+      },
+      {
+        "size": "L",
+        "label": "Large Portion (L)",
+        "priceLKR": 2350
+      }
+    ],
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Chopsy Rice",
+      "Chicken",
+      "Chop Suey Gravy"
+    ],
+    "allergens": [
+      "Soy",
+      "Gluten",
+      "Sesame"
+    ]
+  },
+  {
+    "id": "chopsy-mix",
+    "name": "Mix Rice (Chopsy)",
+    "sinhalaName": "මික්ස් චොප්සි බත් (බස්මති)",
+    "category": "rice",
+    "categoryLabel": "Rice",
+    "subCategory": "Chopsy Rice (Basmathi)",
+    "priceLKR": 1650,
+    "priceDisplay": "Rs. 1,650 – 2,500/=",
+    "description": "Basmathi rice served with mixed meat chop suey gravy/stir-fry.",
+    "portion": "M: 1,650 | L: 2,500",
+    "portions": [
+      {
+        "size": "M",
+        "label": "Medium Portion (M)",
+        "priceLKR": 1650
+      },
+      {
+        "size": "L",
+        "label": "Large Portion (L)",
+        "priceLKR": 2500
+      }
+    ],
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Chopsy Rice",
+      "Mixed Meat",
+      "Chop Suey Gravy"
+    ],
+    "allergens": [
+      "Soy",
+      "Gluten",
+      "Seafood",
+      "Sesame"
+    ]
+  },
+  {
+    "id": "chopsy-seafood",
+    "name": "Seafood Rice (Chopsy)",
+    "sinhalaName": "සීෆුඩ් චොප්සි බත් (බස්මති)",
+    "category": "rice",
+    "categoryLabel": "Rice",
+    "subCategory": "Chopsy Rice (Basmathi)",
+    "priceLKR": 1600,
+    "priceDisplay": "Rs. 1,600 – 2,450/=",
+    "description": "Basmathi rice served with seafood chop suey gravy/stir-fry.",
+    "portion": "M: 1,600 | L: 2,450",
+    "portions": [
+      {
+        "size": "M",
+        "label": "Medium Portion (M)",
+        "priceLKR": 1600
+      },
+      {
+        "size": "L",
+        "label": "Large Portion (L)",
+        "priceLKR": 2450
+      }
+    ],
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Chopsy Rice",
+      "Seafood",
+      "Chop Suey Gravy"
+    ],
+    "allergens": [
+      "Seafood/Crustaceans",
+      "Soy",
+      "Gluten"
+    ]
+  },
+  {
+    "id": "madara-special-single",
+    "name": "Madara Special Fried Rice — Single Portion",
+    "sinhalaName": "මදාරා ස්පෙෂල් ෆ්‍රයිඩ් රයිස් — තනි පෝෂන්",
+    "category": "rice",
+    "categoryLabel": "Rice",
+    "subCategory": "Madara Special Fried Rice",
+    "priceLKR": 1200,
+    "priceDisplay": "Rs. 1,200/=",
+    "description": "Special chopsy rice with a unique gravy, include 1 chicken drumstick.",
+    "portion": "Single Portion (1 Drumstick)",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Madara Special",
+      "Single Portion",
+      "1 Drumstick"
+    ],
+    "allergens": [
+      "Poultry",
+      "Soy",
+      "Gluten",
+      "Sesame",
+      "Seafood"
+    ],
+    "isChefsSpecial": true
+  },
+  {
+    "id": "madara-special-medium",
+    "name": "Madara Special Fried Rice — Medium Portion",
+    "sinhalaName": "මදාරා ස්පෙෂල් ෆ්‍රයිඩ් රයිස් — මධ්‍යම පෝෂන්",
+    "category": "rice",
+    "categoryLabel": "Rice",
+    "subCategory": "Madara Special Fried Rice",
+    "priceLKR": 2400,
+    "priceDisplay": "Rs. 2,400/=",
+    "description": "Special chopsy rice with a unique gravy, include 2 chicken drumsticks.",
+    "portion": "Medium Portion (2 Drumsticks)",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Madara Special",
+      "Medium Portion",
+      "2 Drumsticks"
+    ],
+    "allergens": [
+      "Poultry",
+      "Soy",
+      "Gluten",
+      "Sesame",
+      "Seafood"
+    ],
+    "isChefsSpecial": true
+  },
+  {
+    "id": "madara-special-large",
+    "name": "Madara Special Fried Rice — Large Portion",
+    "sinhalaName": "මදාරා ස්පෙෂල් ෆ්‍රයිඩ් රයිස් — ලාර්ජ් පෝෂන්",
+    "category": "rice",
+    "categoryLabel": "Rice",
+    "subCategory": "Madara Special Fried Rice",
+    "priceLKR": 4500,
+    "priceDisplay": "Rs. 4,500/=",
+    "description": "Special chopsy rice with a unique gravy, include 4 chicken drumsticks.",
+    "portion": "Large Portion (4 Drumsticks)",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Madara Special",
+      "Large Portion",
+      "4 Drumsticks"
+    ],
+    "allergens": [
+      "Poultry",
+      "Soy",
+      "Gluten",
+      "Sesame",
+      "Seafood"
+    ],
+    "isChefsSpecial": true
+  },
+  {
+    "id": "kottu-veg",
+    "name": "Vegetable Koththu",
+    "sinhalaName": "එළවළු කොත්තු",
+    "category": "kottu",
+    "categoryLabel": "Kottu",
+    "subCategory": "Koththu & Cheese Koththu",
+    "priceLKR": 450,
+    "priceDisplay": "Rs. 450 – 1,000/=",
+    "description": "Chopped roti tossed with vegetables and spices.",
+    "portion": "S: 450 | M: 700 | L: 1,000",
+    "portions": [
+      {
+        "size": "S",
+        "label": "Small Portion (S)",
+        "priceLKR": 450
+      },
+      {
+        "size": "M",
+        "label": "Medium Portion (M)",
+        "priceLKR": 700
+      },
+      {
+        "size": "L",
+        "label": "Large Portion (L)",
+        "priceLKR": 1000
+      }
+    ],
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Koththu",
+      "Vegetable",
+      "Street Food"
+    ],
+    "allergens": [
+      "Gluten (wheat)",
+      "Egg"
+    ]
+  },
+  {
+    "id": "kottu-egg",
+    "name": "Egg Koththu",
+    "sinhalaName": "බිත්තර කොත්තු",
+    "category": "kottu",
+    "categoryLabel": "Kottu",
+    "subCategory": "Koththu & Cheese Koththu",
+    "priceLKR": 600,
+    "priceDisplay": "Rs. 600 – 1,300/=",
+    "description": "Chopped roti tossed with egg, vegetables, and spices.",
+    "portion": "S: 600 | M: 900 | L: 1,300",
+    "portions": [
+      {
+        "size": "S",
+        "label": "Small Portion (S)",
+        "priceLKR": 600
+      },
+      {
+        "size": "M",
+        "label": "Medium Portion (M)",
+        "priceLKR": 900
+      },
+      {
+        "size": "L",
+        "label": "Large Portion (L)",
+        "priceLKR": 1300
+      }
+    ],
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Koththu",
+      "Egg",
+      "Classic"
+    ],
+    "allergens": [
+      "Egg",
+      "Gluten (wheat)"
+    ]
+  },
+  {
+    "id": "kottu-chicken",
+    "name": "Chicken Koththu",
+    "sinhalaName": "චිකන් කොත්තු",
+    "category": "kottu",
+    "categoryLabel": "Kottu",
+    "subCategory": "Koththu & Cheese Koththu",
+    "priceLKR": 700,
+    "priceDisplay": "Rs. 700 – 1,550/=",
+    "description": "Chopped roti tossed with chicken, vegetables, and spices.",
+    "portion": "S: 700 | M: 1,050 | L: 1,550",
+    "portions": [
+      {
+        "size": "S",
+        "label": "Small Portion (S)",
+        "priceLKR": 700
+      },
+      {
+        "size": "M",
+        "label": "Medium Portion (M)",
+        "priceLKR": 1050
+      },
+      {
+        "size": "L",
+        "label": "Large Portion (L)",
+        "priceLKR": 1550
+      }
+    ],
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Koththu",
+      "Chicken",
+      "Best Seller"
+    ],
+    "allergens": [
+      "Gluten (wheat)",
+      "Chicken",
+      "Egg"
+    ]
+  },
+  {
+    "id": "kottu-seafood",
+    "name": "Seafood Koththu",
+    "sinhalaName": "සීෆුඩ් කොත්තු",
+    "category": "kottu",
+    "categoryLabel": "Kottu",
+    "subCategory": "Koththu & Cheese Koththu",
+    "priceLKR": 800,
+    "priceDisplay": "Rs. 800 – 1,750/=",
+    "description": "Chopped roti tossed with seafood, vegetables, and spices.",
+    "portion": "S: 800 | M: 1,300 | L: 1,750",
+    "portions": [
+      {
+        "size": "S",
+        "label": "Small Portion (S)",
+        "priceLKR": 800
+      },
+      {
+        "size": "M",
+        "label": "Medium Portion (M)",
+        "priceLKR": 1300
+      },
+      {
+        "size": "L",
+        "label": "Large Portion (L)",
+        "priceLKR": 1750
+      }
+    ],
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Koththu",
+      "Seafood",
+      "Spicy"
+    ],
+    "allergens": [
+      "Seafood/Crustaceans",
+      "Gluten (wheat)",
+      "Egg"
+    ]
+  },
+  {
+    "id": "kottu-dolphin",
+    "name": "Dolphin Koththu",
+    "sinhalaName": "ඩොල්ෆින් කොත්තු",
+    "category": "kottu",
+    "categoryLabel": "Kottu",
+    "subCategory": "Koththu & Cheese Koththu",
+    "priceLKR": 800,
+    "priceDisplay": "Rs. 800 – 1,750/=",
+    "description": "Chopped roti specialty mix (local style).",
+    "portion": "S: 800 | M: 1,350 | L: 1,750",
+    "portions": [
+      {
+        "size": "S",
+        "label": "Small Portion (S)",
+        "priceLKR": 800
+      },
+      {
+        "size": "M",
+        "label": "Medium Portion (M)",
+        "priceLKR": 1350
+      },
+      {
+        "size": "L",
+        "label": "Large Portion (L)",
+        "priceLKR": 1750
+      }
+    ],
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Koththu",
+      "Dolphin Style",
+      "Local Specialty"
+    ],
+    "allergens": [
+      "Gluten (wheat)",
+      "Chicken",
+      "Egg"
+    ]
+  },
+  {
+    "id": "kottu-cheese-chicken",
+    "name": "Cheese Koththu — Chicken",
+    "sinhalaName": "චීස් කොත්තු — චිකන්",
+    "category": "kottu",
+    "categoryLabel": "Kottu",
+    "subCategory": "Koththu & Cheese Koththu",
+    "priceLKR": 950,
+    "priceDisplay": "Rs. 950 – 1,700/=",
+    "description": "Chicken koththu finished with melted cheese.",
+    "portion": "S: 950 | M: 1,350 | L: 1,700",
+    "portions": [
+      {
+        "size": "S",
+        "label": "Small Portion (S)",
+        "priceLKR": 950
+      },
+      {
+        "size": "M",
+        "label": "Medium Portion (M)",
+        "priceLKR": 1350
+      },
+      {
+        "size": "L",
+        "label": "Large Portion (L)",
+        "priceLKR": 1700
+      }
+    ],
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Cheese Koththu",
+      "Chicken",
+      "Cheesy"
+    ],
+    "allergens": [
+      "Dairy (cheese)",
+      "Gluten (wheat)",
+      "Chicken",
+      "Egg"
+    ]
+  },
+  {
+    "id": "kottu-cheese-seafood",
+    "name": "Cheese Koththu — Seafood",
+    "sinhalaName": "චීස් කොත්තු — සීෆුඩ්",
+    "category": "kottu",
+    "categoryLabel": "Kottu",
+    "subCategory": "Koththu & Cheese Koththu",
+    "priceLKR": 1100,
+    "priceDisplay": "Rs. 1,100 – 1,900/=",
+    "description": "Seafood koththu finished with melted cheese.",
+    "portion": "S: 1,100 | M: 1,450 | L: 1,900",
+    "portions": [
+      {
+        "size": "S",
+        "label": "Small Portion (S)",
+        "priceLKR": 1100
+      },
+      {
+        "size": "M",
+        "label": "Medium Portion (M)",
+        "priceLKR": 1450
+      },
+      {
+        "size": "L",
+        "label": "Large Portion (L)",
+        "priceLKR": 1900
+      }
+    ],
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Cheese Koththu",
+      "Seafood",
+      "Cheesy"
+    ],
+    "allergens": [
+      "Dairy (cheese)",
+      "Seafood/Crustaceans",
+      "Gluten (wheat)",
+      "Egg"
+    ]
+  },
+  {
+    "id": "side-chicken-devel",
+    "name": "Chicken Devel",
+    "sinhalaName": "චිකන් ඩෙවල්",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Chicken",
+    "priceLKR": 1300,
+    "priceDisplay": "Rs. 1,300/=",
+    "description": "Tossed semi-dry spicy/sweet devilled chicken.",
+    "portion": "Full Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Chicken",
+      "Devilled",
+      "Spicy Sweet"
+    ],
+    "allergens": [
+      "Soy",
+      "Gluten"
+    ],
+    "isByobPairing": true
+  },
+  {
+    "id": "side-chicken-stew",
+    "name": "Chicken Stew",
+    "sinhalaName": "චිකන් ස්ටූ",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Chicken",
+    "priceLKR": 1300,
+    "priceDisplay": "Rs. 1,300/=",
+    "description": "Mild broth-based chicken curry/stew.",
+    "portion": "Full Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Chicken",
+      "Stew",
+      "Mild Curry"
+    ],
+    "allergens": [
+      "Mustard",
+      "Soy"
+    ]
+  },
+  {
+    "id": "side-chicken-garlic",
+    "name": "Chicken Fried with Garlic",
+    "sinhalaName": "සුදු ළූණු සමග බැදපු චිකන්",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Chicken",
+    "priceLKR": 1300,
+    "priceDisplay": "Rs. 1,300/=",
+    "description": "Deep-fried chicken tossed with garlic bits.",
+    "portion": "Full Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Chicken",
+      "Garlic Fried",
+      "Crispy"
+    ],
+    "allergens": [
+      "Gluten",
+      "Soy"
+    ],
+    "isByobPairing": true
+  },
+  {
+    "id": "side-chicken-chilli-cashew",
+    "name": "Chilli Chicken with Cashew",
+    "sinhalaName": "කජු සමග චිලි චිකන්",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Chicken",
+    "priceLKR": 1500,
+    "priceDisplay": "Rs. 1,500/=",
+    "description": "Stir-fried chili chicken cooked with cashew nuts.",
+    "portion": "Full Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Chilli Chicken",
+      "Cashew Nuts",
+      "Stir Fry"
+    ],
+    "allergens": [
+      "Tree nuts (cashew)",
+      "Soy",
+      "Gluten"
+    ]
+  },
+  {
+    "id": "side-fish-fried",
+    "name": "Fried Fish",
+    "sinhalaName": "බැදපු මාළු",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Fish",
+    "priceLKR": 1500,
+    "priceDisplay": "Rs. 1,500/=",
+    "description": "Deep-fried battered fish pieces.",
+    "portion": "Full Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Fish",
+      "Fried",
+      "Battered"
+    ],
+    "allergens": [
+      "Fish",
+      "Gluten"
+    ]
+  },
+  {
+    "id": "side-fish-hot-garlic",
+    "name": "Hot Garlic Fish",
+    "sinhalaName": "හොට් ගාලික් ෆිෂ්",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Fish",
+    "priceLKR": 1700,
+    "priceDisplay": "Rs. 1,700/=",
+    "description": "Fish tossed in a punchy hot garlic sauce.",
+    "portion": "Full Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Fish",
+      "Hot Garlic",
+      "Spicy"
+    ],
+    "allergens": [
+      "Fish",
+      "Soy",
+      "Gluten"
+    ]
+  },
+  {
+    "id": "side-fish-devilled",
+    "name": "Devilled Fish",
+    "sinhalaName": "මාළු ඩෙවල්",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Fish",
+    "priceLKR": 1600,
+    "priceDisplay": "Rs. 1,600/=",
+    "description": "Batter Fried fish tossed in a spicy-sweet devilled sauce.",
+    "portion": "Full Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Fish",
+      "Devilled",
+      "Spicy Sweet"
+    ],
+    "allergens": [
+      "Fish",
+      "Soy",
+      "Gluten"
+    ]
+  },
+  {
+    "id": "side-fish-handallo-500g",
+    "name": "Fried Handallo (500g)",
+    "sinhalaName": "බැදපු හඳැල්ලෝ (500g)",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Fish",
+    "priceLKR": 1900,
+    "priceDisplay": "Rs. 1,900/=",
+    "description": "Deep-fried small local fish (500g portion).",
+    "portion": "500g Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Handallo",
+      "Small Fish",
+      "500g"
+    ],
+    "allergens": [
+      "Fish",
+      "Gluten"
+    ],
+    "isByobPairing": true
+  },
+  {
+    "id": "side-fish-handallo-1kg",
+    "name": "Fried Handallo (1kg)",
+    "sinhalaName": "බැදපු හඳැල්ලෝ (1kg)",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Fish",
+    "priceLKR": 3750,
+    "priceDisplay": "Rs. 3,750/=",
+    "description": "Deep-fried small local fish (1kg portion).",
+    "portion": "1kg Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Handallo",
+      "Small Fish",
+      "1kg"
+    ],
+    "allergens": [
+      "Fish"
+    ],
+    "isByobPairing": true
+  },
+  {
+    "id": "side-fish-stew",
+    "name": "Fish Stew",
+    "sinhalaName": "මාළු ස්ටූ",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Fish",
+    "priceLKR": 3750,
+    "priceDisplay": "Rs. 3,750/=",
+    "description": "Mild gravy fish stew portion.",
+    "portion": "Full Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Fish",
+      "Stew",
+      "Mild Gravy"
+    ],
+    "allergens": [
+      "Fish",
+      "Mustard"
+    ]
+  },
+  {
+    "id": "side-mix-grill-small",
+    "name": "Mix Grill — Small Portion",
+    "sinhalaName": "මික්ස් ග්‍රිල් — කුඩා පෝෂන්",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Mix Grill",
+    "priceLKR": 3500,
+    "priceDisplay": "Rs. 3,500/=",
+    "description": "Includes Crab, Chicken, Cuttlefish, Pork, Prawn, Bullseye Egg, Sausage, Baby Paraw, Potato, Sweet Corn.",
+    "portion": "Small Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Mix Grill",
+      "Seafood & Meat",
+      "Small Platter"
+    ],
+    "allergens": [
+      "Crustaceans/Seafood",
+      "Egg",
+      "Pork",
+      "Poultry",
+      "Gluten/Soy"
+    ],
+    "isChefsSpecial": true
+  },
+  {
+    "id": "side-mix-grill-large",
+    "name": "Mix Grill — Large Portion",
+    "sinhalaName": "මික්ස් ග්‍රිල් — විශාල පෝෂන්",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Mix Grill",
+    "priceLKR": 4990,
+    "priceDisplay": "Rs. 4,990/=",
+    "description": "Includes Crab, Chicken, Cuttlefish, Pork, Prawn, Bullseye Egg, Sausage, Baby Paraw, Potato, Sweet Corn.",
+    "portion": "Large Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Mix Grill",
+      "Seafood & Meat",
+      "Grand Platter"
+    ],
+    "allergens": [
+      "Crustaceans/Seafood",
+      "Egg",
+      "Pork",
+      "Poultry",
+      "Gluten/Soy"
+    ],
+    "isChefsSpecial": true
+  },
+  {
+    "id": "side-pork-devilled",
+    "name": "Devilled Pork",
+    "sinhalaName": "පෝර්ක් ඩෙවල්",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Pork",
+    "priceLKR": 1550,
+    "priceDisplay": "Rs. 1,550/=",
+    "description": "Pork tossed in a spicy-sweet devilled sauce.",
+    "portion": "Full Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Pork",
+      "Devilled",
+      "Spicy Sweet"
+    ],
+    "allergens": [
+      "Pork",
+      "Soy",
+      "Gluten"
+    ],
+    "isByobPairing": true
+  },
+  {
+    "id": "side-pork-fried",
+    "name": "Fried Pork",
+    "sinhalaName": "බැදපු පෝර්ක්",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Pork",
+    "priceLKR": 1400,
+    "priceDisplay": "Rs. 1,400/=",
+    "description": "Fried pork pieces.",
+    "portion": "Full Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Pork",
+      "Fried",
+      "Crispy"
+    ],
+    "allergens": [
+      "Pork"
+    ]
+  },
+  {
+    "id": "side-pork-black-curry",
+    "name": "Black Pork Curry",
+    "sinhalaName": "කළු ඌරු මස් කරිය",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Pork",
+    "priceLKR": 1600,
+    "priceDisplay": "Rs. 1,600/=",
+    "description": "Traditional dark roasted spice pork curry.",
+    "portion": "Full Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Pork",
+      "Black Curry",
+      "Traditional"
+    ],
+    "allergens": [
+      "Pork"
+    ]
+  },
+  {
+    "id": "side-pork-stew",
+    "name": "Pork Stew",
+    "sinhalaName": "පෝර්ක් ස්ටූ",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Pork",
+    "priceLKR": 1600,
+    "priceDisplay": "Rs. 1,600/=",
+    "description": "Slow-cooked mild pork stew/gravy.",
+    "portion": "Full Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Pork",
+      "Stew",
+      "Slow Cooked"
+    ],
+    "allergens": [
+      "Pork",
+      "Mustard"
+    ]
+  },
+  {
+    "id": "side-egg-bullseye",
+    "name": "Bullseye",
+    "sinhalaName": "බුල්සයි බිත්තරය",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Egg",
+    "priceLKR": 100,
+    "priceDisplay": "Rs. 100/=",
+    "description": "Fried sunny-side-up egg.",
+    "portion": "Single Egg",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Egg",
+      "Sunny Side Up",
+      "Bullseye"
+    ],
+    "allergens": [
+      "Egg"
+    ]
+  },
+  {
+    "id": "side-egg-sl-omelet",
+    "name": "Sri Lankan Omelet",
+    "sinhalaName": "ශ්‍රී ලාංකේය ඔම්ලට්",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Egg",
+    "priceLKR": 450,
+    "priceDisplay": "Rs. 450/=",
+    "description": "Spiced local-style beaten egg omelet with onions and chili.",
+    "portion": "Full Omelet",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Egg",
+      "Omelet",
+      "Sri Lankan Style"
+    ],
+    "allergens": [
+      "Egg"
+    ]
+  },
+  {
+    "id": "side-egg-cheese-omelet",
+    "name": "Cheese Omelet",
+    "sinhalaName": "චීස් ඔම්ලට්",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Egg",
+    "priceLKR": 850,
+    "priceDisplay": "Rs. 850/=",
+    "description": "Egg omelet folded with cheese.",
+    "portion": "Full Omelet",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Egg",
+      "Cheese Omelet",
+      "Cheesy"
+    ],
+    "allergens": [
+      "Egg",
+      "Dairy"
+    ]
+  },
+  {
+    "id": "side-egg-chicken-omelet",
+    "name": "Chicken Omelet",
+    "sinhalaName": "චිකන් ඔම්ලට්",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Egg",
+    "priceLKR": 950,
+    "priceDisplay": "Rs. 950/=",
+    "description": "Egg omelet loaded with minced/small chicken bits.",
+    "portion": "Full Omelet",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Egg",
+      "Chicken Omelet"
+    ],
+    "allergens": [
+      "Egg",
+      "Poultry"
+    ]
+  },
+  {
+    "id": "side-egg-seafood-omelet",
+    "name": "Seafood Omelet",
+    "sinhalaName": "සීෆුඩ් ඔම්ලට්",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Egg",
+    "priceLKR": 1100,
+    "priceDisplay": "Rs. 1,100/=",
+    "description": "Egg omelet loaded with seafood bits.",
+    "portion": "Full Omelet",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Egg",
+      "Seafood Omelet"
+    ],
+    "allergens": [
+      "Egg",
+      "Seafood/Crustaceans"
+    ]
+  },
+  {
+    "id": "side-veg-boiled",
+    "name": "Boiled Vegetables",
+    "sinhalaName": "තම්බන ලද එළවළු",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Vegetable",
+    "priceLKR": 950,
+    "priceDisplay": "Rs. 950/=",
+    "description": "Plain boiled mixed vegetables.",
+    "portion": "Full Plate",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Vegetable",
+      "Boiled",
+      "Healthy"
+    ],
+    "allergens": [
+      "None"
+    ],
+    "isVegetarian": true
+  },
+  {
+    "id": "side-veg-chopsy",
+    "name": "Vegetable Chopsy",
+    "sinhalaName": "එළවළු චොප්සි",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Vegetable",
+    "priceLKR": 900,
+    "priceDisplay": "Rs. 900/=",
+    "description": "Stir-fried mixed vegetable gravy/chopsuey.",
+    "portion": "Full Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Vegetable",
+      "Chop Suey",
+      "Stir Fry"
+    ],
+    "allergens": [
+      "Soy",
+      "Gluten"
+    ],
+    "isVegetarian": true
+  },
+  {
+    "id": "side-veg-hbm",
+    "name": "Hot Butter Mushroom",
+    "sinhalaName": "හොට් බටර් මෂ්රූම්",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Vegetable",
+    "priceLKR": 800,
+    "priceDisplay": "Rs. 800/=",
+    "description": "Battered mushrooms tossed in hot butter sauce.",
+    "portion": "Full Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Mushroom",
+      "Hot Butter",
+      "Crispy"
+    ],
+    "allergens": [
+      "Dairy (butter)",
+      "Gluten",
+      "Soy",
+      "Egg"
+    ],
+    "isVegetarian": true,
+    "isByobPairing": true
+  },
+  {
+    "id": "side-veg-tempura",
+    "name": "Vegetable Tempura",
+    "sinhalaName": "වේජ් ටෙම්පුරා",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Vegetable",
+    "priceLKR": 950,
+    "priceDisplay": "Rs. 950/=",
+    "description": "Batter-fried mixed vegetable fritters.",
+    "portion": "Full Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Vegetable",
+      "Tempura",
+      "Fritters"
+    ],
+    "allergens": [
+      "Gluten",
+      "Egg"
+    ],
+    "isVegetarian": true
+  },
+  {
+    "id": "side-veg-onion-rings",
+    "name": "Onion Rings",
+    "sinhalaName": "ලූණු රින්ග්ස්",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Vegetable",
+    "priceLKR": 400,
+    "priceDisplay": "Rs. 400/=",
+    "description": "Deep-fried battered onion rings.",
+    "portion": "Full Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Onion Rings",
+      "Snack",
+      "Crispy"
+    ],
+    "allergens": [
+      "Gluten"
+    ],
+    "isVegetarian": true
+  },
+  {
+    "id": "side-veg-fries",
+    "name": "French Fries",
+    "sinhalaName": "ෆ්‍රෙන්ච් ෆ්‍රයිස්",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Vegetable",
+    "priceLKR": 950,
+    "priceDisplay": "Rs. 950/=",
+    "description": "Deep-fried potato fries.",
+    "portion": "Full Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "French Fries",
+      "Potato",
+      "Crispy"
+    ],
+    "allergens": [
+      "None"
+    ],
+    "isVegetarian": true
+  },
+  {
+    "id": "side-veg-cucumber",
+    "name": "Peeled Cucumber",
+    "sinhalaName": "පිපිඤ්ඤා ප්ලේට් එක",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Vegetable",
+    "priceLKR": 200,
+    "priceDisplay": "Rs. 200/=",
+    "description": "Fresh sliced/peeled cucumber plate.",
+    "portion": "Fresh Plate",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Cucumber",
+      "Fresh Salad"
+    ],
+    "allergens": [
+      "None"
+    ],
+    "isVegetarian": true
+  },
+  {
+    "id": "side-seafood-devilled-prawn",
+    "name": "Devilled Prawn",
+    "sinhalaName": "ඉස්සෝ ඩෙවල්",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Seafood",
+    "priceLKR": 1450,
+    "priceDisplay": "Rs. 1,450/=",
+    "description": "Prawns tossed in a spicy-sweet devilled sauce.",
+    "portion": "Full Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Prawns",
+      "Devilled",
+      "Spicy Sweet"
+    ],
+    "allergens": [
+      "Crustaceans (prawn)",
+      "Soy",
+      "Gluten"
+    ]
+  },
+  {
+    "id": "side-seafood-hbp",
+    "name": "Hot Butter Prawn",
+    "sinhalaName": "හොට් බටර් ඉස්සෝ",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Seafood",
+    "priceLKR": 1550,
+    "priceDisplay": "Rs. 1,550/=",
+    "description": "Battered prawns tossed in hot butter sauce.",
+    "portion": "Full Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Prawns",
+      "Hot Butter",
+      "Battered"
+    ],
+    "allergens": [
+      "Crustaceans (prawn)",
+      "Dairy (butter)",
+      "Gluten",
+      "Soy"
+    ],
+    "isByobPairing": true
+  },
+  {
+    "id": "side-seafood-hbc",
+    "name": "Hot Butter Cuttlefish",
+    "sinhalaName": "හොට් බටර් දැල්ලෝ",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Seafood",
+    "priceLKR": 1550,
+    "priceDisplay": "Rs. 1,550/=",
+    "description": "Battered cuttlefish tossed in hot butter sauce.",
+    "portion": "Full Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Cuttlefish",
+      "Hot Butter",
+      "Crowd Favorite"
+    ],
+    "allergens": [
+      "Seafood (cuttlefish)",
+      "Dairy (butter)",
+      "Gluten",
+      "Soy"
+    ],
+    "isByobPairing": true
+  },
+  {
+    "id": "side-seafood-prawn-stew",
+    "name": "Prawn Stew",
+    "sinhalaName": "ඉස්සෝ ස්ටූ",
+    "category": "other",
+    "categoryLabel": "Other",
+    "subCategory": "Side Dishes — Seafood",
+    "priceLKR": 1650,
+    "priceDisplay": "Rs. 1,650/=",
+    "description": "Prawn gravy stew.",
+    "portion": "Full Portion",
+    "image": "",
+    "imageSrc": "",
+    "imageSRC": "",
+    "tags": [
+      "Prawns",
+      "Stew",
+      "Gravy"
+    ],
+    "allergens": [
+      "Crustaceans (prawn)"
+    ]
+  }
+]
