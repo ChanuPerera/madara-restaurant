@@ -26,11 +26,28 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Cinzel';
+  src: url('/fonts/cinzel-latin.woff2') format('woff2');
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cinzel';
+  src: url('/fonts/cinzel-latin-ext.woff2') format('woff2');
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   :root {
     --font-quicksand: 'Quicksand', sans-serif;
+    --font-cinzel: 'Cinzel', serif;
     --font-outfit: 'Quicksand', sans-serif;
-    --font-playfair: 'Quicksand', sans-serif;
+    --font-playfair: 'Cinzel', serif;
     --bg-dark: #111318;
     --bg-surface: #181a22;
     --bg-surface-elevated: #1e202a;
@@ -70,6 +87,10 @@
     position: relative;
     selection-background-color: #d97706;
     selection-color: #ffffff;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-serif, .font-cinzel, .title-font {
+    font-family: 'Cinzel', var(--font-cinzel), Georgia, serif;
   }
 
   *, *::before, *::after {

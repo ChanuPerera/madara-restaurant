@@ -38,6 +38,7 @@ export interface MenuItem {
   image: string;
   tags: string[];
   allergens?: string[];
+  isAvailable?: boolean;
 }
 
 

@@ -27,7 +27,8 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["Quicksand", "var(--font-quicksand)", "system-ui", "sans-serif"],
-        serif: ["Quicksand", "var(--font-quicksand)", "Georgia", "serif"],
+        serif: ["Cinzel", "var(--font-cinzel)", "Georgia", "serif"],
+        cinzel: ["Cinzel", "var(--font-cinzel)", "Georgia", "serif"],
         quicksand: ["Quicksand", "var(--font-quicksand)", "sans-serif"],
       },
       boxShadow: {

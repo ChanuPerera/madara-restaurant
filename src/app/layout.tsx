@@ -27,6 +27,23 @@ const quicksand = localFont({
   display: "swap",
 });
 
+const cinzel = localFont({
+  src: [
+    {
+      path: "../../public/fonts/cinzel-latin.woff2",
+      weight: "400 900",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/cinzel-latin-ext.woff2",
+      weight: "400 900",
+      style: "normal",
+    },
+  ],
+  variable: "--font-cinzel",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Madara Restaurant & Catering Homagama | Wedding, Alms Giving, Bana & Event Catering",
   description:
@@ -193,7 +210,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${quicksand.variable} ${quicksand.className}`}>
+    <html lang="en" className={`${quicksand.variable} ${cinzel.variable} ${quicksand.className}`}>
       <head>
         <script
           type="application/ld+json"

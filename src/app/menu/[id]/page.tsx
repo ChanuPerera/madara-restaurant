@@ -10,41 +10,47 @@ import {
   MenuItem,
   CateringPackageDetail
 } from "@/data/restaurantData";
+import { 
+  fetchMenuItemsFromFirebase, 
+  getProductByIdFromSources, 
+  getRelatedProductsFromSources,
+  UnifiedProduct 
+} from "@/services/menuData";
 import { getDishFallbackImage } from "@/utils/menuUtils";
-import ProductDetailClient, { UnifiedProduct } from "./ProductDetailClient";
+import ProductDetailClient from "./ProductDetailClient";
 
 interface PageProps {
   params: Promise<{ id: string }>;
 }
 
-// Generate static HTML paths for all food items & catering packages
+// Generate static HTML paths for all food items (from Firebase + static) & catering packages
 export async function generateStaticParams() {
-  const menuIds = MENU_ITEMS.map((item) => ({ id: item.id }));
-  const cateringIds = CATERING_PACKAGES.map((pkg) => ({ id: pkg.id }));
-  return [...menuIds, ...cateringIds];
-}
+  const menuIdsSet = new Set<string>();
 
-// Helper to look up unified product
-function getProductById(id: string): UnifiedProduct | null {
-  const menuItem = MENU_ITEMS.find((m) => m.id === id);
-  if (menuItem) {
-    const catName = MENU_CATEGORIES.find((c) => c.id === menuItem.category)?.name || "Restaurant Dish";
-    return { kind: "restaurant", data: menuItem, categoryName: catName };
+  // 1. Add static fallback IDs
+  MENU_ITEMS.forEach((item) => menuIdsSet.add(item.id));
+
+  // 2. Add all actual menu items from Firebase
+  try {
+    const liveItems = await fetchMenuItemsFromFirebase(true);
+    if (liveItems && liveItems.length > 0) {
+      liveItems.forEach((item) => menuIdsSet.add(item.id));
+    }
+  } catch (err) {
+    console.warn("Could not fetch Firebase items during generateStaticParams:", err);
   }
 
-  const cateringPkg = CATERING_PACKAGES.find((c) => c.id === id);
-  if (cateringPkg) {
-    const catName = cateringPkg.categoryName;
-    return { kind: "catering", data: cateringPkg, categoryName: catName };
-  }
+  // 3. Add catering package IDs
+  const cateringIds = CATERING_PACKAGES.map((pkg) => pkg.id);
+  cateringIds.forEach((id) => menuIdsSet.add(id));
 
-  return null;
+  return Array.from(menuIdsSet).map((id) => ({ id }));
 }
 
-// Dynamic SEO Metadata Generation
+// Dynamic SEO Metadata Generation using Firebase actual item data
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params;
-  const product = getProductById(id);
+  const product = await getProductByIdFromSources(id);
 
   if (!product) {
     return {
@@ -116,7 +122,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ProductDetailPage({ params }: PageProps) {
   const { id } = await params;
-  const product = getProductById(id);
+  const product = await getProductByIdFromSources(id);
 
   if (!product) {
     notFound();
@@ -130,7 +136,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
   let imageUrl = "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&q=80";
   if (isRest) {
-    imageUrl = (item as MenuItem).image;
+    imageUrl = (item as MenuItem).image?.trim() || getDishFallbackImage((item as MenuItem).category, (item as MenuItem).subCategory);
   } else {
     const cat = CATERING_CATEGORIES.find((c) => c.id === (item as CateringPackageDetail).categoryId);
     if (cat) imageUrl = cat.image;
@@ -148,7 +154,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
           "@type": "Offer",
           price: priceValue,
           priceCurrency: "LKR",
-          availability: "https://schema.org/InStock",
+          availability: (item as MenuItem).isAvailable !== false ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
           url: `https://madararestaurant.lk/menu/${id}`,
         },
         suitableForDiet: (item as MenuItem).isVegetarian ? "https://schema.org/VegetarianDiet" : undefined,
@@ -173,33 +179,9 @@ export default async function ProductDetailPage({ params }: PageProps) {
         },
       };
 
-  // Find related products in the same category (excluding current)
+  // Find related products in the same category (powered by live Firebase menu data)
   const categoryId = isRest ? (item as MenuItem).category : (item as CateringPackageDetail).categoryId;
-  
-  const relatedRestaurant = MENU_ITEMS
-    .filter((m) => m.id !== id && m.category === categoryId)
-    .map((m) => {
-      const catName = MENU_CATEGORIES.find((c) => c.id === m.category)?.name || "Restaurant Dish";
-      return { kind: "restaurant" as const, data: m, categoryName: catName };
-    });
-
-  const relatedCatering = CATERING_PACKAGES
-    .filter((c) => c.id !== id && c.categoryId === categoryId)
-    .map((c) => ({ kind: "catering" as const, data: c, categoryName: c.categoryName }));
-
-  const relatedProducts: UnifiedProduct[] = [...relatedRestaurant, ...relatedCatering].slice(0, 3);
-
-  // If less than 3, pick any popular items
-  if (relatedProducts.length < 3) {
-    const filler = MENU_ITEMS
-      .filter((m) => m.id !== id && !relatedProducts.some((r) => r.data.id === m.id))
-      .slice(0, 3 - relatedProducts.length)
-      .map((m) => {
-        const catName = MENU_CATEGORIES.find((c) => c.id === m.category)?.name || "Restaurant Dish";
-        return { kind: "restaurant" as const, data: m, categoryName: catName };
-      });
-    relatedProducts.push(...filler);
-  }
+  const relatedProducts = await getRelatedProductsFromSources(id, categoryId, product.kind);
 
   return (
     <>
