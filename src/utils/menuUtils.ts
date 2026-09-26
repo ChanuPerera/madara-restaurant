@@ -45,8 +45,20 @@ export const mapFirestoreDocToMenuItem = (docData: any, docId: string): MenuItem
   const rawImage = docData.imageUrl || docData.imageSrc || docData.imageSRC || docData.image || "";
   const finalImage = rawImage.trim() !== "" ? rawImage.trim() : getDishFallbackImage(docData.category, docData.subCategory);
 
+  // Determine allergens
+  let allergens: string[] = [];
+  if (Array.isArray(docData.allergens) && docData.allergens.length > 0) {
+    allergens = docData.allergens.map((a: any) => String(a).trim()).filter(Boolean);
+  } else if (typeof docData.allergenDetails === "string" && docData.allergenDetails.trim()) {
+    allergens = docData.allergenDetails
+      .replace(/^Contains\s+/i, "")
+      .split(/[,&]/)
+      .map((s: string) => s.trim())
+      .filter(Boolean);
+  }
+
   return {
-    id: docId || docData.id,
+    id: String(docData.id || docId || "unknown"),
     name: docData.name || "Untitled Dish",
     sinhalaName: docData.sinhalaName || "",
     category: docData.category || "other",
@@ -62,6 +74,7 @@ export const mapFirestoreDocToMenuItem = (docData: any, docId: string): MenuItem
     isByobPairing: Boolean(docData.isByobPairing),
     image: finalImage,
     tags: Array.isArray(docData.tags) ? docData.tags : [],
-    allergens: Array.isArray(docData.allergens) ? docData.allergens : [],
+    allergens: allergens,
+    isAvailable: docData.isAvailable !== false,
   };
 };
