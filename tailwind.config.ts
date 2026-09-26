@@ -28,7 +28,11 @@ const config: Config = {
       fontFamily: {
         sans: ["Quicksand", "var(--font-quicksand)", "system-ui", "sans-serif"],
         serif: ["Quicksand", "var(--font-quicksand)", "Georgia", "serif"],
+        mono: ["Quicksand", "var(--font-quicksand)", "monospace"],
         quicksand: ["Quicksand", "var(--font-quicksand)", "sans-serif"],
+        display: ["Quicksand", "var(--font-quicksand)", "sans-serif"],
+        heading: ["Quicksand", "var(--font-quicksand)", "sans-serif"],
+        body: ["Quicksand", "var(--font-quicksand)", "sans-serif"],
       },
       boxShadow: {
         "glow-orange": "0 0 20px -5px rgba(217, 119, 6, 0.15)",

@@ -6,25 +6,11 @@ import { LanguageProvider } from "@/context/LanguageContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 
 const quicksand = localFont({
-  src: [
-    {
-      path: "../../public/fonts/quicksand-latin.woff2",
-      weight: "300 700",
-      style: "normal",
-    },
-    {
-      path: "../../public/fonts/quicksand-latin-ext.woff2",
-      weight: "300 700",
-      style: "normal",
-    },
-    {
-      path: "../../public/fonts/quicksand-vietnamese.woff2",
-      weight: "300 700",
-      style: "normal",
-    },
-  ],
+  src: "../../public/fonts/quicksand-latin.woff2",
   variable: "--font-quicksand",
   display: "swap",
+  weight: "300 700",
+  fallback: ["Quicksand", "system-ui", "sans-serif"],
 });
 
 export const metadata: Metadata = {
