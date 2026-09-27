@@ -4,9 +4,9 @@ import AboutPageClient from "./AboutPageClient";
 import { RESTAURANT_INFO } from "@/data/restaurantData";
 
 export const metadata: Metadata = {
-  title: "About Us & Contact Info | Madara Restaurant & Catering Homagama",
+  title: "About Madara Restaurant & Catering Services Homagama",
   description:
-    "Learn about Madara Restaurant & Catering Services in Homagama. Over 650 delivered catering events, 100% food safety standards, executive master chefs, and 50,000+ satisfied guests. Call 0704535815.",
+    "Discover Homagama's trusted catering specialist with over 650 successful events. Master chefs, hygienic preparation, and full event hospitality. Contact us today!",
   keywords: [
     "About Madara Restaurant",
     "Madara Catering Homagama",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     canonical: "https://madararestaurant.lk/about/",
   },
   openGraph: {
-    title: "About Us & Contact Info | Madara Restaurant & Catering Homagama",
+    title: "About Madara Restaurant & Catering Services Homagama",
     description:
       "Homagama's premier catering and dining destination. 100% hygienic prep, master chefs, and 650+ delivered catering events.",
     url: "https://madararestaurant.lk/about/",
@@ -37,27 +37,64 @@ export const metadata: Metadata = {
     locale: "en_LK",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Madara Restaurant & Catering Services Homagama",
+    description:
+      "Homagama's premier catering specialist with over 650 successful events. Contact us today!",
+    images: [
+      "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&h=630&q=80",
+    ],
+  },
 };
 
 export default function AboutPage() {
   const jsonLdAbout = {
     "@context": "https://schema.org",
-    "@type": "FoodEstablishment",
-    name: "Madara Restaurant & Catering Services Homagama",
-    image: "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&q=80",
-    description: "Homagama's premier restaurant and event catering service.",
-    url: "https://madararestaurant.lk/about/",
-    telephone: RESTAURANT_INFO.phone,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: RESTAURANT_INFO.address,
-      addressLocality: "Homagama",
-      addressRegion: "Western Province",
-      addressCountry: "LK",
-    },
-    servesCuisine: ["Sri Lankan", "Chinese", "Western", "Mongolian Wok", "Indian"],
-    hasMenu: "https://madararestaurant.lk/menu/",
-    priceRange: "LKR 700 - LKR 3,850",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://madararestaurant.lk/",
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "About Us",
+            "item": "https://madararestaurant.lk/about/",
+          },
+        ],
+      },
+      {
+        "@type": "FoodEstablishment",
+        "name": "Madara Restaurant & Catering Services Homagama",
+        "image":
+          "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&q=80",
+        "description": "Homagama's premier restaurant and event catering service.",
+        "url": "https://madararestaurant.lk/about/",
+        "telephone": RESTAURANT_INFO.phone,
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": RESTAURANT_INFO.address,
+          "addressLocality": "Homagama",
+          "addressRegion": "Western Province",
+          "addressCountry": "LK",
+        },
+        "servesCuisine": [
+          "Sri Lankan",
+          "Chinese",
+          "Western",
+          "Mongolian Wok",
+          "Indian",
+        ],
+        "hasMenu": "https://madararestaurant.lk/menu/",
+        "priceRange": "LKR 700 - LKR 3,850",
+      },
+    ],
   };
 
   return (

@@ -70,17 +70,17 @@ export default function ModernCateringView() {
       <section id="menu-book" className="py-12 px-4 sm:px-6 lg:px-8 scroll-mt-20">
         <div className="max-w-7xl mx-auto space-y-3 text-center mb-6">
 
-          <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900">
+          <h1 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900">
             {language === "si" ? (
               <>
                 පිටු පෙරලා බලන්න: <span className="text-amber-600">කේටරින් මෙනුව</span>
               </>
             ) : (
               <>
-                Flip Through the Pages: <span className="text-amber-600">Catering Menu</span>
+                Catering Packages & <span className="text-amber-600">Event Menus</span>
               </>
             )}
-          </h2>
+          </h1>
 
           <p className="max-w-xl mx-auto text-xs sm:text-sm text-stone-500 leading-relaxed">
             {language === "si"

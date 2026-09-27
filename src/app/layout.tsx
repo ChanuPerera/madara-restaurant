@@ -31,9 +31,12 @@ const cinzel = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Madara Restaurant & Catering Homagama | Wedding, Alms Giving, Bana & Event Catering",
+  title: {
+    default: "Madara Restaurant & Catering Homagama | Event Catering",
+    template: "%s | Madara Restaurant Homagama",
+  },
   description:
-    "Homagama's premier catering specialist for Weddings, Alms Giving (දානමය පිංකම්), Bana & Dane, Funeral meals, Birthday celebrations & Corporate events. Live Mongolian wok stations, charcoal BBQ, takeaway & fine dining at 191/B/1, Athurugiriya Road, Homagama. Call 0704535815 / 0736535815.",
+    "Homagama's premier catering service for Weddings, Dane, Funerals, and Parties. Enjoy live Mongolian wok, BBQ, and dine-in. Book your catering menu today!",
   keywords: [
     "Madara Restaurant",
     "Madara Catering Homagama",
@@ -54,17 +57,17 @@ export const metadata: Metadata = {
   publisher: "Madara Restaurant",
   metadataBase: new URL("https://madararestaurant.lk"),
   alternates: {
-    canonical: "https://madararestaurant.lk",
+    canonical: "https://madararestaurant.lk/",
   },
   icons: {
     icon: "/icon.svg",
     apple: "/icon.svg",
   },
   openGraph: {
-    title: "Madara Restaurant & Catering Homagama | Grand Event Catering Specialist",
+    title: "Madara Restaurant & Catering Homagama | Event Catering Specialist",
     description:
-      "Catering for Weddings, Alms Giving (Dane), Funerals, Birthdays & Corporate Events. Live Action Stations, Dine-in & BYOB dining in Homagama, Sri Lanka. Call 0704535815.",
-    url: "https://madararestaurant.lk",
+      "Homagama's premier catering service for Weddings, Dane, Funerals, and Parties. Live Action Stations, Dine-in & BYOB. Call 0704535815.",
+    url: "https://madararestaurant.lk/",
     siteName: "Madara Restaurant & Catering",
     images: [
       {
@@ -80,8 +83,11 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Madara Restaurant & Catering Homagama | Event Catering Specialist",
-    description: "Catering for Weddings, Alms Giving, Funerals, Birthdays & Corporate Events in Homagama. Call 0704535815.",
-    images: ["https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&h=630&q=80"],
+    description:
+      "Homagama's premier catering service for Weddings, Dane, Funerals, and Parties. Live Action Stations, Dine-in & BYOB. Call 0704535815.",
+    images: [
+      "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&h=630&q=80",
+    ],
   },
   robots: {
     index: true,
@@ -107,16 +113,39 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "WebSite",
+        "@id": "https://madararestaurant.lk/#website",
+        "url": "https://madararestaurant.lk/",
+        "name": "Madara Restaurant & Catering Homagama",
+        "description": "Homagama's premier catering service and multi-cuisine restaurant",
+        "inLanguage": ["en", "si"],
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://madararestaurant.lk/menu/?q={search_term_string}",
+          "query-input": "required name=search_term_string",
+        },
+      },
+      {
         "@type": "Restaurant",
         "@id": "https://madararestaurant.lk/#restaurant",
         "name": RESTAURANT_INFO.name,
         "image": "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&q=80",
         "telephone": RESTAURANT_INFO.phone,
         "email": RESTAURANT_INFO.email,
-        "url": "https://madararestaurant.lk",
-        "menu": "https://madararestaurant.lk/#menu",
-        "servesCuisine": ["Sri Lankan", "Asian Fusion", "Mongolian Wok", "Charcoal BBQ", "Traditional Dane Curries", "Indian", "Seafood"],
+        "url": "https://madararestaurant.lk/",
+        "menu": "https://madararestaurant.lk/menu/",
+        "servesCuisine": [
+          "Sri Lankan",
+          "Asian Fusion",
+          "Mongolian Wok",
+          "Charcoal BBQ",
+          "Traditional Dane Curries",
+          "Indian",
+          "Seafood",
+        ],
         "priceRange": "LKR 750 - LKR 4,950",
+        "currenciesAccepted": "LKR",
+        "paymentAccepted": "Cash, Credit Card, Bank Transfer",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "191/B/1, Athurugiriya Road",

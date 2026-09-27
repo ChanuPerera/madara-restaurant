@@ -4,9 +4,9 @@ import CateringPageClient from "./CateringPageClient";
 import { RESTAURANT_INFO } from "@/data/restaurantData";
 
 export const metadata: Metadata = {
-  title: "Catering Menus & Tailored Packages | Madara Restaurant Homagama",
+  title: "Catering Packages & Event Menus | Madara Restaurant",
   description:
-    "Explore full catering menus and tailored per-person packages for Weddings, Birthdays, Alms Giving (Dane), Funerals, and Corporate events in Homagama & Colombo. Includes buffet warmers, table setup, and party stewards. Book via WhatsApp.",
+    "All-inclusive event catering menus with per-person packages, buffet warmers, tableware, and steward services in Homagama & Colombo. Book via WhatsApp today!",
   keywords: [
     "Catering Menu Homagama",
     "Catering Packages Homagama",
@@ -23,9 +23,9 @@ export const metadata: Metadata = {
     canonical: "https://madararestaurant.lk/catering/",
   },
   openGraph: {
-    title: "Catering Menus & Tailored Packages | Madara Restaurant Homagama",
+    title: "Catering Packages & Event Menus | Madara Restaurant",
     description:
-      "All-inclusive event catering menus with itemized selections, transparent per-person pricing, buffet warmers, tableware, and steward services across Homagama and Colombo.",
+      "All-inclusive event catering menus with itemized selections, transparent per-person pricing, buffet warmers, tableware, and steward services across Homagama.",
     url: "https://madararestaurant.lk/catering/",
     siteName: "Madara Restaurant & Catering",
     images: [
@@ -39,27 +39,59 @@ export const metadata: Metadata = {
     locale: "en_LK",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Catering Packages & Event Menus | Madara Restaurant",
+    description:
+      "All-inclusive event catering menus with per-person packages, buffet warmers, and stewards in Homagama & Colombo. Book today!",
+    images: [
+      "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&h=630&q=80",
+    ],
+  },
 };
 
 export default function CateringPage() {
   const jsonLdCatering = {
     "@context": "https://schema.org",
-    "@type": "FoodEstablishment",
-    name: "Madara Restaurant & Catering Services Homagama",
-    image: "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&q=80",
-    description: "Homagama's premier catering service for Weddings, Alms Giving (Dane), Funerals, Birthdays, and Corporate Events.",
-    url: "https://madararestaurant.lk/catering/",
-    telephone: RESTAURANT_INFO.phone,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: RESTAURANT_INFO.address,
-      addressLocality: "Homagama",
-      addressRegion: "Western Province",
-      addressCountry: "LK",
-    },
-    servesCuisine: ["Sri Lankan", "Chinese", "Western", "Mongolian Wok", "BBQ"],
-    hasMenu: "https://madararestaurant.lk/catering/",
-    priceRange: "LKR 700 - LKR 3,850",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://madararestaurant.lk/",
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Catering Packages & Menus",
+            "item": "https://madararestaurant.lk/catering/",
+          },
+        ],
+      },
+      {
+        "@type": "FoodEstablishment",
+        "name": "Madara Restaurant & Catering Services Homagama",
+        "image":
+          "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&q=80",
+        "description":
+          "Homagama's premier catering service for Weddings, Alms Giving (Dane), Funerals, Birthdays, and Corporate Events.",
+        "url": "https://madararestaurant.lk/catering/",
+        "telephone": RESTAURANT_INFO.phone,
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": RESTAURANT_INFO.address,
+          "addressLocality": "Homagama",
+          "addressRegion": "Western Province",
+          "addressCountry": "LK",
+        },
+        "servesCuisine": ["Sri Lankan", "Chinese", "Western", "Mongolian Wok", "BBQ"],
+        "hasMenu": "https://madararestaurant.lk/catering/",
+        "priceRange": "LKR 700 - LKR 3,850",
+      },
+    ],
   };
 
   return (

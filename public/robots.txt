@@ -1,4 +1,11 @@
-User-agent: *
+User-Agent: *
 Allow: /
 
+User-Agent: Googlebot
+Allow: /
+
+User-Agent: Googlebot-Image
+Allow: /
+
+Host: https://madararestaurant.lk
 Sitemap: https://madararestaurant.lk/sitemap.xml

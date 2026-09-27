@@ -93,12 +93,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       "Sri Lanka Food Delivery",
     ],
     alternates: {
-      canonical: `https://madararestaurant.lk/menu/${id}`,
+      canonical: `https://madararestaurant.lk/menu/${id}/`,
     },
     openGraph: {
       title: seoTitle,
       description: seoDescription,
-      url: `https://madararestaurant.lk/menu/${id}`,
+      url: `https://madararestaurant.lk/menu/${id}/`,
       siteName: "Madara Restaurant & Catering",
       images: [
         {
@@ -142,42 +142,68 @@ export default async function ProductDetailPage({ params }: PageProps) {
     if (cat) imageUrl = cat.image;
   }
 
-  // Schema.org JSON-LD Structured Data
-  const jsonLdProduct = isRest
-    ? {
-        "@context": "https://schema.org",
-        "@type": "MenuItem",
-        name: title,
-        description: description,
-        image: imageUrl,
-        offers: {
-          "@type": "Offer",
-          price: priceValue,
-          priceCurrency: "LKR",
-          availability: (item as MenuItem).isAvailable !== false ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-          url: `https://madararestaurant.lk/menu/${id}`,
-        },
-        suitableForDiet: (item as MenuItem).isVegetarian ? "https://schema.org/VegetarianDiet" : undefined,
-        menuAddOn: "Buffet Setup, Welcome Drinks & Desserts available upon request",
-      }
-    : {
-        "@context": "https://schema.org",
-        "@type": "Product",
-        name: title,
-        description: description,
-        image: imageUrl,
-        brand: {
-          "@type": "Brand",
-          name: "Madara Catering Services",
-        },
-        offers: {
-          "@type": "Offer",
-          price: priceValue,
-          priceCurrency: "LKR",
-          availability: "https://schema.org/InStock",
-          url: `https://madararestaurant.lk/menu/${id}`,
-        },
-      };
+  // Schema.org JSON-LD Structured Data with BreadcrumbList
+  const jsonLdGraph = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://madararestaurant.lk/",
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": isRest ? "Food Menu" : "Catering Packages",
+            "item": isRest ? "https://madararestaurant.lk/menu/" : "https://madararestaurant.lk/catering/",
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": title,
+            "item": `https://madararestaurant.lk/menu/${id}/`,
+          },
+        ],
+      },
+      isRest
+        ? {
+            "@type": "MenuItem",
+            name: title,
+            description: description,
+            image: imageUrl,
+            offers: {
+              "@type": "Offer",
+              price: priceValue,
+              priceCurrency: "LKR",
+              availability: (item as MenuItem).isAvailable !== false ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+              url: `https://madararestaurant.lk/menu/${id}/`,
+            },
+            suitableForDiet: (item as MenuItem).isVegetarian ? "https://schema.org/VegetarianDiet" : undefined,
+            menuAddOn: "Buffet Setup, Welcome Drinks & Desserts available upon request",
+          }
+        : {
+            "@type": "Product",
+            name: title,
+            description: description,
+            image: imageUrl,
+            brand: {
+              "@type": "Brand",
+              name: "Madara Catering Services",
+            },
+            offers: {
+              "@type": "Offer",
+              price: priceValue,
+              priceCurrency: "LKR",
+              availability: "https://schema.org/InStock",
+              url: `https://madararestaurant.lk/menu/${id}/`,
+            },
+          },
+    ],
+  };
 
   // Find related products in the same category (powered by live Firebase menu data)
   const categoryId = isRest ? (item as MenuItem).category : (item as CateringPackageDetail).categoryId;
@@ -187,7 +213,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdProduct) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdGraph) }}
       />
       <ProductDetailClient product={product} relatedProducts={relatedProducts} />
     </>

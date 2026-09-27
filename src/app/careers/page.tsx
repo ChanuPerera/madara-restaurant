@@ -4,9 +4,9 @@ import { JOB_VACANCIES, RESTAURANT_INFO } from "@/data/restaurantData";
 import ModernCareersView from "@/components/modern/ModernCareersView";
 
 export const metadata: Metadata = {
-  title: "Careers & Job Vacancies | Madara Restaurant & Catering Homagama",
+  title: "Careers & Job Vacancies | Madara Restaurant Homagama",
   description:
-    "We are hiring! Join Madara Restaurant in Homagama. Immediate job vacancies for Kottu Chef, Chinese Chef, Rice & Curry Chef (Bulk Cooking), Kitchen Helper, Cleaner, and Waiter. Attractive salary & meals provided. Apply today via WhatsApp or Call 0704535815.",
+    "Join our team in Homagama. Immediate job vacancies for Chefs, Cooks, Kitchen Helpers, Cleaners & Waiters. Attractive salary and free meals. Apply online today!",
   keywords: [
     "Restaurant Jobs Homagama",
     "Kottu Chef Vacancy Homagama",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Careers & Job Vacancies | Madara Restaurant Homagama",
     description:
-      "Join our passionate culinary and catering team in Homagama. Vacancies for Kottu Chef, Chinese Chef, Rice & Curry Chef (Bulk Cooking), Kitchen Helper, Cleaner, and Waiter. Apply now!",
+      "Join our passionate culinary and catering team in Homagama. Vacancies for Chefs, Cooks, Kitchen Helpers, Cleaners, and Waiters. Apply now!",
     url: "https://madararestaurant.lk/careers/",
     siteName: "Madara Restaurant",
     images: [
@@ -39,51 +39,82 @@ export const metadata: Metadata = {
     locale: "en_LK",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Careers & Job Vacancies | Madara Restaurant Homagama",
+    description:
+      "Join our culinary team in Homagama. Vacancies for Chefs, Helpers, Cleaners & Waiters. Apply online!",
+    images: [
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&h=630&q=80",
+    ],
+  },
 };
 
 export default function CareersPage() {
-  const jsonLdJobPostings = {
+  const jsonLdData = {
     "@context": "https://schema.org",
-    "@graph": JOB_VACANCIES.map((job) => ({
-      "@type": "JobPosting",
-      "title": job.title,
-      "description": `${job.overview} Responsibilities: ${job.responsibilities.join(", ")}. Requirements: ${job.requirements.join(", ")}.`,
-      "datePosted": "2026-01-15",
-      "validThrough": "2026-12-31",
-      "employmentType": job.type === "Full-Time" ? "FULL_TIME" : "PART_TIME",
-      "hiringOrganization": {
-        "@type": "Organization",
-        "name": RESTAURANT_INFO.name,
-        "sameAs": "https://madararestaurant.lk",
-        "logo": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=500&q=80",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://madararestaurant.lk/",
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Careers & Job Vacancies",
+            "item": "https://madararestaurant.lk/careers/",
+          },
+        ],
       },
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": RESTAURANT_INFO.address,
-          "addressLocality": "Homagama",
-          "addressRegion": "Western Province",
-          "addressCountry": "LK",
+      ...JOB_VACANCIES.map((job) => ({
+        "@type": "JobPosting",
+        "title": job.title,
+        "description": `${job.overview} Responsibilities: ${job.responsibilities.join(
+          ", "
+        )}. Requirements: ${job.requirements.join(", ")}.`,
+        "datePosted": "2026-01-15",
+        "validThrough": "2026-12-31",
+        "employmentType": job.type === "Full-Time" ? "FULL_TIME" : "PART_TIME",
+        "hiringOrganization": {
+          "@type": "Organization",
+          "name": RESTAURANT_INFO.name,
+          "sameAs": "https://madararestaurant.lk",
+          "logo":
+            "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=500&q=80",
         },
-      },
-      "baseSalary": {
-        "@type": "MonetaryAmount",
-        "currency": "LKR",
-        "value": {
-          "@type": "QuantitativeValue",
-          "unitText": "MONTH",
+        "jobLocation": {
+          "@type": "Place",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": RESTAURANT_INFO.address,
+            "addressLocality": "Homagama",
+            "addressRegion": "Western Province",
+            "addressCountry": "LK",
+          },
         },
-      },
-    })),
+        "baseSalary": {
+          "@type": "MonetaryAmount",
+          "currency": "LKR",
+          "value": {
+            "@type": "QuantitativeValue",
+            "unitText": "MONTH",
+          },
+        },
+      })),
+    ],
   };
 
   return (
     <>
-      {/* Inject JobPosting JSON-LD for Search Engines */}
+      {/* Inject JobPosting & BreadcrumbList JSON-LD for Search Engines */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdJobPostings) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData) }}
       />
       <ModernCareersView />
     </>
