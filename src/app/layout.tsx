@@ -55,9 +55,9 @@ export const metadata: Metadata = {
   authors: [{ name: "Madara Restaurant & Catering Team" }],
   creator: "Madara Restaurant",
   publisher: "Madara Restaurant",
-  metadataBase: new URL("https://madararestaurant.lk"),
+  metadataBase: new URL("https://madararestaurant.com"),
   alternates: {
-    canonical: "https://madararestaurant.lk/",
+    canonical: "https://madararestaurant.com/",
   },
   icons: {
     icon: "/icon.svg",
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     title: "Madara Restaurant & Catering Homagama | Event Catering Specialist",
     description:
       "Homagama's premier catering service for Weddings, Dane, Funerals, and Parties. Live Action Stations, Dine-in & BYOB. Call 0704535815.",
-    url: "https://madararestaurant.lk/",
+    url: "https://madararestaurant.com/",
     siteName: "Madara Restaurant & Catering",
     images: [
       {
@@ -114,27 +114,29 @@ export default function RootLayout({
     "@graph": [
       {
         "@type": "WebSite",
-        "@id": "https://madararestaurant.lk/#website",
-        "url": "https://madararestaurant.lk/",
-        "name": "Madara Restaurant & Catering Homagama",
-        "description": "Homagama's premier catering service and multi-cuisine restaurant",
-        "inLanguage": ["en", "si"],
-        "potentialAction": {
+        "@id": "https://madararestaurant.com/#website",
+        url: "https://madararestaurant.com/",
+        name: "Madara Restaurant & Catering Homagama",
+        description:
+          "Homagama's premier catering service and multi-cuisine restaurant",
+        inLanguage: ["en", "si"],
+        potentialAction: {
           "@type": "SearchAction",
-          "target": "https://madararestaurant.lk/menu/?q={search_term_string}",
+          target: "https://madararestaurant.com/menu/?q={search_term_string}",
           "query-input": "required name=search_term_string",
         },
       },
       {
         "@type": "Restaurant",
-        "@id": "https://madararestaurant.lk/#restaurant",
-        "name": RESTAURANT_INFO.name,
-        "image": "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&q=80",
-        "telephone": RESTAURANT_INFO.phone,
-        "email": RESTAURANT_INFO.email,
-        "url": "https://madararestaurant.lk/",
-        "menu": "https://madararestaurant.lk/menu/",
-        "servesCuisine": [
+        "@id": "https://madararestaurant.com/#restaurant",
+        name: RESTAURANT_INFO.name,
+        image:
+          "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&q=80",
+        telephone: RESTAURANT_INFO.phone,
+        email: RESTAURANT_INFO.email,
+        url: "https://madararestaurant.com/",
+        menu: "https://madararestaurant.com/menu/",
+        servesCuisine: [
           "Sri Lankan",
           "Asian Fusion",
           "Mongolian Wok",
@@ -143,79 +145,92 @@ export default function RootLayout({
           "Indian",
           "Seafood",
         ],
-        "priceRange": "LKR 750 - LKR 4,950",
-        "currenciesAccepted": "LKR",
-        "paymentAccepted": "Cash, Credit Card, Bank Transfer",
-        "address": {
+        priceRange: "LKR 750 - LKR 4,950",
+        currenciesAccepted: "LKR",
+        paymentAccepted: "Cash, Credit Card, Bank Transfer",
+        address: {
           "@type": "PostalAddress",
-          "streetAddress": "191/B/1, Athurugiriya Road",
-          "addressLocality": "Homagama",
-          "addressRegion": "Western Province",
-          "postalCode": "10200",
-          "addressCountry": "LK",
+          streetAddress: "191/B/1, Athurugiriya Road",
+          addressLocality: "Homagama",
+          addressRegion: "Western Province",
+          postalCode: "10200",
+          addressCountry: "LK",
         },
-        "geo": {
+        geo: {
           "@type": "GeoCoordinates",
-          "latitude": 6.8436,
-          "longitude": 80.0019,
+          latitude: 6.8436,
+          longitude: 80.0019,
         },
-        "openingHoursSpecification": [
+        openingHoursSpecification: [
           {
             "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-            "opens": "07:00",
-            "closes": "22:00",
+            dayOfWeek: [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday",
+            ],
+            opens: "07:00",
+            closes: "22:00",
           },
         ],
-        "aggregateRating": {
+        aggregateRating: {
           "@type": "AggregateRating",
-          "ratingValue": "4.9",
-          "reviewCount": "650",
-          "bestRating": "5",
-          "worstRating": "1",
+          ratingValue: "4.9",
+          reviewCount: "650",
+          bestRating: "5",
+          worstRating: "1",
         },
-        "hasOfferCatalog": {
+        hasOfferCatalog: {
           "@type": "OfferCatalog",
-          "name": "Madara Restaurant & Catering Services",
-          "itemListElement": [
+          name: "Madara Restaurant & Catering Services",
+          itemListElement: [
             {
               "@type": "Offer",
-              "itemOffered": {
+              itemOffered: {
                 "@type": "Service",
-                "name": "Wedding & Homecoming Catering",
-                "description": "Grand event catering with luxury chafing displays, live action stations, and stewards.",
+                name: "Wedding & Homecoming Catering",
+                description:
+                  "Grand event catering with luxury chafing displays, live action stations, and stewards.",
               },
             },
             {
               "@type": "Offer",
-              "itemOffered": {
+              itemOffered: {
                 "@type": "Service",
-                "name": "Alms Giving & Bana Dane Catering (දානමය පිංකම්)",
-                "description": "Pious, traditional 7-curry Dane meals prepared with supreme cleanliness for Maha Sangha.",
+                name: "Alms Giving & Bana Dane Catering (දානමය පිංකම්)",
+                description:
+                  "Pious, traditional 7-curry Dane meals prepared with supreme cleanliness for Maha Sangha.",
               },
             },
             {
               "@type": "Offer",
-              "itemOffered": {
+              itemOffered: {
                 "@type": "Service",
-                "name": "Funeral & Memorial Catering",
-                "description": "Dignified, punctual catering for memorial wakes, tea service with short eats, and warm buffets.",
+                name: "Funeral & Memorial Catering",
+                description:
+                  "Dignified, punctual catering for memorial wakes, tea service with short eats, and warm buffets.",
               },
             },
             {
               "@type": "Offer",
-              "itemOffered": {
+              itemOffered: {
                 "@type": "Service",
-                "name": "Birthday Party & Corporate Catering",
-                "description": "Customizable multi-cuisine catering for birthdays, office seminars, and private gatherings.",
+                name: "Birthday Party & Corporate Catering",
+                description:
+                  "Customizable multi-cuisine catering for birthdays, office seminars, and private gatherings.",
               },
             },
             {
               "@type": "Offer",
-              "itemOffered": {
+              itemOffered: {
                 "@type": "Service",
-                "name": "Live Action Cooking Kitchens",
-                "description": "On-site live Mongolian wok, charcoal BBQ, and hoppers/kottu cooking stations.",
+                name: "Live Action Cooking Kitchens",
+                description:
+                  "On-site live Mongolian wok, charcoal BBQ, and hoppers/kottu cooking stations.",
               },
             },
           ],
@@ -225,7 +240,10 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${quicksand.variable} ${cinzel.variable} ${quicksand.className}`}>
+    <html
+      lang="en"
+      className={`${quicksand.variable} ${cinzel.variable} ${quicksand.className}`}
+    >
       <head>
         <script
           type="application/ld+json"

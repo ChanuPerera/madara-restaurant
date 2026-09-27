@@ -20,13 +20,13 @@ export const metadata: Metadata = {
     "Hotel and Catering Jobs Sri Lanka",
   ],
   alternates: {
-    canonical: "https://madararestaurant.lk/careers/",
+    canonical: "https://madararestaurant.com/careers/",
   },
   openGraph: {
     title: "Careers & Job Vacancies | Madara Restaurant Homagama",
     description:
       "Join our passionate culinary and catering team in Homagama. Vacancies for Chefs, Cooks, Kitchen Helpers, Cleaners, and Waiters. Apply now!",
-    url: "https://madararestaurant.lk/careers/",
+    url: "https://madararestaurant.com/careers/",
     siteName: "Madara Restaurant",
     images: [
       {
@@ -56,53 +56,52 @@ export default function CareersPage() {
     "@graph": [
       {
         "@type": "BreadcrumbList",
-        "itemListElement": [
+        itemListElement: [
           {
             "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://madararestaurant.lk/",
+            position: 1,
+            name: "Home",
+            item: "https://madararestaurant.com/",
           },
           {
             "@type": "ListItem",
-            "position": 2,
-            "name": "Careers & Job Vacancies",
-            "item": "https://madararestaurant.lk/careers/",
+            position: 2,
+            name: "Careers & Job Vacancies",
+            item: "https://madararestaurant.com/careers/",
           },
         ],
       },
       ...JOB_VACANCIES.map((job) => ({
         "@type": "JobPosting",
-        "title": job.title,
-        "description": `${job.overview} Responsibilities: ${job.responsibilities.join(
-          ", "
+        title: job.title,
+        description: `${job.overview} Responsibilities: ${job.responsibilities.join(
+          ", ",
         )}. Requirements: ${job.requirements.join(", ")}.`,
-        "datePosted": "2026-01-15",
-        "validThrough": "2026-12-31",
-        "employmentType": job.type === "Full-Time" ? "FULL_TIME" : "PART_TIME",
-        "hiringOrganization": {
+        datePosted: "2026-01-15",
+        validThrough: "2026-12-31",
+        employmentType: job.type === "Full-Time" ? "FULL_TIME" : "PART_TIME",
+        hiringOrganization: {
           "@type": "Organization",
-          "name": RESTAURANT_INFO.name,
-          "sameAs": "https://madararestaurant.lk",
-          "logo":
-            "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=500&q=80",
+          name: RESTAURANT_INFO.name,
+          sameAs: "https://madararestaurant.com",
+          logo: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=500&q=80",
         },
-        "jobLocation": {
+        jobLocation: {
           "@type": "Place",
-          "address": {
+          address: {
             "@type": "PostalAddress",
-            "streetAddress": RESTAURANT_INFO.address,
-            "addressLocality": "Homagama",
-            "addressRegion": "Western Province",
-            "addressCountry": "LK",
+            streetAddress: RESTAURANT_INFO.address,
+            addressLocality: "Homagama",
+            addressRegion: "Western Province",
+            addressCountry: "LK",
           },
         },
-        "baseSalary": {
+        baseSalary: {
           "@type": "MonetaryAmount",
-          "currency": "LKR",
-          "value": {
+          currency: "LKR",
+          value: {
             "@type": "QuantitativeValue",
-            "unitText": "MONTH",
+            unitText: "MONTH",
           },
         },
       })),

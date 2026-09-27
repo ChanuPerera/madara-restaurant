@@ -18,7 +18,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: "https://madararestaurant.lk/sitemap.xml",
-    host: "https://madararestaurant.lk",
+    sitemap: "https://madararestaurant.com/sitemap.xml",
+    host: "https://madararestaurant.com",
   };
 }

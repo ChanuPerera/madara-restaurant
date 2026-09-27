@@ -18,13 +18,13 @@ export const metadata: Metadata = {
     "Homagama Catering Desk",
   ],
   alternates: {
-    canonical: "https://madararestaurant.lk/about/",
+    canonical: "https://madararestaurant.com/about/",
   },
   openGraph: {
     title: "About Madara Restaurant & Catering Services Homagama",
     description:
       "Homagama's premier catering and dining destination. 100% hygienic prep, master chefs, and 650+ delivered catering events.",
-    url: "https://madararestaurant.lk/about/",
+    url: "https://madararestaurant.com/about/",
     siteName: "Madara Restaurant & Catering",
     images: [
       {
@@ -54,45 +54,46 @@ export default function AboutPage() {
     "@graph": [
       {
         "@type": "BreadcrumbList",
-        "itemListElement": [
+        itemListElement: [
           {
             "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://madararestaurant.lk/",
+            position: 1,
+            name: "Home",
+            item: "https://madararestaurant.com/",
           },
           {
             "@type": "ListItem",
-            "position": 2,
-            "name": "About Us",
-            "item": "https://madararestaurant.lk/about/",
+            position: 2,
+            name: "About Us",
+            item: "https://madararestaurant.com/about/",
           },
         ],
       },
       {
         "@type": "FoodEstablishment",
-        "name": "Madara Restaurant & Catering Services Homagama",
-        "image":
+        name: "Madara Restaurant & Catering Services Homagama",
+        image:
           "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&q=80",
-        "description": "Homagama's premier restaurant and event catering service.",
-        "url": "https://madararestaurant.lk/about/",
-        "telephone": RESTAURANT_INFO.phone,
-        "address": {
+        description:
+          "Homagama's premier restaurant and event catering service.",
+        url: "https://madararestaurant.com/about/",
+        telephone: RESTAURANT_INFO.phone,
+        address: {
           "@type": "PostalAddress",
-          "streetAddress": RESTAURANT_INFO.address,
-          "addressLocality": "Homagama",
-          "addressRegion": "Western Province",
-          "addressCountry": "LK",
+          streetAddress: RESTAURANT_INFO.address,
+          addressLocality: "Homagama",
+          addressRegion: "Western Province",
+          addressCountry: "LK",
         },
-        "servesCuisine": [
+        servesCuisine: [
           "Sri Lankan",
           "Chinese",
           "Western",
           "Mongolian Wok",
           "Indian",
         ],
-        "hasMenu": "https://madararestaurant.lk/menu/",
-        "priceRange": "LKR 700 - LKR 3,850",
+        hasMenu: "https://madararestaurant.com/menu/",
+        priceRange: "LKR 700 - LKR 3,850",
       },
     ],
   };

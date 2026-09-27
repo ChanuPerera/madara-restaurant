@@ -1,20 +1,20 @@
 import React from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { 
-  MENU_ITEMS, 
-  CATERING_PACKAGES, 
-  MENU_CATEGORIES, 
+import {
+  MENU_ITEMS,
+  CATERING_PACKAGES,
+  MENU_CATEGORIES,
   CATERING_CATEGORIES,
   RESTAURANT_INFO,
   MenuItem,
-  CateringPackageDetail
+  CateringPackageDetail,
 } from "@/data/restaurantData";
-import { 
-  fetchMenuItemsFromFirebase, 
-  getProductByIdFromSources, 
+import {
+  fetchMenuItemsFromFirebase,
+  getProductByIdFromSources,
   getRelatedProductsFromSources,
-  UnifiedProduct 
+  UnifiedProduct,
 } from "@/services/menuData";
 import { getDishFallbackImage, MENU_FALLBACK_IMAGE } from "@/utils/menuUtils";
 import ProductDetailClient from "./ProductDetailClient";
@@ -37,7 +37,10 @@ export async function generateStaticParams() {
       liveItems.forEach((item) => menuIdsSet.add(item.id));
     }
   } catch (err) {
-    console.warn("Could not fetch Firebase items during generateStaticParams:", err);
+    console.warn(
+      "Could not fetch Firebase items during generateStaticParams:",
+      err,
+    );
   }
 
   // 3. Add catering package IDs
@@ -48,33 +51,42 @@ export async function generateStaticParams() {
 }
 
 // Dynamic SEO Metadata Generation using Firebase actual item data
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { id } = await params;
   const product = await getProductByIdFromSources(id);
 
   if (!product) {
     return {
       title: "Menu Item Not Found | Madara Restaurant Homagama",
-      description: "The requested food item or catering package was not found in our menu.",
+      description:
+        "The requested food item or catering package was not found in our menu.",
     };
   }
 
   const isRest = product.kind === "restaurant";
   const item = product.data;
-  const title = isRest ? (item as MenuItem).name : (item as CateringPackageDetail).packageName;
-  const description = isRest 
-    ? (item as MenuItem).description 
+  const title = isRest
+    ? (item as MenuItem).name
+    : (item as CateringPackageDetail).packageName;
+  const description = isRest
+    ? (item as MenuItem).description
     : (item as CateringPackageDetail).tagline;
-  const priceText = isRest 
-    ? `Rs. ${(item as MenuItem).priceLKR.toLocaleString()}/=` 
+  const priceText = isRest
+    ? `Rs. ${(item as MenuItem).priceLKR.toLocaleString()}/=`
     : (item as CateringPackageDetail).priceDisplay;
 
   let imageUrl = MENU_FALLBACK_IMAGE;
   if (isRest) {
     const dish = item as MenuItem;
-    imageUrl = dish.image?.trim() || getDishFallbackImage(dish.category, dish.subCategory);
+    imageUrl =
+      dish.image?.trim() ||
+      getDishFallbackImage(dish.category, dish.subCategory);
   } else {
-    const cat = CATERING_CATEGORIES.find((c) => c.id === (item as CateringPackageDetail).categoryId);
+    const cat = CATERING_CATEGORIES.find(
+      (c) => c.id === (item as CateringPackageDetail).categoryId,
+    );
     if (cat) imageUrl = cat.image;
   }
 
@@ -93,12 +105,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       "Sri Lanka Food Delivery",
     ],
     alternates: {
-      canonical: `https://madararestaurant.lk/menu/${id}/`,
+      canonical: `https://madararestaurant.com/menu/${id}/`,
     },
     openGraph: {
       title: seoTitle,
       description: seoDescription,
-      url: `https://madararestaurant.lk/menu/${id}/`,
+      url: `https://madararestaurant.com/menu/${id}/`,
       siteName: "Madara Restaurant & Catering",
       images: [
         {
@@ -130,15 +142,28 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
   const isRest = product.kind === "restaurant";
   const item = product.data;
-  const title = isRest ? (item as MenuItem).name : (item as CateringPackageDetail).packageName;
-  const description = isRest ? (item as MenuItem).description : (item as CateringPackageDetail).tagline;
-  const priceValue = isRest ? (item as MenuItem).priceLKR : (item as CateringPackageDetail).pricePerPersonLKR || 0;
+  const title = isRest
+    ? (item as MenuItem).name
+    : (item as CateringPackageDetail).packageName;
+  const description = isRest
+    ? (item as MenuItem).description
+    : (item as CateringPackageDetail).tagline;
+  const priceValue = isRest
+    ? (item as MenuItem).priceLKR
+    : (item as CateringPackageDetail).pricePerPersonLKR || 0;
 
   let imageUrl = MENU_FALLBACK_IMAGE;
   if (isRest) {
-    imageUrl = (item as MenuItem).image?.trim() || getDishFallbackImage((item as MenuItem).category, (item as MenuItem).subCategory);
+    imageUrl =
+      (item as MenuItem).image?.trim() ||
+      getDishFallbackImage(
+        (item as MenuItem).category,
+        (item as MenuItem).subCategory,
+      );
   } else {
-    const cat = CATERING_CATEGORIES.find((c) => c.id === (item as CateringPackageDetail).categoryId);
+    const cat = CATERING_CATEGORIES.find(
+      (c) => c.id === (item as CateringPackageDetail).categoryId,
+    );
     if (cat) imageUrl = cat.image;
   }
 
@@ -148,24 +173,26 @@ export default async function ProductDetailPage({ params }: PageProps) {
     "@graph": [
       {
         "@type": "BreadcrumbList",
-        "itemListElement": [
+        itemListElement: [
           {
             "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://madararestaurant.lk/",
+            position: 1,
+            name: "Home",
+            item: "https://madararestaurant.com/",
           },
           {
             "@type": "ListItem",
-            "position": 2,
-            "name": isRest ? "Food Menu" : "Catering Packages",
-            "item": isRest ? "https://madararestaurant.lk/menu/" : "https://madararestaurant.lk/catering/",
+            position: 2,
+            name: isRest ? "Food Menu" : "Catering Packages",
+            item: isRest
+              ? "https://madararestaurant.com/menu/"
+              : "https://madararestaurant.com/catering/",
           },
           {
             "@type": "ListItem",
-            "position": 3,
-            "name": title,
-            "item": `https://madararestaurant.lk/menu/${id}/`,
+            position: 3,
+            name: title,
+            item: `https://madararestaurant.com/menu/${id}/`,
           },
         ],
       },
@@ -179,11 +206,17 @@ export default async function ProductDetailPage({ params }: PageProps) {
               "@type": "Offer",
               price: priceValue,
               priceCurrency: "LKR",
-              availability: (item as MenuItem).isAvailable !== false ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-              url: `https://madararestaurant.lk/menu/${id}/`,
+              availability:
+                (item as MenuItem).isAvailable !== false
+                  ? "https://schema.org/InStock"
+                  : "https://schema.org/OutOfStock",
+              url: `https://madararestaurant.com/menu/${id}/`,
             },
-            suitableForDiet: (item as MenuItem).isVegetarian ? "https://schema.org/VegetarianDiet" : undefined,
-            menuAddOn: "Buffet Setup, Welcome Drinks & Desserts available upon request",
+            suitableForDiet: (item as MenuItem).isVegetarian
+              ? "https://schema.org/VegetarianDiet"
+              : undefined,
+            menuAddOn:
+              "Buffet Setup, Welcome Drinks & Desserts available upon request",
           }
         : {
             "@type": "Product",
@@ -199,15 +232,21 @@ export default async function ProductDetailPage({ params }: PageProps) {
               price: priceValue,
               priceCurrency: "LKR",
               availability: "https://schema.org/InStock",
-              url: `https://madararestaurant.lk/menu/${id}/`,
+              url: `https://madararestaurant.com/menu/${id}/`,
             },
           },
     ],
   };
 
   // Find related products in the same category (powered by live Firebase menu data)
-  const categoryId = isRest ? (item as MenuItem).category : (item as CateringPackageDetail).categoryId;
-  const relatedProducts = await getRelatedProductsFromSources(id, categoryId, product.kind);
+  const categoryId = isRest
+    ? (item as MenuItem).category
+    : (item as CateringPackageDetail).categoryId;
+  const relatedProducts = await getRelatedProductsFromSources(
+    id,
+    categoryId,
+    product.kind,
+  );
 
   return (
     <>
@@ -215,7 +254,10 @@ export default async function ProductDetailPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdGraph) }}
       />
-      <ProductDetailClient product={product} relatedProducts={relatedProducts} />
+      <ProductDetailClient
+        product={product}
+        relatedProducts={relatedProducts}
+      />
     </>
   );
 }

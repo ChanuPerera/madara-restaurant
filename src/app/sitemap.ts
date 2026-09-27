@@ -5,7 +5,7 @@ import { fetchMenuItemsFromFirebase } from "@/services/menuData";
 export const dynamic = "force-static";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://madararestaurant.lk";
+  const baseUrl = "https://madararestaurant.com";
   const now = new Date();
 
   // Core Landing and Pillar Pages

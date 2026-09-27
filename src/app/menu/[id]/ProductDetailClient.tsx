@@ -4,41 +4,41 @@ import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { 
-  MenuItem, 
+import {
+  MenuItem,
   MenuItemPortion,
-  CateringPackageDetail, 
+  CateringPackageDetail,
   RESTAURANT_INFO,
   MENU_CATEGORIES,
-  CATERING_CATEGORIES
+  CATERING_CATEGORIES,
 } from "@/data/restaurantData";
-import { 
-  getDishFallbackImage, 
-  useMenuItem, 
+import {
+  getDishFallbackImage,
+  useMenuItem,
   useMenuItems,
   UnifiedProduct,
-  MENU_FALLBACK_IMAGE 
+  MENU_FALLBACK_IMAGE,
 } from "@/services/menuService";
 import { useLanguage } from "@/context/LanguageContext";
 import ModernNavbar from "@/components/modern/ModernNavbar";
 import ModernFooter from "@/components/modern/ModernFooter";
 import MobileActionDock from "@/components/MobileActionDock";
-import { 
-  ChevronRight, 
-  MessageCircle, 
-  Phone, 
-  Share2, 
-  CheckCircle2, 
-  ArrowLeft, 
-  Clock, 
-  ShieldCheck, 
-  Utensils, 
+import {
+  ChevronRight,
+  MessageCircle,
+  Phone,
+  Share2,
+  CheckCircle2,
+  ArrowLeft,
+  Clock,
+  ShieldCheck,
+  Utensils,
   Check,
   AlertCircle,
   Radio,
   Flame,
   Leaf,
-  Sparkles
+  Sparkles,
 } from "lucide-react";
 
 export type { UnifiedProduct };
@@ -48,7 +48,10 @@ interface ProductDetailClientProps {
   relatedProducts: UnifiedProduct[];
 }
 
-export default function ProductDetailClient({ product, relatedProducts }: ProductDetailClientProps) {
+export default function ProductDetailClient({
+  product,
+  relatedProducts,
+}: ProductDetailClientProps) {
   const router = useRouter();
   const { language } = useLanguage();
   const [copied, setCopied] = useState(false);
@@ -80,7 +83,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
   // Real-time synchronization with Firebase actual menu item
   const { item: liveDish, isLive } = useMenuItem(
     initialRestaurantDish?.id || "",
-    initialRestaurantDish
+    initialRestaurantDish,
   );
   const currentDish = liveDish || initialRestaurantDish;
 
@@ -95,29 +98,44 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
     const matches = allLiveMenuItems
       .filter((m) => m.id !== currentId && m.category === catId)
       .map((m) => {
-        const catName = MENU_CATEGORIES.find((c) => c.id === m.category)?.name || m.subCategory || "Restaurant Dish";
+        const catName =
+          MENU_CATEGORIES.find((c) => c.id === m.category)?.name ||
+          m.subCategory ||
+          "Restaurant Dish";
         return { kind: "restaurant" as const, data: m, categoryName: catName };
       });
 
     if (matches.length >= 3) return matches.slice(0, 3);
 
     const filler = allLiveMenuItems
-      .filter((m) => m.id !== currentId && !matches.some((r) => r.data.id === m.id))
+      .filter(
+        (m) => m.id !== currentId && !matches.some((r) => r.data.id === m.id),
+      )
       .slice(0, 3 - matches.length)
       .map((m) => {
-        const catName = MENU_CATEGORIES.find((c) => c.id === m.category)?.name || m.subCategory || "Restaurant Dish";
+        const catName =
+          MENU_CATEGORIES.find((c) => c.id === m.category)?.name ||
+          m.subCategory ||
+          "Restaurant Dish";
         return { kind: "restaurant" as const, data: m, categoryName: catName };
       });
 
     const combined = [...matches, ...filler].slice(0, 3);
     return combined.length > 0 ? combined : relatedProducts;
-  }, [isRestaurant, currentDish?.id, currentDish?.category, allLiveMenuItems, relatedProducts]);
+  }, [
+    isRestaurant,
+    currentDish?.id,
+    currentDish?.category,
+    allLiveMenuItems,
+    relatedProducts,
+  ]);
 
   // Portion selection state with automatic sync when Firebase portions load/update
   const dishPortions = currentDish?.portions || [];
-  const [selectedPortion, setSelectedPortion] = useState<MenuItemPortion | null>(
-    dishPortions.length > 0 ? dishPortions[0] : null
-  );
+  const [selectedPortion, setSelectedPortion] =
+    useState<MenuItemPortion | null>(
+      dishPortions.length > 0 ? dishPortions[0] : null,
+    );
 
   useEffect(() => {
     if (dishPortions.length > 0) {
@@ -132,18 +150,25 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
   }, [dishPortions]);
 
   // Display strings based on active language (single-language preference)
-  const title = language === "si" && currentDish?.sinhalaName
-    ? currentDish.sinhalaName
-    : (isRestaurant ? (currentDish?.name || "") : (item as CateringPackageDetail).packageName);
+  const title =
+    language === "si" && currentDish?.sinhalaName
+      ? currentDish.sinhalaName
+      : isRestaurant
+        ? currentDish?.name || ""
+        : (item as CateringPackageDetail).packageName;
 
-  const description = isRestaurant ? (currentDish?.description || "") : (item as CateringPackageDetail).tagline;
+  const description = isRestaurant
+    ? currentDish?.description || ""
+    : (item as CateringPackageDetail).tagline;
   const categoryName = product.categoryName;
   const isAvailable = isRestaurant ? currentDish?.isAvailable !== false : true;
 
   // Price calculations
   const currentPriceLKR = selectedPortion
     ? selectedPortion.priceLKR
-    : (isRestaurant ? (currentDish?.priceLKR || 0) : null);
+    : isRestaurant
+      ? currentDish?.priceLKR || 0
+      : null;
 
   const priceDisplay = isRestaurant
     ? `Rs. ${currentPriceLKR?.toLocaleString()}/=`
@@ -151,14 +176,20 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
 
   const portionOrMin = selectedPortion
     ? selectedPortion.label
-    : (isRestaurant ? (currentDish?.portion || "Full Portion") : `Min ${(item as CateringPackageDetail).minGuests} Guests Required`);
+    : isRestaurant
+      ? currentDish?.portion || "Full Portion"
+      : `Min ${(item as CateringPackageDetail).minGuests} Guests Required`;
 
   // Image source with reliable fallback
   let imageUrl = MENU_FALLBACK_IMAGE;
   if (isRestaurant && currentDish) {
-    imageUrl = currentDish.image?.trim() || getDishFallbackImage(currentDish.category, currentDish.subCategory);
+    imageUrl =
+      currentDish.image?.trim() ||
+      getDishFallbackImage(currentDish.category, currentDish.subCategory);
   } else if (!isRestaurant) {
-    const cat = CATERING_CATEGORIES.find((c) => c.id === (item as CateringPackageDetail).categoryId);
+    const cat = CATERING_CATEGORIES.find(
+      (c) => c.id === (item as CateringPackageDetail).categoryId,
+    );
     if (cat) imageUrl = cat.image;
   }
 
@@ -168,22 +199,32 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
   }, [imageUrl]);
 
   // Allergens & Highlights
-  const allergens = isRestaurant ? (currentDish?.allergens || []) : (item.allergens || []);
-  const highlightsList = isRestaurant && currentDish
-    ? [
-        currentDish.portion,
-        ...(currentDish.tags || []),
-        `Allergens: ${allergens && allergens.length > 0 ? allergens.join(", ") : "None"}`
-      ]
-    : (item as CateringPackageDetail).highlights || [];
+  const allergens = isRestaurant
+    ? currentDish?.allergens || []
+    : item.allergens || [];
+  const highlightsList =
+    isRestaurant && currentDish
+      ? [
+          currentDish.portion,
+          ...(currentDish.tags || []),
+          `Allergens: ${allergens && allergens.length > 0 ? allergens.join(", ") : "None"}`,
+        ]
+      : (item as CateringPackageDetail).highlights || [];
 
   // Menu sections if catering package
-  const menuSections = !isRestaurant ? (item as CateringPackageDetail).menuSections : [];
+  const menuSections = !isRestaurant
+    ? (item as CateringPackageDetail).menuSections
+    : [];
 
   const getWhatsAppLink = () => {
-    const currentUrl = typeof window !== "undefined" ? window.location.href : `https://madararestaurant.lk/menu/${currentDish?.id || item.id}`;
+    const currentUrl =
+      typeof window !== "undefined"
+        ? window.location.href
+        : `https://madararestaurant.com/menu/${currentDish?.id || item.id}`;
     const portionText = selectedPortion ? ` - ${selectedPortion.label}` : "";
-    const availText = !isAvailable ? " [Note: Inquiring on next batch availability]" : "";
+    const availText = !isAvailable
+      ? " [Note: Inquiring on next batch availability]"
+      : "";
     const text = `Hi Madara Restaurant! I am viewing your online menu and interested in:\n\n*${title}* (${priceDisplay}${portionText})${availText}\nURL: ${currentUrl}\n\nPlease share availability and ordering details.`;
     return `https://wa.me/${RESTAURANT_INFO.whatsappNumber}?text=${encodeURIComponent(text)}`;
   };
@@ -240,14 +281,15 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
           {isLive && isRestaurant && (
             <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span>{language === "si" ? "සජීවී දත්ත" : "Live CMS Synced"}</span>
+              <span>
+                {language === "si" ? "සජීවී දත්ත" : "Live CMS Synced"}
+              </span>
             </span>
           )}
         </div>
       </div>
 
       <main className="pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1">
-
         {/* Back Button */}
         <div className="mb-6 flex items-center justify-between">
           <button
@@ -256,7 +298,9 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
             className="inline-flex items-center gap-2 text-xs font-bold text-stone-700 hover:text-amber-700 transition-colors bg-white px-3.5 py-2 rounded-xl border border-stone-300 shadow-xs cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>{language === "si" ? "නැවත මෙනුවට" : "Back to All Menus"}</span>
+            <span>
+              {language === "si" ? "නැවත මෙනුවට" : "Back to All Menus"}
+            </span>
           </button>
 
           {isLive && isRestaurant && (
@@ -269,7 +313,6 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
 
         {/* Product Hero Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-16">
-          
           {/* Left: Product Image (7 Cols) */}
           <div className="lg:col-span-7">
             <div className="relative h-80 sm:h-96 lg:h-[460px] w-full rounded-3xl overflow-hidden border border-stone-200 shadow-lg bg-stone-100 group">
@@ -320,18 +363,30 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
             <div className="grid grid-cols-3 gap-3 mt-4 text-center">
               <div className="p-3.5 bg-white rounded-2xl border border-stone-200 shadow-xs">
                 <ShieldCheck className="w-5 h-5 text-amber-600 mx-auto mb-1" />
-                <span className="block text-[11px] font-bold text-stone-800">100% Hygienic</span>
-                <span className="text-[10px] text-stone-500">Prepared Fresh Daily</span>
+                <span className="block text-[11px] font-bold text-stone-800">
+                  100% Hygienic
+                </span>
+                <span className="text-[10px] text-stone-500">
+                  Prepared Fresh Daily
+                </span>
               </div>
               <div className="p-3.5 bg-white rounded-2xl border border-stone-200 shadow-xs">
                 <Utensils className="w-5 h-5 text-amber-600 mx-auto mb-1" />
-                <span className="block text-[11px] font-bold text-stone-800">Portion Size</span>
-                <span className="text-[10px] text-stone-500">{portionOrMin}</span>
+                <span className="block text-[11px] font-bold text-stone-800">
+                  Portion Size
+                </span>
+                <span className="text-[10px] text-stone-500">
+                  {portionOrMin}
+                </span>
               </div>
               <div className="p-3.5 bg-white rounded-2xl border border-stone-200 shadow-xs">
                 <Clock className="w-5 h-5 text-amber-600 mx-auto mb-1" />
-                <span className="block text-[11px] font-bold text-stone-800">Prompt Service</span>
-                <span className="text-[10px] text-stone-500">Homagama & Colombo</span>
+                <span className="block text-[11px] font-bold text-stone-800">
+                  Prompt Service
+                </span>
+                <span className="text-[10px] text-stone-500">
+                  Homagama & Colombo
+                </span>
               </div>
             </div>
           </div>
@@ -342,18 +397,31 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
               {/* Category Subtitle */}
               <div className="flex items-center justify-between mb-1">
                 <span className="block text-xs font-bold uppercase tracking-widest text-amber-700">
-                  {isRestaurant 
-                    ? (currentDish?.subCategory || (language === "si" ? "ආපනශාලා ආහාර" : "Restaurant Dish"))
-                    : (language === "si" ? "කේටරින් පැකේජය" : "Catering Package")}
+                  {isRestaurant
+                    ? currentDish?.subCategory ||
+                      (language === "si" ? "ආපනශාලා ආහාර" : "Restaurant Dish")
+                    : language === "si"
+                      ? "කේටරින් පැකේජය"
+                      : "Catering Package"}
                 </span>
 
-                {isRestaurant && currentDish?.spicyLevel !== undefined && currentDish.spicyLevel > 0 && (
-                  <span className="flex items-center gap-0.5 text-xs text-red-600 font-bold" title={`Spicy Level: ${currentDish.spicyLevel}`}>
-                    {Array.from({ length: currentDish.spicyLevel }).map((_, i) => (
-                      <Flame key={i} className="w-3.5 h-3.5 fill-red-500 text-red-600" />
-                    ))}
-                  </span>
-                )}
+                {isRestaurant &&
+                  currentDish?.spicyLevel !== undefined &&
+                  currentDish.spicyLevel > 0 && (
+                    <span
+                      className="flex items-center gap-0.5 text-xs text-red-600 font-bold"
+                      title={`Spicy Level: ${currentDish.spicyLevel}`}
+                    >
+                      {Array.from({ length: currentDish.spicyLevel }).map(
+                        (_, i) => (
+                          <Flame
+                            key={i}
+                            className="w-3.5 h-3.5 fill-red-500 text-red-600"
+                          />
+                        ),
+                      )}
+                    </span>
+                  )}
               </div>
 
               {/* Title - Single Language */}
@@ -366,7 +434,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
                 <div className="p-3 mb-4 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900 text-xs font-bold flex items-center gap-2">
                   <AlertCircle className="w-4 h-4 shrink-0 text-amber-700" />
                   <span>
-                    {language === "si" 
+                    {language === "si"
                       ? "මෙම ආහාරය දැනට අවසන් වී ඇත (Sold Out). ලබාගත හැකි දිනය විමසීමට WhatsApp පණිවිඩයක් එවන්න."
                       : "This item is currently sold out. Inquire via WhatsApp for upcoming availability."}
                   </span>
@@ -398,7 +466,9 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
                 {dishPortions.length > 0 && (
                   <div className="mt-4 pt-3 border-t border-amber-300/60">
                     <span className="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-2">
-                      {language === "si" ? "ප්‍රමාණය තෝරන්න (Select Portion)" : "Select Portion Size"}
+                      {language === "si"
+                        ? "ප්‍රමාණය තෝරන්න (Select Portion)"
+                        : "Select Portion Size"}
                     </span>
                     <div className="flex flex-wrap gap-2">
                       {dishPortions.map((p) => {
@@ -414,7 +484,8 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
                                 : "bg-white text-stone-800 border-stone-300 hover:bg-amber-50"
                             }`}
                           >
-                            {p.label || p.size} — Rs. {p.priceLKR.toLocaleString()}/=
+                            {p.label || p.size} — Rs.{" "}
+                            {p.priceLKR.toLocaleString()}/=
                           </button>
                         );
                       })}
@@ -429,7 +500,10 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
                   {language === "si" ? "විස්තරය" : "Description"}
                 </h3>
                 <p className="text-sm text-stone-700 leading-relaxed bg-white p-4 rounded-2xl border border-stone-200 shadow-xs">
-                  {description || (language === "si" ? "නැවුම් රසැති ආහාර අත්දැකීමක්." : "Delicious freshly prepared dish from our kitchen.")}
+                  {description ||
+                    (language === "si"
+                      ? "නැවුම් රසැති ආහාර අත්දැකීමක්."
+                      : "Delicious freshly prepared dish from our kitchen.")}
                 </p>
               </div>
 
@@ -437,7 +511,13 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
               {highlightsList.length > 0 && (
                 <div className="mb-6">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-stone-500 mb-3">
-                    {isRestaurant ? (language === "si" ? "විශේෂාංග" : "Dish Highlights") : (language === "si" ? "ඇතුළත් දෑ" : "Included Menu Items")}
+                    {isRestaurant
+                      ? language === "si"
+                        ? "විශේෂාංග"
+                        : "Dish Highlights"
+                      : language === "si"
+                        ? "ඇතුළත් දෑ"
+                        : "Included Menu Items"}
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {highlightsList.map((hl, idx) => {
@@ -468,10 +548,15 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
               {menuSections && menuSections.length > 0 && (
                 <div className="mb-6 space-y-3">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-stone-500">
-                    {language === "si" ? "සම්පූර්ණ මෙනු අන්තර්ගතය" : "Included Menu Breakdown"}
+                    {language === "si"
+                      ? "සම්පූර්ණ මෙනු අන්තර්ගතය"
+                      : "Included Menu Breakdown"}
                   </h3>
                   {menuSections.map((sec, sIdx) => (
-                    <div key={sIdx} className="p-4 bg-white rounded-2xl border border-stone-200 shadow-xs">
+                    <div
+                      key={sIdx}
+                      className="p-4 bg-white rounded-2xl border border-stone-200 shadow-xs"
+                    >
                       <h4 className="text-xs font-bold text-amber-800 uppercase tracking-wider mb-2">
                         {sec.title}
                       </h4>
@@ -500,7 +585,11 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
                   className="flex-1 py-3.5 px-6 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-sm uppercase tracking-wider transition-all flex items-center justify-center gap-2.5 shadow-md hover:scale-102"
                 >
                   <MessageCircle className="w-5 h-5 fill-white" />
-                  <span>{language === "si" ? "WhatsApp හරහා ඇනවුම් කරන්න" : "Order via WhatsApp"}</span>
+                  <span>
+                    {language === "si"
+                      ? "WhatsApp හරහා ඇනවුම් කරන්න"
+                      : "Order via WhatsApp"}
+                  </span>
                 </a>
 
                 {/* Direct Hotline Call Button */}
@@ -509,7 +598,9 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
                   className="py-3.5 px-4 rounded-2xl bg-white hover:bg-stone-50 text-stone-900 font-bold text-sm transition-all flex items-center justify-center gap-2 border border-stone-300 shadow-xs"
                 >
                   <Phone className="w-4 h-4 text-amber-600" />
-                  <span>{language === "si" ? "ඇමතුමක් ලබාගන්න" : "Call Hotline"}</span>
+                  <span>
+                    {language === "si" ? "ඇමතුමක් ලබාගන්න" : "Call Hotline"}
+                  </span>
                 </a>
               </div>
 
@@ -528,13 +619,14 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
                   ) : (
                     <>
                       <Share2 className="w-3.5 h-3.5 text-amber-600" />
-                      <span>{language === "si" ? "සබැඳිය බෙදාගන්න" : "Share Link"}</span>
+                      <span>
+                        {language === "si" ? "සබැඳිය බෙදාගන්න" : "Share Link"}
+                      </span>
                     </>
                   )}
                 </button>
               </div>
             </div>
-
           </div>
         </div>
 
@@ -551,7 +643,9 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
                 href="/menu"
                 className="text-xs font-bold text-amber-700 hover:underline flex items-center gap-1"
               >
-                <span>{language === "si" ? "සම්පූර්ණ මෙනුව" : "View Full Menu"}</span>
+                <span>
+                  {language === "si" ? "සම්පූර්ණ මෙනුව" : "View Full Menu"}
+                </span>
                 <ChevronRight className="w-3.5 h-3.5" />
               </Link>
             </div>
@@ -560,22 +654,31 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
               {dynamicRelatedProducts.map((rel) => {
                 const relItem = rel.data;
                 const relIsRest = rel.kind === "restaurant";
-                const relTitle = language === "si" && relItem.sinhalaName 
-                  ? relItem.sinhalaName 
-                  : (relIsRest ? (relItem as MenuItem).name : (relItem as CateringPackageDetail).packageName);
-                
-                const relPrice = relIsRest 
-                  ? ((relItem as MenuItem).portions && (relItem as MenuItem).portions!.length > 0
-                      ? `Rs. ${(relItem as MenuItem).portions![0].priceLKR.toLocaleString()}/=`
-                      : `Rs. ${(relItem as MenuItem).priceLKR.toLocaleString()}/=`)
+                const relTitle =
+                  language === "si" && relItem.sinhalaName
+                    ? relItem.sinhalaName
+                    : relIsRest
+                      ? (relItem as MenuItem).name
+                      : (relItem as CateringPackageDetail).packageName;
+
+                const relPrice = relIsRest
+                  ? (relItem as MenuItem).portions &&
+                    (relItem as MenuItem).portions!.length > 0
+                    ? `Rs. ${(relItem as MenuItem).portions![0].priceLKR.toLocaleString()}/=`
+                    : `Rs. ${(relItem as MenuItem).priceLKR.toLocaleString()}/=`
                   : (relItem as CateringPackageDetail).priceDisplay;
 
                 let relImg = MENU_FALLBACK_IMAGE;
                 if (relIsRest) {
                   const m = relItem as MenuItem;
-                  relImg = m.image?.trim() || getDishFallbackImage(m.category, m.subCategory);
+                  relImg =
+                    m.image?.trim() ||
+                    getDishFallbackImage(m.category, m.subCategory);
                 } else {
-                  const cat = CATERING_CATEGORIES.find((c) => c.id === (relItem as CateringPackageDetail).categoryId);
+                  const cat = CATERING_CATEGORIES.find(
+                    (c) =>
+                      c.id === (relItem as CateringPackageDetail).categoryId,
+                  );
                   if (cat) relImg = cat.image;
                 }
 
@@ -607,7 +710,9 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
                         </h3>
                       </div>
                       <div className="mt-3 flex items-center justify-between text-xs font-bold text-amber-700">
-                        <span>{language === "si" ? "තොරතුරු බලන්න" : "View Details"}</span>
+                        <span>
+                          {language === "si" ? "තොරතුරු බලන්න" : "View Details"}
+                        </span>
                         <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                       </div>
                     </div>
@@ -617,7 +722,6 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
             </div>
           </section>
         )}
-
       </main>
 
       {/* Universal Footer */}

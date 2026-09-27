@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { RESTAURANT_INFO } from "@/data/restaurantData";
 import { useLanguage } from "@/context/LanguageContext";
+import SitemapDrawer from "@/components/SitemapDrawer";
 import OrLogo from "@/assets/orlogo-01.png";
 import { 
   Flame, 
@@ -15,11 +16,13 @@ import {
   Wine, 
   ChefHat, 
   Briefcase,
-  AlertCircle
+  AlertCircle,
+  Compass
 } from "lucide-react";
 
 export default function Footer() {
   const { language, t } = useLanguage();
+  const [isSitemapOpen, setIsSitemapOpen] = useState(false);
 
   const quickLinks = [
     { name: language === "si" ? "කේටරින් මෙනුව" : "Catering Menu", href: "/catering-menu" },
@@ -155,6 +158,16 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <button
+                  type="button"
+                  onClick={() => setIsSitemapOpen(true)}
+                  className="hover:text-madara-orange text-madara-amber transition-colors flex items-center gap-1.5 cursor-pointer text-left font-medium"
+                >
+                  <Compass className="w-3.5 h-3.5 text-madara-orange" />
+                  <span>{language === "si" ? "අඩවි සිතියම (Site Map)" : "Site Map & Directory"}</span>
+                </button>
+              </li>
             </ul>
           </div>
 
@@ -221,9 +234,23 @@ export default function Footer() {
             <Link href="/careers" className="text-madara-amber hover:underline">
               {t("nav.careers")}
             </Link>
+            <span>•</span>
+            <button
+              type="button"
+              onClick={() => setIsSitemapOpen(true)}
+              className="text-madara-amber hover:underline cursor-pointer"
+            >
+              {language === "si" ? "අඩවි සිතියම (Site Map)" : "Site Map"}
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Interactive Bottom Sheet Sitemap Drawer */}
+      <SitemapDrawer
+        isOpen={isSitemapOpen}
+        onClose={() => setIsSitemapOpen(false)}
+      />
 
       {/* Floating Bottom Right WhatsApp Action Button (Desktop Only) */}
       <a

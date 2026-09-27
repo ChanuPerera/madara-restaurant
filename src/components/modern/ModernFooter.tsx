@@ -1,21 +1,25 @@
 "use client";
 
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import OrLogo from "@/assets/orlogo-01.png";
 import { useLanguage } from "@/context/LanguageContext";
 import { RESTAURANT_INFO } from "@/data/restaurantData";
+import SitemapDrawer from "@/components/SitemapDrawer";
 import { 
   Phone, 
   MapPin, 
   Clock, 
   Mail, 
   MessageCircle, 
-  ArrowUpRight 
+  ArrowUpRight,
+  Compass
 } from "lucide-react";
 
 export default function ModernFooter() {
   const { language } = useLanguage();
+  const [isSitemapOpen, setIsSitemapOpen] = useState(false);
 
   return (
     <footer id="contact" className="bg-stone-900 text-stone-300 pt-16 pb-12 border-t border-stone-800">
@@ -74,6 +78,16 @@ export default function ModernFooter() {
                 <Link href="/careers" className="hover:text-amber-400 transition-colors">
                   {language === "si" ? "රැකියා අවස්ථා" : "Careers"}
                 </Link>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => setIsSitemapOpen(true)}
+                  className="hover:text-amber-400 text-amber-400/90 font-medium transition-colors flex items-center gap-1.5 cursor-pointer text-left"
+                >
+                  <Compass className="w-3.5 h-3.5 text-amber-500" />
+                  <span>{language === "si" ? "අඩවි සිතියම (Site Map)" : "Site Map & Directory"}</span>
+                </button>
               </li>
             </ul>
           </div>
@@ -138,9 +152,26 @@ export default function ModernFooter() {
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-500">
           <p>© {new Date().getFullYear()} Madara Restaurant & Catering. All rights reserved.</p>
-          <p className="text-stone-600">Homagama, Western Province, Sri Lanka</p>
+          <div className="flex items-center gap-3 text-stone-400">
+            <span>Homagama, Western Province, Sri Lanka</span>
+            <span>•</span>
+            <button
+              type="button"
+              onClick={() => setIsSitemapOpen(true)}
+              className="text-amber-400/90 hover:text-amber-300 underline underline-offset-4 decoration-amber-500/40 hover:decoration-amber-300 transition-colors cursor-pointer"
+            >
+              {language === "si" ? "අඩවි සිතියම (Site Map)" : "Site Map"}
+            </button>
+          </div>
         </div>
       </div>
+
+      {/* Interactive Bottom Sheet Sitemap Drawer */}
+      <SitemapDrawer
+        isOpen={isSitemapOpen}
+        onClose={() => setIsSitemapOpen(false)}
+      />
     </footer>
   );
 }
+

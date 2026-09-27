@@ -7,5 +7,5 @@ Allow: /
 User-Agent: Googlebot-Image
 Allow: /
 
-Host: https://madararestaurant.lk
-Sitemap: https://madararestaurant.lk/sitemap.xml
+Host: https://madararestaurant.com
+Sitemap: https://madararestaurant.com/sitemap.xml

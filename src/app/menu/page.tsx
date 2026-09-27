@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     "Madara Restaurant Prices",
   ],
   alternates: {
-    canonical: "https://madararestaurant.lk/menu/",
+    canonical: "https://madararestaurant.com/menu/",
   },
   openGraph: {
     title: "Food Menu & Catering Prices | Madara Restaurant Homagama",
     description:
       "Full menu showcase for dine-in, takeaway, and per-person catering packages in Homagama. Signature Wok, Biryani, Kottu, Seafood, and event catering spreads.",
-    url: "https://madararestaurant.lk/menu/",
+    url: "https://madararestaurant.com/menu/",
     siteName: "Madara Restaurant & Catering",
     images: [
       {
@@ -55,45 +55,46 @@ export default function MenuPage() {
     "@graph": [
       {
         "@type": "BreadcrumbList",
-        "itemListElement": [
+        itemListElement: [
           {
             "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://madararestaurant.lk/",
+            position: 1,
+            name: "Home",
+            item: "https://madararestaurant.com/",
           },
           {
             "@type": "ListItem",
-            "position": 2,
-            "name": "Menu & Catering Prices",
-            "item": "https://madararestaurant.lk/menu/",
+            position: 2,
+            name: "Menu & Catering Prices",
+            item: "https://madararestaurant.com/menu/",
           },
         ],
       },
       {
         "@type": "FoodEstablishment",
-        "name": "Madara Restaurant & Catering Services Homagama",
-        "image":
+        name: "Madara Restaurant & Catering Services Homagama",
+        image:
           "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=1200&q=80",
-        "description": "Homagama's premier restaurant and event catering service.",
-        "url": "https://madararestaurant.lk/menu/",
-        "telephone": RESTAURANT_INFO.phone,
-        "address": {
+        description:
+          "Homagama's premier restaurant and event catering service.",
+        url: "https://madararestaurant.com/menu/",
+        telephone: RESTAURANT_INFO.phone,
+        address: {
           "@type": "PostalAddress",
-          "streetAddress": RESTAURANT_INFO.address,
-          "addressLocality": "Homagama",
-          "addressRegion": "Western Province",
-          "addressCountry": "LK",
+          streetAddress: RESTAURANT_INFO.address,
+          addressLocality: "Homagama",
+          addressRegion: "Western Province",
+          addressCountry: "LK",
         },
-        "servesCuisine": [
+        servesCuisine: [
           "Sri Lankan",
           "Chinese",
           "Western",
           "Mongolian Wok",
           "Indian",
         ],
-        "hasMenu": "https://madararestaurant.lk/menu/",
-        "priceRange": "LKR 700 - LKR 3,850",
+        hasMenu: "https://madararestaurant.com/menu/",
+        priceRange: "LKR 700 - LKR 3,850",
       },
     ],
   };
