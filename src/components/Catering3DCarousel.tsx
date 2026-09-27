@@ -5,135 +5,12 @@ import { useLanguage } from "@/context/LanguageContext";
 import { useTheme } from "@/context/ThemeContext";
 import { RESTAURANT_INFO } from "@/data/restaurantData";
 import { Flame, MessageCircle, Sparkles } from "lucide-react";
-import menuImg1 from "@/assets/3dmenu/1.png";
-import menuImg2 from "@/assets/3dmenu/2.png";
-import menuImg3 from "@/assets/3dmenu/3.png";
-import menuImg4 from "@/assets/3dmenu/4.png";
-import menuImg5 from "@/assets/3dmenu/5.png";
-import menuImg6 from "@/assets/3dmenu/6.png";
-import menuImg7 from "@/assets/3dmenu/7.png";
+import {
+  useCulinarySignatures,
+  ShowcaseDish,
+} from "@/services/signatureService";
 
-interface ShowcaseDish {
-  id: string;
-  nameEn: string;
-  nameSi: string;
-  categoryEn: string;
-  categorySi: string;
-  priceDisplay: string;
-  descriptionEn: string;
-  descriptionSi: string;
-  image: string;
-  badgeEn: string;
-  badgeSi: string;
-}
-
-const DISHES: ShowcaseDish[] = [
-  {
-    id: "mongolian-wok",
-    nameEn: "Madara Grand Mongolian Wok Bowl",
-    nameSi: "මදාරා මොන්ගෝලියන් වොක්",
-    categoryEn: "Live Action Wok",
-    categorySi: "සජීවී වොක් කුටිය",
-    priceDisplay: "LKR 1,850",
-    descriptionEn:
-      "Sizzling high-flame wok bowls tossed with tender cutlets, fresh vegetables, prawns & signature wok sauce.",
-    descriptionSi:
-      "සජීවී ගිනි දැල් මැද පිසෙන නැවුම් එළවළු, මාළු සහ මස් ඇතුළත් සුවඳැති මොන්ගෝලියන් වොක්.",
-    image: menuImg1.src,
-    badgeEn: "Live Action Favorite",
-    badgeSi: "ජනප්‍රියම සජීවී කෑම",
-  },
-  {
-    id: "dum-biryani",
-    nameEn: "Royal Claypot Dum Biryani",
-    nameSi: "රාජකීය දම් බිරියානි",
-    categoryEn: "Rice & Biryani",
-    categorySi: "බත් සහ බිරියානි",
-    priceDisplay: "LKR 2,450",
-    descriptionEn:
-      "Aromatic basmati rice sealed in authentic claypots with tender marinated chicken, boiled eggs & mint raita.",
-    descriptionSi:
-      "මැටි ඇතිලියේ තම්බා සැකසූ සුවඳැති බාස්මතී බිරියානි, චිකන් සහ මින්ට් චට්නි සමඟ.",
-    image: menuImg2.src,
-    badgeEn: "Chef's Signature",
-    badgeSi: "සූපවේදී විශේෂ තේරීම",
-  },
-  {
-    id: "hbc-sizzler",
-    nameEn: "Fiery Hot Butter Cuttlefish",
-    nameSi: "හොට් බටර් දැල්ලෝ",
-    categoryEn: "BYOB Special Bites",
-    categorySi: "BYOB ප්‍රියතම බයිට්ස්",
-    priceDisplay: "LKR 1,950",
-    descriptionEn:
-      "Crispy fried cuttlefish tossed in aromatic garlic butter, scallions, and roasted chilli flakes.",
-    descriptionSi:
-      "කරස් ගා බැදගත් දැල්ලෝ, ගාලික් බටර් සහ ලූණු කොළ සමඟ තෙම්පරාදු කළ බයිට් එක.",
-    image: menuImg3.src,
-    badgeEn: "#1 BYOB Pairing",
-    badgeSi: "අංක 1 BYOB තේරීම",
-  },
-  {
-    id: "cheese-kottu",
-    nameEn: "Molten Cheese Mixed Kottu",
-    nameSi: "චීස් කොත්තු - මීට් මික්ස්",
-    categoryEn: "Sizzling Kottu",
-    categorySi: "කොත්තු සත්කාරය",
-    priceDisplay: "LKR 1,650",
-    descriptionEn:
-      "Hand-clattered roti on hot iron griddles with roast chicken, beef, fresh veggies & melted rich cheddar cheese.",
-    descriptionSi:
-      "උණු උණු යකඩ තැටියේ කොත්තු කර උඩින් උණු කළ චීස් හෙලූ රසවත් මික්ස් කොත්තු.",
-    image: menuImg4.src,
-    badgeEn: "Sizzling Hot",
-    badgeSi: "උණු උණු කෑම",
-  },
-  {
-    id: "bbq-prawns",
-    nameEn: "Garlic Butter Lagoon Prawns",
-    nameSi: "ගාලික් බටර් ඉස්සෝ",
-    categoryEn: "Seafood Specialties",
-    categorySi: "සීෆුඩ් විශේෂ",
-    priceDisplay: "LKR 2,200",
-    descriptionEn:
-      "Jumbo lagoon prawns flame-grilled with rich garlic butter, parsley, and lemon wedges.",
-    descriptionSi:
-      "නැවුම් කලපු ඉස්සන් ගාලික් බටර් සහ දෙහි යුෂ සමඟ ග්‍රිල් කළ රාජකීය සංග්‍රහය.",
-    image: menuImg5.src,
-    badgeEn: "Premium Seafood",
-    badgeSi: "උසස් සීෆුඩ්",
-  },
-  {
-    id: "heritage-lamprais",
-    nameEn: "Traditional Banana Leaf Lamprais",
-    nameSi: "පාරම්පරික ලම්ප්‍රයිස්",
-    categoryEn: "Sri Lankan Heritage",
-    categorySi: "දේශීය උරුමය",
-    priceDisplay: "LKR 1,450",
-    descriptionEn:
-      "Slow-baked in authentic banana leaf: stock rice, mixed meat curry, blachan, ash plantain & brinjal moju.",
-    descriptionSi:
-      "කෙසෙල් කොළයේ ඔතා අවන් කළ පාරම්පරික සුවඳැති ලම්ප්‍රයිස් සංග්‍රහය.",
-    image: menuImg6.src,
-    badgeEn: "Heritage Classic",
-    badgeSi: "පාරම්පරික රසය",
-  },
-  {
-    id: "black-pepper-beef",
-    nameEn: "Spicy Pepper Beef Sizzler",
-    nameSi: "බ්ලැක් පෙපර් බීෆ් සිස්ලර්",
-    categoryEn: "Sizzlers & Grills",
-    categorySi: "සිස්ලර්ස් සහ ග්‍රිල්ස්",
-    priceDisplay: "LKR 1,750",
-    descriptionEn:
-      "Tender beef strips wok-tossed with crushed black pepper, capsicum, onions, and spicy sauce.",
-    descriptionSi:
-      "කළු ගමිරිස් සහ අමු මිරිස් සමඟ තෙම්පරාදු කළ බීෆ් සිස්ලර් බයිට් එක.",
-    image: menuImg7.src,
-    badgeEn: "Fiery Delight",
-    badgeSi: "දේවල් කළ බයිට්",
-  },
-];
+export type { ShowcaseDish };
 
 interface Catering3DCarouselProps {
   forceTheme?: "light" | "dark";
@@ -152,11 +29,14 @@ export default function Catering3DCarousel({
   const [windowWidth, setWindowWidth] = useState<number>(1000);
   const [activeIndex, setActiveIndex] = useState(0);
 
+  // Dynamic dishes loaded from Firebase 'culinary_signatures' collection
+  const { signatures: dishes } = useCulinarySignatures();
+
   const startXRef = useRef<number>(0);
   const startAngleRef = useRef<number>(0);
   const dragDistanceRef = useRef<number>(0);
 
-  const totalItems = DISHES.length;
+  const totalItems = Math.max(dishes.length, 1);
   const stepAngle = (2 * Math.PI) / totalItems;
 
   useEffect(() => {
@@ -168,10 +48,11 @@ export default function Catering3DCarousel({
 
   // Compute active item index based on current rotation angle
   useEffect(() => {
+    if (totalItems === 0) return;
     let normalized =
       ((-rotationAngle % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
     let index = Math.round(normalized / stepAngle) % totalItems;
-    setActiveIndex(index);
+    setActiveIndex((index + totalItems) % totalItems);
   }, [rotationAngle, stepAngle, totalItems]);
 
   // Snap to nearest item angle smoothly when drag finishes
@@ -231,7 +112,7 @@ export default function Catering3DCarousel({
     snapToNearest(targetAngle);
   };
 
-  const activeDish = DISHES[activeIndex];
+  const activeDish = dishes[activeIndex] || dishes[0];
 
   const getWhatsAppLink = (dish: ShowcaseDish) => {
     const text =
@@ -325,7 +206,7 @@ export default function Catering3DCarousel({
           onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
           onTouchEnd={handleDragEnd}
         >
-          {DISHES.map((dish, index) => {
+          {dishes.map((dish, index) => {
             // Orbital angle theta around 3D ring with continuous rotationAngle offset
             const baseAngle = index * stepAngle;
             const theta = baseAngle + rotationAngle;
