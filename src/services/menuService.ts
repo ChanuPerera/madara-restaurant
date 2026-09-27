@@ -11,6 +11,7 @@ import {
   getRelatedProductsFromSources,
   getDishFallbackImage, 
   mapFirestoreDocToMenuItem,
+  MENU_FALLBACK_IMAGE,
   UnifiedProduct
 } from "./menuData";
 
@@ -20,7 +21,8 @@ export {
   getProductByIdFromSources,
   getRelatedProductsFromSources,
   getDishFallbackImage, 
-  mapFirestoreDocToMenuItem 
+  mapFirestoreDocToMenuItem,
+  MENU_FALLBACK_IMAGE
 };
 export type { UnifiedProduct };
 

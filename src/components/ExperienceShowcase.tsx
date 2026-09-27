@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { ACTION_KITCHEN_STATIONS, MENU_ITEMS, RESTAURANT_INFO } from "@/data/restaurantData";
+import { MENU_FALLBACK_IMAGE } from "@/utils/menuUtils";
 import { useLanguage } from "@/context/LanguageContext";
 import { 
   Flame, 
@@ -200,10 +201,14 @@ export default function ExperienceShowcase() {
                 {byobBites.map((dish) => (
                   <div key={dish.id} className="p-3 rounded-xl bg-black/40 border border-white/10 flex items-center gap-3">
                     <img
-                      src={dish.image}
+                      src={dish.image || MENU_FALLBACK_IMAGE}
                       alt={dish.name}
                       className="w-14 h-14 rounded-lg object-cover flex-shrink-0"
                       loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = MENU_FALLBACK_IMAGE;
+                      }}
                     />
                     <div className="min-w-0">
                       <h5 className="text-xs font-bold text-white truncate">{dish.name}</h5>

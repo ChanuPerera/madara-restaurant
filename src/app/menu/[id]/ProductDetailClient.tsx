@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { 
   MenuItem, 
   MenuItemPortion,
@@ -15,7 +16,8 @@ import {
   getDishFallbackImage, 
   useMenuItem, 
   useMenuItems,
-  UnifiedProduct 
+  UnifiedProduct,
+  MENU_FALLBACK_IMAGE 
 } from "@/services/menuService";
 import { useLanguage } from "@/context/LanguageContext";
 import ModernNavbar from "@/components/modern/ModernNavbar";
@@ -47,8 +49,29 @@ interface ProductDetailClientProps {
 }
 
 export default function ProductDetailClient({ product, relatedProducts }: ProductDetailClientProps) {
+  const router = useRouter();
   const { language } = useLanguage();
   const [copied, setCopied] = useState(false);
+
+  // Set the restore flag when user views a detail page
+  useEffect(() => {
+    try {
+      sessionStorage.setItem("madara_menu_should_restore", "true");
+    } catch {}
+  }, []);
+
+  const handleBackToMenu = (e: React.MouseEvent) => {
+    e.preventDefault();
+    try {
+      sessionStorage.setItem("madara_menu_should_restore", "true");
+    } catch {}
+
+    if (typeof window !== "undefined" && window.history.length > 1) {
+      router.back();
+    } else {
+      router.push("/menu");
+    }
+  };
 
   const isRestaurant = product.kind === "restaurant";
   const item = product.data;
@@ -131,13 +154,18 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
     : (isRestaurant ? (currentDish?.portion || "Full Portion") : `Min ${(item as CateringPackageDetail).minGuests} Guests Required`);
 
   // Image source with reliable fallback
-  let imageUrl = "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&q=80";
+  let imageUrl = MENU_FALLBACK_IMAGE;
   if (isRestaurant && currentDish) {
     imageUrl = currentDish.image?.trim() || getDishFallbackImage(currentDish.category, currentDish.subCategory);
   } else if (!isRestaurant) {
     const cat = CATERING_CATEGORIES.find((c) => c.id === (item as CateringPackageDetail).categoryId);
     if (cat) imageUrl = cat.image;
   }
+
+  const [heroImgSrc, setHeroImgSrc] = useState(imageUrl);
+  useEffect(() => {
+    setHeroImgSrc(imageUrl);
+  }, [imageUrl]);
 
   // Allergens & Highlights
   const allergens = isRestaurant ? (currentDish?.allergens || []) : (item.allergens || []);
@@ -195,7 +223,11 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
               <span>{language === "si" ? "මුල් පිටුවට" : "Home"}</span>
             </Link>
             <span className="text-stone-300">/</span>
-            <Link href="/menu" className="text-stone-600 hover:text-amber-600 transition-colors">
+            <Link
+              href="/menu"
+              onClick={handleBackToMenu}
+              className="text-stone-600 hover:text-amber-600 transition-colors cursor-pointer"
+            >
               {language === "si" ? "ආපනශාලා මෙනුව" : "Food Menu"}
             </Link>
             <span className="text-stone-300">/</span>
@@ -218,13 +250,14 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
 
         {/* Back Button */}
         <div className="mb-6 flex items-center justify-between">
-          <Link
-            href="/menu"
-            className="inline-flex items-center gap-2 text-xs font-bold text-stone-700 hover:text-amber-700 transition-colors bg-white px-3.5 py-2 rounded-xl border border-stone-300 shadow-xs"
+          <button
+            type="button"
+            onClick={handleBackToMenu}
+            className="inline-flex items-center gap-2 text-xs font-bold text-stone-700 hover:text-amber-700 transition-colors bg-white px-3.5 py-2 rounded-xl border border-stone-300 shadow-xs cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>{language === "si" ? "නැවත මෙනුවට" : "Back to All Menus"}</span>
-          </Link>
+          </button>
 
           {isLive && isRestaurant && (
             <span className="sm:hidden inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
@@ -241,12 +274,13 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
           <div className="lg:col-span-7">
             <div className="relative h-80 sm:h-96 lg:h-[460px] w-full rounded-3xl overflow-hidden border border-stone-200 shadow-lg bg-stone-100 group">
               <Image
-                src={imageUrl}
+                src={heroImgSrc}
                 alt={title}
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 58vw"
                 className="object-cover group-hover:scale-105 transition-transform duration-700"
+                onError={() => setHeroImgSrc(MENU_FALLBACK_IMAGE)}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent opacity-60" />
 
@@ -536,7 +570,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Produc
                       : `Rs. ${(relItem as MenuItem).priceLKR.toLocaleString()}/=`)
                   : (relItem as CateringPackageDetail).priceDisplay;
 
-                let relImg = "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80";
+                let relImg = MENU_FALLBACK_IMAGE;
                 if (relIsRest) {
                   const m = relItem as MenuItem;
                   relImg = m.image?.trim() || getDishFallbackImage(m.category, m.subCategory);

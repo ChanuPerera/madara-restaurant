@@ -4,7 +4,7 @@ import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import { MENU_ITEMS } from "@/data/restaurantData";
-import { useMenuItems } from "@/services/menuService";
+import { useMenuItems, MENU_FALLBACK_IMAGE } from "@/services/menuService";
 import { ArrowRight, ChevronRight } from "lucide-react";
 
 export default function ModernMenuSection() {
@@ -78,14 +78,30 @@ export default function ModernMenuSection() {
               <Link
                 key={item.id}
                 href={`/menu/${item.id}`}
+                onClick={() => {
+                  try {
+                    sessionStorage.setItem("madara_menu_state", JSON.stringify({
+                      scrollY: 0,
+                      itemId: item.id,
+                      selectedCategory: "all",
+                      searchQuery: "",
+                      timestamp: Date.now(),
+                    }));
+                    sessionStorage.setItem("madara_menu_should_restore", "true");
+                  } catch {}
+                }}
                 className="bg-stone-50/50 rounded-2xl overflow-hidden border border-stone-200/70 hover:border-amber-400/80 hover:bg-white hover:shadow-lg transition-all duration-300 flex flex-col group cursor-pointer"
               >
                 {/* Image */}
                 <div className="relative h-44 w-full overflow-hidden bg-stone-100">
                   <img
-                    src={item.image}
+                    src={item.image || MENU_FALLBACK_IMAGE}
                     alt={title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = MENU_FALLBACK_IMAGE;
+                    }}
                   />
                   {item.subCategory && (
                     <div className="absolute top-3 left-3 bg-stone-900/80 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-sm">

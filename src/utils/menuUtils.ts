@@ -1,23 +1,12 @@
 import { MenuItem, MenuItemPortion } from "@/data/restaurantData";
+import menuFallbackImg from "@/assets/restaurant_menu/fallback.jpg";
 
-// Category fallback food images when imageSRC / imageUrl is empty
-export const getDishFallbackImage = (category?: string, subCategory?: string): string => {
-  const cat = category?.toLowerCase();
-  const sub = subCategory?.toLowerCase() || "";
+// Menu fallback food image
+export const MENU_FALLBACK_IMAGE = menuFallbackImg.src;
 
-  if (cat === "rice") {
-    return "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80";
-  }
-  if (cat === "kottu") {
-    return "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80";
-  }
-  if (sub.includes("seafood") || sub.includes("cuttlefish") || sub.includes("prawn") || sub.includes("fish")) {
-    return "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=800&q=80";
-  }
-  if (sub.includes("chicken") || sub.includes("pork") || sub.includes("grill")) {
-    return "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80";
-  }
-  return "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80";
+// Category fallback food image when imageSRC / imageUrl is empty
+export const getDishFallbackImage = (_category?: string, _subCategory?: string): string => {
+  return MENU_FALLBACK_IMAGE;
 };
 
 // Map Firestore document data into standard website MenuItem interface
@@ -43,7 +32,7 @@ export const mapFirestoreDocToMenuItem = (docData: any, docId: string): MenuItem
 
   // Determine image URL
   const rawImage = docData.imageUrl || docData.imageSrc || docData.imageSRC || docData.image || "";
-  const finalImage = rawImage.trim() !== "" ? rawImage.trim() : getDishFallbackImage(docData.category, docData.subCategory);
+  const finalImage = rawImage.trim() !== "" ? rawImage.trim() : MENU_FALLBACK_IMAGE;
 
   // Determine allergens
   let allergens: string[] = [];

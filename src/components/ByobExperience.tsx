@@ -2,6 +2,7 @@
 
 import React from "react";
 import { RESTAURANT_INFO, MENU_ITEMS } from "@/data/restaurantData";
+import { MENU_FALLBACK_IMAGE } from "@/utils/menuUtils";
 import { 
   Wine, 
   Sparkles, 
@@ -115,10 +116,14 @@ export default function ByobExperience() {
               >
                 <div className="aspect-[4/3] relative overflow-hidden">
                   <img
-                    src={dish.image}
+                    src={dish.image || MENU_FALLBACK_IMAGE}
                     alt={dish.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = MENU_FALLBACK_IMAGE;
+                    }}
                   />
                   <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-black/70 backdrop-blur-md text-[10px] font-bold text-madara-orange">
                     🌶️ Level {dish.spicyLevel}

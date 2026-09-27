@@ -7,13 +7,13 @@ import {
   CATERING_PACKAGES, 
   CateringPackageDetail 
 } from "@/data/restaurantData";
-import { getDishFallbackImage, mapFirestoreDocToMenuItem } from "@/utils/menuUtils";
+import { getDishFallbackImage, mapFirestoreDocToMenuItem, MENU_FALLBACK_IMAGE } from "@/utils/menuUtils";
 
 export type UnifiedProduct = 
   | { kind: "restaurant"; data: MenuItem; categoryName: string }
   | { kind: "catering"; data: CateringPackageDetail; categoryName: string };
 
-export { getDishFallbackImage, mapFirestoreDocToMenuItem };
+export { getDishFallbackImage, mapFirestoreDocToMenuItem, MENU_FALLBACK_IMAGE };
 
 /**
  * Fetch all menu items from Firebase Firestore with fallback to static MENU_ITEMS.

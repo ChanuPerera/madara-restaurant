@@ -16,7 +16,7 @@ import {
   getRelatedProductsFromSources,
   UnifiedProduct 
 } from "@/services/menuData";
-import { getDishFallbackImage } from "@/utils/menuUtils";
+import { getDishFallbackImage, MENU_FALLBACK_IMAGE } from "@/utils/menuUtils";
 import ProductDetailClient from "./ProductDetailClient";
 
 interface PageProps {
@@ -69,7 +69,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ? `Rs. ${(item as MenuItem).priceLKR.toLocaleString()}/=` 
     : (item as CateringPackageDetail).priceDisplay;
 
-  let imageUrl = "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&q=80";
+  let imageUrl = MENU_FALLBACK_IMAGE;
   if (isRest) {
     const dish = item as MenuItem;
     imageUrl = dish.image?.trim() || getDishFallbackImage(dish.category, dish.subCategory);
@@ -134,7 +134,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
   const description = isRest ? (item as MenuItem).description : (item as CateringPackageDetail).tagline;
   const priceValue = isRest ? (item as MenuItem).priceLKR : (item as CateringPackageDetail).pricePerPersonLKR || 0;
 
-  let imageUrl = "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&q=80";
+  let imageUrl = MENU_FALLBACK_IMAGE;
   if (isRest) {
     imageUrl = (item as MenuItem).image?.trim() || getDishFallbackImage((item as MenuItem).category, (item as MenuItem).subCategory);
   } else {

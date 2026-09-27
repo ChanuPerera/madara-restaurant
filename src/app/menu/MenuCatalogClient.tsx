@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { 
@@ -8,7 +8,7 @@ import {
   MENU_CATEGORIES, 
   RESTAURANT_INFO
 } from "@/data/restaurantData";
-import { useMenuItems } from "@/services/menuService";
+import { useMenuItems, MENU_FALLBACK_IMAGE } from "@/services/menuService";
 import { useLanguage } from "@/context/LanguageContext";
 import ModernNavbar from "@/components/modern/ModernNavbar";
 import ModernFooter from "@/components/modern/ModernFooter";
@@ -23,11 +23,145 @@ import {
   Radio
 } from "lucide-react";
 
+function MenuCatalogCardImage({ src, alt }: { src: string; alt: string }) {
+  const [imgSrc, setImgSrc] = useState(src || MENU_FALLBACK_IMAGE);
+
+  useEffect(() => {
+    setImgSrc(src || MENU_FALLBACK_IMAGE);
+  }, [src]);
+
+  return (
+    <Image
+      src={imgSrc}
+      alt={alt}
+      fill
+      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+      className="object-cover group-hover:scale-105 transition-transform duration-500"
+      onError={() => setImgSrc(MENU_FALLBACK_IMAGE)}
+    />
+  );
+}
+
 export default function MenuCatalogClient() {
   const { language } = useLanguage();
   const { items: liveMenuItems, isLive } = useMenuItems();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [highlightedItemId, setHighlightedItemId] = useState<string | null>(null);
+  const restoredRef = useRef(false);
+
+  // Restore scroll and filter state when returning from product details
+  useEffect(() => {
+    if (typeof window !== "undefined" && "scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
+    try {
+      const shouldRestore = sessionStorage.getItem("madara_menu_should_restore") === "true";
+      const rawState = sessionStorage.getItem("madara_menu_state");
+
+      if (shouldRestore && rawState) {
+        sessionStorage.removeItem("madara_menu_should_restore");
+        const state = JSON.parse(rawState);
+
+        // Within reasonable time window (2 hours)
+        if (Date.now() - (state.timestamp || 0) < 2 * 60 * 60 * 1000) {
+          restoredRef.current = true;
+
+          if (state.selectedCategory) {
+            setSelectedCategory(state.selectedCategory);
+          }
+          if (state.searchQuery) {
+            setSearchQuery(state.searchQuery);
+          }
+          if (state.itemId) {
+            setHighlightedItemId(state.itemId);
+            setTimeout(() => setHighlightedItemId(null), 3000);
+          }
+
+          const targetY = typeof state.scrollY === "number" ? state.scrollY : 0;
+          const targetItemId = state.itemId;
+
+          const performScroll = () => {
+            if (targetItemId) {
+              const el = document.getElementById(`menu-item-${targetItemId}`);
+              if (el) {
+                el.scrollIntoView({ block: "center", behavior: "instant" });
+                return true;
+              }
+            }
+            if (targetY > 0) {
+              window.scrollTo({ top: targetY, behavior: "instant" });
+              return true;
+            }
+            return false;
+          };
+
+          performScroll();
+          const rId = requestAnimationFrame(performScroll);
+          const t1 = setTimeout(performScroll, 60);
+          const t2 = setTimeout(performScroll, 160);
+          const t3 = setTimeout(performScroll, 320);
+          const t4 = setTimeout(performScroll, 550);
+
+          return () => {
+            cancelAnimationFrame(rId);
+            clearTimeout(t1);
+            clearTimeout(t2);
+            clearTimeout(t3);
+            clearTimeout(t4);
+          };
+        }
+      }
+    } catch (err) {
+      console.warn("Could not restore menu scroll state:", err);
+    }
+  }, []);
+
+  // Save state when clicking an item or navigating
+  const saveCatalogState = (itemId?: string) => {
+    try {
+      const state = {
+        scrollY: window.scrollY,
+        itemId: itemId || "",
+        selectedCategory,
+        searchQuery,
+        timestamp: Date.now(),
+      };
+      sessionStorage.setItem("madara_menu_state", JSON.stringify(state));
+      sessionStorage.setItem("madara_menu_should_restore", "true");
+    } catch {}
+  };
+
+  // Continuously record scroll position so back navigation remembers exact depth
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    const handleScroll = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        try {
+          const raw = sessionStorage.getItem("madara_menu_state");
+          const existing = raw ? JSON.parse(raw) : {};
+          sessionStorage.setItem(
+            "madara_menu_state",
+            JSON.stringify({
+              ...existing,
+              scrollY: window.scrollY,
+              selectedCategory,
+              searchQuery,
+              timestamp: Date.now(),
+            })
+          );
+        } catch {}
+      }, 150);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      clearTimeout(timeoutId);
+    };
+  }, [selectedCategory, searchQuery]);
 
   // Restaurant menu items mapped from Firebase Firestore (with fallback)
   const cardItems = useMemo(() => {
@@ -43,7 +177,7 @@ export default function MenuCatalogClient() {
       priceValue: item.priceLKR,
       portion: item.portion,
       description: item.description,
-      image: item.image,
+      image: item.image?.trim() || MENU_FALLBACK_IMAGE,
       tags: item.tags,
       allergens: item.allergens || []
     }));
@@ -72,6 +206,16 @@ export default function MenuCatalogClient() {
       return true;
     });
   }, [cardItems, selectedCategory, searchQuery]);
+
+  // Ensure scroll is performed once filteredItems update
+  useEffect(() => {
+    if (highlightedItemId && restoredRef.current) {
+      const el = document.getElementById(`menu-item-${highlightedItemId}`);
+      if (el) {
+        el.scrollIntoView({ block: "center", behavior: "instant" });
+      }
+    }
+  }, [filteredItems, highlightedItemId]);
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-stone-900 font-sans flex flex-col justify-between">
@@ -192,20 +336,25 @@ export default function MenuCatalogClient() {
                 // SINGLE LANGUAGE ONLY
                 const displayName = language === "si" && item.sinhalaName ? item.sinhalaName : item.name;
 
+                const isHighlighted = highlightedItemId === item.id;
+
                 return (
                   <Link
                     key={item.id}
+                    id={`menu-item-${item.id}`}
                     href={`/menu/${item.id}`}
-                    className="group bg-white border border-stone-200/90 hover:border-amber-400 rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
+                    onClick={() => saveCatalogState(item.id)}
+                    className={`group bg-white border ${
+                      isHighlighted
+                        ? "border-amber-500 ring-4 ring-amber-400/50 shadow-xl"
+                        : "border-stone-200/90 hover:border-amber-400 shadow-xs hover:shadow-md"
+                    } rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-1 flex flex-col justify-between`}
                   >
                     {/* Top Image */}
                     <div className="relative h-52 w-full bg-stone-100 overflow-hidden">
-                      <Image
+                      <MenuCatalogCardImage
                         src={item.image}
                         alt={displayName}
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
 
