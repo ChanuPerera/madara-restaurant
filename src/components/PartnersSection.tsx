@@ -3,8 +3,10 @@
 import React from "react";
 import { PARTNERS_LIST } from "@/data/restaurantData";
 import { Handshake, Award, ShieldCheck, Building2 } from "lucide-react";
+import { useAccreditations } from "@/services/aboutService";
 
 export default function PartnersSection() {
+  const { accreditations } = useAccreditations();
   return (
     <section id="partners" className="py-20 relative bg-madara-surface/40 border-y border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -47,28 +49,46 @@ export default function PartnersSection() {
         </div>
 
         {/* Corporate Trust Ribbon */}
-        <div className="mt-12 p-6 rounded-2xl bg-black/40 border border-white/10 flex flex-col sm:flex-row items-center justify-around gap-6 text-center sm:text-left">
-          <div className="flex items-center gap-3">
-            <ShieldCheck className="w-6 h-6 text-emerald-400 flex-shrink-0" />
-            <div>
-              <p className="text-xs font-bold text-white">ISO &amp; Food Hygiene Certified</p>
-              <p className="text-[11px] text-madara-textMuted">Highest standards of freshness &amp; safety</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <Award className="w-6 h-6 text-madara-orange flex-shrink-0" />
-            <div>
-              <p className="text-xs font-bold text-white">500+ Catered Events Delivered</p>
-              <p className="text-[11px] text-madara-textMuted">100% on-time setup guarantee</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <Building2 className="w-6 h-6 text-madara-amber flex-shrink-0" />
-            <div>
-              <p className="text-xs font-bold text-white">Corporate Invoice &amp; Tax Billing</p>
-              <p className="text-[11px] text-madara-textMuted">Streamlined company accounts</p>
-            </div>
-          </div>
+        <div className="mt-12 p-6 rounded-2xl bg-black/40 border border-white/10 flex flex-col sm:flex-row items-center justify-around gap-6 text-center sm:text-left flex-wrap">
+          {accreditations && accreditations.length > 0 ? (
+            accreditations.slice(0, 4).map((badge, idx) => (
+              <div key={badge.id || idx} className="flex items-center gap-3">
+                {idx % 2 === 0 ? (
+                  <Award className="w-6 h-6 text-madara-orange flex-shrink-0" />
+                ) : (
+                  <ShieldCheck className="w-6 h-6 text-emerald-400 flex-shrink-0" />
+                )}
+                <div>
+                  <p className="text-xs font-bold text-white">{badge.title}</p>
+                  <p className="text-[11px] text-madara-textMuted">Verified Catering &amp; Hygiene Standard</p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <>
+              <div className="flex items-center gap-3">
+                <ShieldCheck className="w-6 h-6 text-emerald-400 flex-shrink-0" />
+                <div>
+                  <p className="text-xs font-bold text-white">ISO &amp; Food Hygiene Certified</p>
+                  <p className="text-[11px] text-madara-textMuted">Highest standards of freshness &amp; safety</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <Award className="w-6 h-6 text-madara-orange flex-shrink-0" />
+                <div>
+                  <p className="text-xs font-bold text-white">650+ Catered Events Delivered</p>
+                  <p className="text-[11px] text-madara-textMuted">100% on-time setup guarantee</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <Building2 className="w-6 h-6 text-madara-amber flex-shrink-0" />
+                <div>
+                  <p className="text-xs font-bold text-white">Corporate Invoice &amp; Tax Billing</p>
+                  <p className="text-[11px] text-madara-textMuted">Streamlined company accounts</p>
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
       </div>

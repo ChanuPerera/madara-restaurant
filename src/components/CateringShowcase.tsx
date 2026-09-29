@@ -14,8 +14,23 @@ import {
   UtensilsCrossed
 } from "lucide-react";
 
+import { useCateringOccasions } from "@/services/cateringService";
+import { useAccreditations } from "@/services/aboutService";
+
 export default function CateringShowcase() {
   const { language, t } = useLanguage();
+  const { occasions } = useCateringOccasions();
+  const { accreditations } = useAccreditations();
+
+  const occasionsPill =
+    occasions && occasions.length > 0
+      ? occasions.slice(0, 3).map((o) => (language === "si" ? o.titleSi.split(" ")[0] : o.titleEn.split(" ")[0])).join(" • ")
+      : "Weddings • Dane • Parties";
+
+  const eventBadge =
+    accreditations && accreditations.length > 0
+      ? (language === "si" && accreditations[0].titleSi ? accreditations[0].titleSi : accreditations[0].title)
+      : "650+ Events Catered";
 
   const cateringWhatsAppUrl = `https://wa.me/${RESTAURANT_INFO.whatsappNumber}?text=${encodeURIComponent(
     "Hi Madara Restaurant! 🎉 I would like to inquire about your Catering Packages and Menus for an upcoming event."
@@ -51,12 +66,12 @@ export default function CateringShowcase() {
                   {/* Top-Right Floating Badge */}
                   <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-md border border-white/20 text-white text-xs font-bold px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg">
                     <Sparkles className="w-3.5 h-3.5 text-madara-orange" />
-                    <span>650+ Events Catered</span>
+                    <span>{eventBadge}</span>
                   </div>
 
                   {/* Top-Left Occasion Types Pill */}
                   <div className="absolute top-4 left-4 bg-gradient-to-r from-madara-orange to-red-600 text-white text-[11px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
-                    Weddings • Dane • Parties
+                    {occasionsPill}
                   </div>
 
                   {/* Bottom Glass Card Highlight */}

@@ -156,45 +156,46 @@ export function mapFirestoreDocToSignature(docData: any, docId: string): Showcas
         d.id === docId ||
         d.id === docData.id ||
         d.id.replace("sig-", "") === docId.replace("sig-", "")
-    ) || DEFAULT_SIGNATURE_DISHES[0];
+    );
 
-  const nameEn = String(docData.nameEn || docData.name || fallback.nameEn);
-  const nameSi = String(docData.nameSi || docData.sinhalaName || fallback.nameSi);
-  const categoryEn = String(docData.categoryEn || docData.category || fallback.categoryEn);
-  const categorySi = String(docData.categorySi || fallback.categorySi);
+  const rawName = String(docData.nameEn || docData.name || (fallback ? fallback.nameEn : docId));
+  const rawNameSi = docData.nameSi || docData.sinhalaName || (docData.name ? docData.name : (fallback ? fallback.nameSi : rawName));
+  const categoryEn = String(docData.categoryEn || docData.category || (fallback ? fallback.categoryEn : "Signature Dish"));
+  const categorySi = String(docData.categorySi || (fallback ? fallback.categorySi : "විශේෂිත ආහාර"));
 
   let priceDisplay = String(docData.priceDisplay || docData.price || "");
   if (!priceDisplay && typeof docData.priceLKR === "number") {
     priceDisplay = `LKR ${docData.priceLKR.toLocaleString()}`;
   }
   if (!priceDisplay) {
-    priceDisplay = fallback.priceDisplay;
+    priceDisplay = fallback ? fallback.priceDisplay : "LKR 0";
   }
 
+  const rawBadge = String(docData.badgeEn || docData.badge || (docData.name ? docData.name : (fallback ? fallback.badgeEn : "Chef's Choice")));
+  const rawBadgeSi = String(docData.badgeSi || docData.sinhalaBadge || (docData.badge ? docData.badge : (fallback ? fallback.badgeSi : rawBadge)));
+
   const descriptionEn = String(
-    docData.descriptionEn || docData.description || fallback.descriptionEn
+    docData.descriptionEn || docData.description || (fallback ? fallback.descriptionEn : "")
   );
-  const descriptionSi = String(docData.descriptionSi || fallback.descriptionSi);
+  const descriptionSi = String(docData.descriptionSi || (fallback ? fallback.descriptionSi : descriptionEn));
   const image = String(
-    docData.imageUrl || docData.image || docData.imageSrc || fallback.image
+    docData.imageUrl || docData.image || docData.imageSrc || (fallback ? fallback.image : "")
   );
-  const badgeEn = String(docData.badgeEn || docData.badge || fallback.badgeEn);
-  const badgeSi = String(docData.badgeSi || fallback.badgeSi);
   const displayOrder = typeof docData.displayOrder === "number" ? docData.displayOrder : 999;
   const isActive = docData.isActive !== false;
 
   return {
-    id: docId || docData.id || fallback.id,
-    nameEn,
-    nameSi,
+    id: docId || docData.id || (fallback ? fallback.id : "sig-dish"),
+    nameEn: rawName,
+    nameSi: String(rawNameSi),
     categoryEn,
     categorySi,
     priceDisplay,
     descriptionEn,
     descriptionSi,
     image,
-    badgeEn,
-    badgeSi,
+    badgeEn: rawBadge,
+    badgeSi: rawBadgeSi,
     displayOrder,
     isActive,
   };

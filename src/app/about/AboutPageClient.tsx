@@ -25,58 +25,47 @@ import {
   CheckCircle2,
   Flame,
   Soup,
-  PartyPopper
+  PartyPopper,
+  BadgeCheck
 } from "lucide-react";
+import {
+  useAboutHero,
+  useAccreditations,
+  useCulinaryServices,
+  useHygieneStandards,
+} from "@/services/aboutService";
 
 export default function AboutPageClient() {
   const { language } = useLanguage();
 
-  const services = [
-    {
-      title: language === "si" ? "ආපනශාලා ආහාර සේවාව" : "Fine Dining Restaurant",
-      desc: language === "si" ? "ප්‍රණීත බත්, කොත්තු, මෙන්ම චීන සහ දේශීය කෑම වර්ග එකම වහලක් යටින්." : "Authentic Sri Lankan heritage curries, Mongolian wok fried rice, and fresh hot kottu.",
-      icon: UtensilsCrossed,
-    },
-    {
-      title: language === "si" ? "උත්සව කේටරින් සේවාව" : "Grand Event Catering",
-      desc: language === "si" ? "මංගල උත්සව, බණ හා දානමය පිංකම්, අවමංගල්‍ය හා උපන්දින සාද සඳහා පූර්ණ කේටරින් සේවාව." : "Complete per-person catering packages for Weddings, Alms Givings, Funerals & Parties.",
-      icon: Users,
-    },
-    {
-      title: language === "si" ? "සජීවී කුටි සහ BBQ" : "Live Wok & Charcoal BBQ",
-      desc: language === "si" ? "ඔබේ උත්සව භූමියේදීම සජීවීව පිළියෙළ කරන මොන්ගෝලියන් වොක්, BBQ සහ ආප්ප කුටි." : "On-site live action cooking stations featuring Mongolian wok, charcoal BBQ, and hoppers.",
-      icon: Flame,
-    },
-    {
-      title: language === "si" ? "ආයතනික කෑම පැකේජ" : "Corporate Meals & Events",
-      desc: language === "si" ? "කාර්යාලීය උත්සව, සම්මන්ත්‍රණ සහ රැස්වීම් සඳහා ගුණාත්මක ආහාර පැකේජ." : "Tailor-made seminar buffets, packed lunches, and executive dinner spreads.",
-      icon: PartyPopper,
-    },
-    {
-      title: language === "si" ? "ටේක්-අවේ සහ ඩිලිවරි" : "Takeaway & Fast Delivery",
-      desc: language === "si" ? "හෝමාගම සහ අවට ප්‍රදේශ සඳහා ඉක්මන් ඩිලිවරි හා ටේක්-අවේ සේවාව." : "Quick takeaway and prompt home delivery across Homagama and Athurugiriya.",
-      icon: Soup,
-    },
-  ];
+  // Dynamic Firestore Data
+  const { hero } = useAboutHero();
+  const { accreditations } = useAccreditations();
+  const { services } = useCulinaryServices();
+  const { standards } = useHygieneStandards();
 
-  const standards = [
-    {
-      title: language === "si" ? "100% සෞඛ්‍යාරක්ෂිත බව" : "100% Hygienic Food Prep",
-      desc: language === "si" ? "මහජන සෞඛ්‍ය පරීක්ෂක (PHI) උපදෙස් අනුව ඉහළම පිරිසිදුකම සුරැකූ මුළුතැන්ගෙය." : "Strict kitchen hygiene protocols complying with public health safety standards.",
-    },
-    {
-      title: language === "si" ? "පළපුරුදු ප්‍රධාන සූපවේදීන්" : "Executive Master Chefs",
-      desc: language === "si" ? "වසර ගණනාවක පළපුරුද්ද සහිත සූපවේදීන්ගේ අත්ගුණයෙන් නිමවන ප්‍රණීත ආහාර." : "Decades of culinary expertise crafting authentic flavors and secret sauce reductions.",
-    },
-    {
-      title: language === "si" ? "ස්වාභාවික දේශීය කුළුබඩු" : "100% Natural Spices",
-      desc: language === "si" ? "කෘතිම රසකාරක නොමැතිව ස්වාභාවික දේශීය කුළුබඩු පමණක් භාවිතා කිරීම." : "Only natural Sri Lankan spices and fresh ingredients—zero harmful artificial additives.",
-    },
-    {
-      title: language === "si" ? "විශ්වාසනීය කේටරින් සේවාව" : "650+ Delivered Events",
-      desc: language === "si" ? "සාර්ථක උත්සව 650 කට අධික ප්‍රමාණයක් සහ 50,000 කට අධික තෘප්තිමත් පාරිභෝගිකයින්." : "Over 650 successful catering events delivered with 4.9/5 customer satisfaction.",
-    },
-  ];
+  const getServiceIcon = (iconName: string) => {
+    switch (iconName) {
+      case "UtensilsCrossed":
+        return UtensilsCrossed;
+      case "Users":
+        return Users;
+      case "Flame":
+        return Flame;
+      case "PartyPopper":
+        return PartyPopper;
+      case "Soup":
+        return Soup;
+      case "ChefHat":
+        return ChefHat;
+      case "Award":
+        return Award;
+      case "ShieldCheck":
+        return ShieldCheck;
+      default:
+        return Sparkles;
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-stone-900 font-sans flex flex-col justify-between">
@@ -98,45 +87,72 @@ export default function AboutPageClient() {
                 {language === "si" ? "අප ගැන" : "About Us"}
               </span>
             </Link>
-
           </div>
         </div>
 
-        {/* Hero Section: Story & Vision */}
+        {/* Hero Section: Story & Vision (Mapped from Firestore 'about_hero' & 'accreditations') */}
         <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-16">
           <div className="bg-white rounded-3xl p-6 sm:p-12 border border-stone-200 shadow-sm relative overflow-hidden">
-            <div className="max-w-3xl space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-bold uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5 text-amber-700" />
-                <span>{language === "si" ? "මඩර ආයතනික තොරතුරු" : "Madara Restaurant & Catering"}</span>
-              </div>
-              <h1 className="text-3xl sm:text-5xl font-serif font-bold text-stone-900 tracking-tight leading-tight">
-                {language === "si" ? (
-                  <>හෝමාගම අග්‍රගන්‍ය <span className="text-amber-700">ආපනශාලා සහ කේටරින් සේවාව</span></>
-                ) : (
-                  <>Homagama's Premier <span className="text-amber-700">Dining & Catering Destination</span></>
-                )}
-              </h1>
-              <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
-                {language === "si"
-                  ? "හෝමාගම අතුරුගිරිය පාරේ පිහිටි මඩර ආපනශාලාව යනු ප්‍රණීත ආහාර සහ උසස්ම මට්ටමේ කේටරින් සේවාවන් සපයන ප්‍රමුඛතම ආයතනයයි. මංගල උත්සව, බණ හා දානමය පිංකම්, අවමංගල්‍ය සහ ආයතනික උත්සව සඳහා විශ්වාසනීයම සේවාව අපි ලබා දෙන්නෙමු."
-                  : "Located at 191/B/1, Athurugiriya Road, Homagama, Madara Restaurant & Catering Services is synonymous with exceptional food quality, impeccable hygiene, and dedicated event catering. From intimate alms-giving (Dane) ceremonies to grand wedding buffets, we craft unforgettable culinary experiences."}
-              </p>
-              <div className="pt-2 flex flex-wrap items-center gap-4 text-xs font-bold text-stone-800">
-                <div className="flex items-center gap-1.5 bg-amber-50 px-3 py-1.5 rounded-xl border border-amber-200">
-                  <Award className="w-4 h-4 text-amber-700" />
-                  <span>650+ Delivered Catering Events</span>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-8 space-y-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-700" />
+                  <span>
+                    {language === "si" && hero.heroBadgeSi
+                      ? hero.heroBadgeSi
+                      : hero.heroBadge}
+                  </span>
                 </div>
-                <div className="flex items-center gap-1.5 bg-amber-50 px-3 py-1.5 rounded-xl border border-amber-200">
-                  <ShieldCheck className="w-4 h-4 text-amber-700" />
-                  <span>100% Hygienic PHO Standards</span>
+
+                <h1 className="text-3xl sm:text-5xl font-serif font-bold text-stone-900 tracking-tight leading-tight">
+                  {language === "si" && hero.heroTitleSi
+                    ? hero.heroTitleSi
+                    : hero.heroTitle}
+                </h1>
+
+                <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
+                  {language === "si" && hero.heroDescriptionSi
+                    ? hero.heroDescriptionSi
+                    : hero.heroDescription}
+                </p>
+
+                {/* Accreditation Badges from Firestore 'accreditations' */}
+                <div className="pt-2 flex flex-wrap items-center gap-3 text-xs font-bold text-stone-800">
+                  {accreditations.map((badge, idx) => (
+                    <div
+                      key={badge.id || idx}
+                      className="flex items-center gap-1.5 bg-amber-50 px-3 py-1.5 rounded-xl border border-amber-200 hover:border-amber-300 transition-colors"
+                    >
+                      {idx % 2 === 0 ? (
+                        <Award className="w-4 h-4 text-amber-700" />
+                      ) : (
+                        <ShieldCheck className="w-4 h-4 text-amber-700" />
+                      )}
+                      <span>
+                        {language === "si" && badge.titleSi
+                          ? badge.titleSi
+                          : badge.title}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               </div>
+
+              {hero.heroImageUrl && (
+                <div className="lg:col-span-4 relative rounded-2xl overflow-hidden aspect-[4/3] shadow-md border border-stone-200">
+                  <img
+                    src={hero.heroImageUrl}
+                    alt={hero.heroTitle}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                </div>
+              )}
             </div>
           </div>
         </section>
 
-        {/* Our Core Services */}
+        {/* Our Core Services (Mapped from Firestore 'culinary_services') */}
         <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-16">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <span className="text-xs font-bold uppercase tracking-widest text-amber-700">
@@ -148,29 +164,31 @@ export default function AboutPageClient() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((svc, idx) => {
-              const Icon = svc.icon;
+            {services.map((svc) => {
+              const Icon = getServiceIcon(svc.icon);
               return (
                 <div
-                  key={idx}
-                  className="bg-white p-6 rounded-3xl border border-stone-200 shadow-xs hover:shadow-md transition-all space-y-3"
+                  key={svc.id}
+                  className="bg-white p-6 rounded-3xl border border-stone-200 shadow-xs hover:shadow-md transition-all space-y-3 flex flex-col justify-between"
                 >
-                  <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center">
-                    <Icon className="w-6 h-6" />
+                  <div className="space-y-3">
+                    <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center">
+                      <Icon className="w-6 h-6" />
+                    </div>
+                    <h3 className="text-base font-serif font-bold text-stone-900">
+                      {language === "si" && svc.titleSi ? svc.titleSi : svc.title}
+                    </h3>
+                    <p className="text-xs text-stone-600 leading-relaxed">
+                      {language === "si" && svc.descSi ? svc.descSi : svc.description}
+                    </p>
                   </div>
-                  <h3 className="text-base font-serif font-bold text-stone-900">
-                    {svc.title}
-                  </h3>
-                  <p className="text-xs text-stone-600 leading-relaxed">
-                    {svc.desc}
-                  </p>
                 </div>
               );
             })}
           </div>
         </section>
 
-        {/* Certifications & Standards */}
+        {/* Certifications & Standards (Mapped from Firestore 'hygiene_standards') */}
         <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-16">
           <div className="bg-gradient-to-br from-stone-900 to-amber-950 text-white rounded-3xl p-6 sm:p-10 shadow-lg">
             <div className="max-w-2xl mb-8">
@@ -178,16 +196,56 @@ export default function AboutPageClient() {
                 {language === "si" ? "ගුණාත්මක බව සහ සෞඛ්‍යය" : "Quality & Hygiene Standards"}
               </span>
               <h2 className="text-2xl sm:text-4xl font-serif font-bold text-white mt-1">
-                {language === "si" ? "අපගේ උසස් ප්‍රමිතීන්" : "Our Standards & Certifications"}
+                {language === "si" ? "අපගේ උසස් ප්‍රමිතීන් සහ සහතික" : "Our Standards & Certifications"}
               </h2>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {standards.map((std, idx) => (
-                <div key={idx} className="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/10 space-y-2">
-                  <CheckCircle2 className="w-6 h-6 text-amber-400" />
-                  <h4 className="text-sm font-bold text-stone-100">{std.title}</h4>
-                  <p className="text-xs text-stone-300 leading-relaxed">{std.desc}</p>
+              {standards.map((std) => (
+                <div
+                  key={std.id}
+                  className="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/10 space-y-3 flex flex-col justify-between hover:bg-white/15 transition-all"
+                >
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <CheckCircle2 className="w-6 h-6 text-amber-400 shrink-0" />
+                      {std.badgeText && (
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                          {language === "si" && std.badgeTextSi
+                            ? std.badgeTextSi
+                            : std.badgeText}
+                        </span>
+                      )}
+                    </div>
+                    <h4 className="text-sm font-bold text-stone-100">
+                      {language === "si" && std.titleSi ? std.titleSi : std.title}
+                    </h4>
+                    <p className="text-xs text-stone-300 leading-relaxed">
+                      {language === "si" && std.descSi ? std.descSi : std.description}
+                    </p>
+                  </div>
+
+                  {(std.certificateNumber || std.issuingBody || std.validUntil) && (
+                    <div className="pt-2 border-t border-white/10 text-[10.5px] text-stone-400 space-y-0.5">
+                      {std.certificateNumber && (
+                        <span className="block font-mono text-[10px] text-amber-300/90 font-semibold">
+                          {std.certificateNumber}
+                        </span>
+                      )}
+                      {std.issuingBody && (
+                        <span className="block text-stone-400 text-[11px] truncate">
+                          {language === "si" && std.issuingBodySi
+                            ? std.issuingBodySi
+                            : std.issuingBody}
+                        </span>
+                      )}
+                      {std.validUntil && (
+                        <span className="block text-stone-400 text-[10px] italic">
+                          {std.validUntil}
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

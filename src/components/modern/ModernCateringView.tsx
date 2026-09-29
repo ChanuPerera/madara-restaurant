@@ -23,9 +23,11 @@ import {
   UtensilsCrossed,
   CheckCircle2
 } from "lucide-react";
+import { useCateringEnhancements, CateringEnhancementItem } from "@/services/cateringService";
 
 export default function ModernCateringView() {
   const { language } = useLanguage();
+  const { enhancements } = useCateringEnhancements();
 
   const generateGeneralCateringWhatsAppUrl = () => {
     const text =
@@ -33,6 +35,78 @@ export default function ModernCateringView() {
         ? "ආයුබෝවන් Madara Restaurant! මට මෙනු පොත බලා ඉදිරි උත්සවයක් සඳහා කේටරින් සේවාව පිළිබඳව සම්බන්ධ වීමට අවශ්‍යයි."
         : "Hi Madara Restaurant! I was reviewing your catering menu book and would like to contact you regarding event catering.";
     return `https://wa.me/${RESTAURANT_INFO.whatsappNumber}?text=${encodeURIComponent(text)}`;
+  };
+
+  const getEnhancementIcon = (category: string, iconName?: string) => {
+    if (iconName) {
+      switch (iconName) {
+        case "UtensilsCrossed": return UtensilsCrossed;
+        case "GlassWater": return GlassWater;
+        case "IceCream": return IceCream;
+        case "Flame": return Flame;
+        default: break;
+      }
+    }
+    switch (category) {
+      case "buffet": return UtensilsCrossed;
+      case "drinks": return GlassWater;
+      case "desserts": return IceCream;
+      case "live_stations": return Flame;
+      default: return Sparkles;
+    }
+  };
+
+  const renderItemContent = (
+    item: string | { name: string; priceDisplay?: string; options?: string[] },
+    idx: number
+  ) => {
+    if (typeof item === "string") {
+      const colonIdx = item.indexOf(":");
+      if (colonIdx > 0 && colonIdx < item.length - 2) {
+        const title = item.substring(0, colonIdx).trim();
+        const choices = item.substring(colonIdx + 1).split(",").map((s) => s.trim());
+        return (
+          <div key={idx} className="bg-amber-50/60 p-3 rounded-2xl border border-amber-100 space-y-1">
+            <span className="text-xs font-bold text-stone-900 block">{title}</span>
+            <div className="flex flex-wrap gap-1.5 pt-0.5">
+              {choices.map((choice, cIdx) => (
+                <span
+                  key={cIdx}
+                  className="text-[10.5px] text-stone-700 bg-white/90 px-2 py-0.5 rounded-md border border-amber-200/60 font-medium"
+                >
+                  {choice}
+                </span>
+              ))}
+            </div>
+          </div>
+        );
+      }
+
+      return (
+        <li key={idx} className="flex items-start gap-2 text-xs text-stone-700 font-medium">
+          <CheckCircle2 className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+          <span>{item}</span>
+        </li>
+      );
+    }
+
+    return (
+      <div key={idx} className="bg-amber-50/60 p-3 rounded-2xl border border-amber-100 space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-bold text-stone-900">{item.name}</span>
+          {item.priceDisplay && (
+            <span className="text-xs font-extrabold text-amber-900 bg-white px-2.5 py-0.5 rounded-full border border-amber-200">
+              {item.priceDisplay}
+            </span>
+          )}
+        </div>
+        {item.options && item.options.length > 0 && (
+          <p className="text-[10.5px] text-stone-600">
+            <span className="font-semibold text-stone-700">Choices:</span> {item.options.join(" | ")}
+          </p>
+        )}
+      </div>
+    );
   };
 
   return (
@@ -65,11 +139,9 @@ export default function ModernCateringView() {
         </div>
       </div>
 
-
       {/* Interactive 3D Catering Menu Flipbook */}
       <section id="menu-book" className="py-12 px-4 sm:px-6 lg:px-8 scroll-mt-20">
         <div className="max-w-7xl mx-auto space-y-3 text-center mb-6">
-
           <h1 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900">
             {language === "si" ? (
               <>
@@ -93,7 +165,7 @@ export default function ModernCateringView() {
         <CateringMenuBook />
       </section>
 
-      {/* Visual Add-Ons Section: Clean, Attractive, Premium Layout */}
+      {/* Visual Add-Ons Section: Mapped dynamically from Firestore 'catering_enhancements' */}
       <section className="py-16 bg-stone-50/80 border-t border-b border-stone-200/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           
@@ -108,205 +180,83 @@ export default function ModernCateringView() {
             <p className="text-xs sm:text-sm text-stone-500 max-w-lg mx-auto">
               {language === "si"
                 ? "ඔබ තෝරාගත් මෙනු පැකේජයට අවශ්‍ය පරිදි බුෆේ උපකරණ, පිළිගැනීමේ බීම හා අතුරුපස එකතු කර ගන්න."
-                : "Customize your event with full buffet setups, refreshing welcome drinks, and artisanal desserts."}
+                : "Customize your event with full buffet setups, refreshing welcome drinks, artisanal desserts, and live action cooking."}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-            
-            {/* ADDON CARD 1: FULL BUFFET SETUP */}
-            <div className="bg-white rounded-3xl p-6 sm:p-7 border border-stone-200/90 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between space-y-5">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center shadow-xs">
-                    <UtensilsCrossed className="w-6 h-6" />
-                  </div>
-                  <span className="bg-amber-100 text-amber-900 border border-amber-300 font-extrabold text-xs px-3 py-1 rounded-full">
-                    Rs. 150/= <span className="font-medium text-[10px]">/ pax</span>
-                  </span>
-                </div>
+          <div
+            className={`grid grid-cols-1 md:grid-cols-2 ${
+              enhancements.length >= 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"
+            } gap-6 items-stretch`}
+          >
+            {enhancements.map((enhancement, index) => {
+              const Icon = getEnhancementIcon(enhancement.category, enhancement.icon);
+              const hasStructuredItems =
+                enhancement.items.some(
+                  (it) => typeof it === "object" || (typeof it === "string" && it.includes(":"))
+                );
 
-                <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-amber-800 block">
-                    Option 01
-                  </span>
-                  <h3 className="text-xl font-serif font-bold text-stone-900">
-                    Full Buffet Setup
-                  </h3>
-                  <p className="text-xs text-stone-500 mt-0.5">
-                    Complete tableware, linen setup & service equipment
-                  </p>
-                </div>
-
-                <div className="pt-2 border-t border-stone-100 space-y-2">
-                  <span className="text-[11px] font-bold text-stone-800 uppercase tracking-wider block">
-                    Includes:
-                  </span>
-                  <ul className="space-y-2 text-xs text-stone-700 font-medium">
-                    <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
-                      <span>Buffet serving dishes</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
-                      <span>Buffet table with frills</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
-                      <span>Dinner plates</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
-                      <span>Water glasses</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
-                      <span>Paper serviettes</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
-                      <span className="text-stone-600 text-[11px]">Dessert cups & spoons <span className="text-amber-800 font-normal italic">(when dessert in menu)</span></span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            {/* ADDON CARD 2: WELCOME DRINKS */}
-            <div className="bg-white rounded-3xl p-6 sm:p-7 border border-stone-200/90 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between space-y-5">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center shadow-xs">
-                    <GlassWater className="w-6 h-6" />
-                  </div>
-                  <span className="bg-amber-100 text-amber-900 border border-amber-300 font-extrabold text-xs px-3 py-1 rounded-full">
-                    Welcome Drinks
-                  </span>
-                </div>
-
-                <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-amber-800 block">
-                    Option 02
-                  </span>
-                  <h3 className="text-xl font-serif font-bold text-stone-900">
-                    Welcome Drinks
-                  </h3>
-                  <p className="text-xs text-stone-500 mt-0.5">
-                    Chilled cordials, fresh juices & iced coffee
-                  </p>
-                </div>
-
-                <div className="pt-2 border-t border-stone-100 space-y-3">
-                  <div className="bg-amber-50/60 p-3 rounded-2xl border border-amber-100 space-y-1">
+              return (
+                <div
+                  key={enhancement.id || index}
+                  className="bg-white rounded-3xl p-6 sm:p-7 border border-stone-200/90 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between space-y-5"
+                >
+                  <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-stone-900">Fruit Cordial Bar</span>
-                      <span className="text-xs font-extrabold text-amber-900 bg-white px-2.5 py-0.5 rounded-full border border-amber-200">Rs. 100/= <span className="text-[9px] font-normal text-stone-500">/ pax</span></span>
-                    </div>
-                    <p className="text-[10.5px] text-stone-600">
-                      <span className="font-semibold text-stone-700">Choices:</span> Orange | Strawberry | Guava | Blackcurrant
-                    </p>
-                  </div>
-
-                  <div className="bg-amber-50/60 p-3 rounded-2xl border border-amber-100 space-y-1">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-stone-900">Fresh Fruit Juice</span>
-                      <span className="text-xs font-extrabold text-amber-900 bg-white px-2.5 py-0.5 rounded-full border border-amber-200">Rs. 320/= <span className="text-[9px] font-normal text-stone-500">/ pax</span></span>
-                    </div>
-                    <p className="text-[10.5px] text-stone-600">
-                      <span className="font-semibold text-stone-700">Choices:</span> Watermelon | Pineapple | Mango
-                    </p>
-                  </div>
-
-                  <div className="bg-amber-50/60 p-3 rounded-2xl border border-amber-100 flex items-center justify-between">
-                    <div>
-                      <span className="text-xs font-bold text-stone-900 block">Signature Iced Coffee</span>
-                      <span className="text-[10.5px] text-stone-500">Rich creamy cold brew</span>
-                    </div>
-                    <span className="text-xs font-extrabold text-amber-900 bg-white px-2.5 py-0.5 rounded-full border border-amber-200">Rs. 260/= <span className="text-[9px] font-normal text-stone-500">/ pax</span></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* ADDON CARD 3: DESSERTS */}
-            <div className="bg-white rounded-3xl p-6 sm:p-7 border border-stone-200/90 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between space-y-5">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center shadow-xs">
-                    <IceCream className="w-6 h-6" />
-                  </div>
-                  <span className="bg-amber-100 text-amber-900 border border-amber-300 font-extrabold text-xs px-3 py-1 rounded-full">
-                    Artisanal Desserts
-                  </span>
-                </div>
-
-                <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-amber-800 block">
-                    Option 03
-                  </span>
-                  <h3 className="text-xl font-serif font-bold text-stone-900">
-                    Artisanal Desserts
-                  </h3>
-                  <p className="text-xs text-stone-500 mt-0.5">
-                    Traditional Sri Lankan & gourmet desserts
-                  </p>
-                </div>
-
-                <div className="pt-2 border-t border-stone-100 space-y-1.5">
-                  <div className="grid grid-cols-1 gap-1.5">
-                    
-                    <div className="flex items-center justify-between py-1 px-2.5 rounded-xl bg-stone-50/80 border border-stone-200/60">
-                      <span className="text-xs font-bold text-stone-900 flex items-center gap-1.5">
-                        <span>🍮</span> Cream Caramel Pudding
-                      </span>
-                      <span className="text-xs font-extrabold text-amber-900">Rs. 150/=</span>
-                    </div>
-
-                    <div className="flex items-center justify-between py-1 px-2.5 rounded-xl bg-stone-50/80 border border-stone-200/60">
-                      <span className="text-xs font-bold text-stone-900 flex items-center gap-1.5">
-                        <span>🍮</span> Watalappan
-                      </span>
-                      <span className="text-xs font-extrabold text-amber-900">Rs. 180/=</span>
-                    </div>
-
-                    <div className="flex items-center justify-between py-1 px-2.5 rounded-xl bg-stone-50/80 border border-stone-200/60">
-                      <span className="text-xs font-bold text-stone-900 flex items-center gap-1.5">
-                        <span>🍮</span> Biscuit Pudding
-                      </span>
-                      <span className="text-xs font-extrabold text-amber-900">Rs. 220/=</span>
-                    </div>
-
-                    <div className="p-2 rounded-xl bg-stone-50/80 border border-stone-200/60 space-y-0.5">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-stone-900 flex items-center gap-1.5">
-                          <span>🍉</span> Fresh Cut Fruit
-                        </span>
-                        <span className="text-xs font-extrabold text-amber-900">Rs. 260/=</span>
+                      <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center shadow-xs">
+                        <Icon className="w-6 h-6" />
                       </div>
-                      <p className="text-[10px] text-stone-500 font-medium pl-6">
-                        Watermelon | Mango | Pineapple | Papaya
+                      <span className="bg-amber-100 text-amber-900 border border-amber-300 font-extrabold text-xs px-3 py-1 rounded-full">
+                        {language === "si"
+                          ? `විකල්ප 0${index + 1}`
+                          : `Option 0${index + 1}`}
+                      </span>
+                    </div>
+
+                    <div>
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-amber-800 block">
+                        {enhancement.category.toUpperCase().replace("_", " ")}
+                      </span>
+                      <h3 className="text-xl font-serif font-bold text-stone-900">
+                        {language === "si" && enhancement.titleSi
+                          ? enhancement.titleSi
+                          : enhancement.title}
+                      </h3>
+                      <p className="text-xs text-stone-500 mt-0.5">
+                        {language === "si" && enhancement.subtitleSi
+                          ? enhancement.subtitleSi
+                          : enhancement.subtitle}
                       </p>
                     </div>
 
-                    <div className="flex items-center justify-between py-1 px-2.5 rounded-xl bg-stone-50/80 border border-stone-200/60">
-                      <span className="text-xs font-bold text-stone-900 flex items-center gap-1.5">
-                        <span>🍓</span> Fruit Trifle
+                    <div className="pt-2 border-t border-stone-100 space-y-2">
+                      <span className="text-[11px] font-bold text-stone-800 uppercase tracking-wider block">
+                        {language === "si" ? "ඇතුළත් දෑ:" : "Includes:"}
                       </span>
-                      <span className="text-xs font-extrabold text-amber-900">Rs. 380/=</span>
-                    </div>
 
-                    <div className="flex items-center justify-between py-1 px-2.5 rounded-xl bg-stone-50/80 border border-stone-200/60">
-                      <span className="text-xs font-bold text-stone-900 flex items-center gap-1.5">
-                        <span>🍓</span> Strawberry Tres Leches
-                      </span>
-                      <span className="text-xs font-extrabold text-amber-900">Rs. 410/=</span>
+                      {hasStructuredItems ? (
+                        <div className="space-y-2">
+                          {enhancement.items.map((item, itIdx) =>
+                            renderItemContent(item, itIdx)
+                          )}
+                        </div>
+                      ) : (
+                        <ul className="space-y-2 text-xs text-stone-700 font-medium">
+                          {enhancement.items.map((item, itIdx) =>
+                            renderItemContent(item, itIdx)
+                          )}
+                        </ul>
+                      )}
                     </div>
+                  </div>
 
+                  <div className="pt-3 border-t border-stone-100 text-[11px] text-stone-400 flex items-center justify-between">
+                    <span>{language === "si" ? "අවශ්‍ය පරිදි වෙනස් කළ හැක" : "Fully customizable"}</span>
+                    <span className="text-amber-700 font-bold">{language === "si" ? "අමතර සේවාවක්" : "Add-On"}</span>
                   </div>
                 </div>
-              </div>
-            </div>
-
+              );
+            })}
           </div>
         </div>
       </section>
@@ -372,7 +322,7 @@ export default function ModernCateringView() {
         </div>
       </section>
 
-      {/* Direct WhatsApp Consultation Capsule - Minimal Text & Enhanced Luxury UI */}
+      {/* Direct WhatsApp Consultation Capsule */}
       <section className="pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto rounded-3xl bg-gradient-to-r from-stone-950 via-[#1c140d] to-stone-950 text-white p-8 sm:p-12 shadow-2xl text-center space-y-6 border border-amber-500/30 relative overflow-hidden group">
           {/* Subtle Ambient Radial Glow & Dot Matrix */}

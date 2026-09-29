@@ -13,75 +13,16 @@ import {
   MessageCircle, 
   ArrowUpRight 
 } from "lucide-react";
-
-interface CateringPillar {
-  id: string;
-  titleEn: string;
-  titleSi: string;
-  tagEn: string;
-  tagSi: string;
-  descEn: string;
-  descSi: string;
-  featuresEn: string[];
-  featuresSi: string[];
-  image: string;
-}
-
-const PILLARS: CateringPillar[] = [
-  {
-    id: "weddings",
-    titleEn: "Weddings & Homecomings",
-    titleSi: "මංගල හා දෙවැනි ගමන සාද",
-    tagEn: "Grand Luxury",
-    tagSi: "රාජකීය මට්ටම",
-    descEn: "Bespoke banquet menus, roll-top luxury chafing dishes, live carvery & action stations with professional uniformed stewards.",
-    descSi: "සුවිශේෂී මංගල බුෆේ වට්ටෝරු, සුඛෝපභෝගී රෝල්-ටොප් භාජන, සජීවී කුටි සහ නිල ඇඳුමින් සැරසුණු සේවක මණ්ඩලය.",
-    featuresEn: ["Buffet warmers & tableware included", "Live Mongolian / BBQ stations", "Uniformed service stewards"],
-    featuresSi: ["උණුසුම් බුෆේ භාජන හා පිඟන් භාණ්ඩ", "සජීවී මොන්ගෝලියන් / BBQ කුටි", "වෘත්තීය නිල ඇඳුම් සේවක මණ්ඩලය"],
-    image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    id: "dane",
-    titleEn: "Sacred Alms Giving & Bana",
-    titleSi: "දානමය පිංකම් හා බණ",
-    tagEn: "Pious & Traditional",
-    tagSi: "ශ්‍රද්ධා සම්පන්න",
-    descEn: "Traditional 7-curry vegetarian or fish menus prepared with pristine cleanliness and respect for the venerable Maha Sangha.",
-    descSi: "මහා සංඝරත්නය උදෙසා පිරිසිදුකම මුල් කරගත්, සාම්ප්‍රදායික ව්‍යංජන 7 කින් යුතු ගුණදායක දානමය සංග්‍රහ.",
-    featuresEn: ["Pure, authentic traditional curries", "Individual Sangha thali trays", "Punctual morning & noon delivery"],
-    featuresSi: ["පාරම්පරික දේශීය ව්‍යංජන", "සංඝරත්නය උදෙසා විශේෂිත තැටි සැකසුම", "නියමිත වෙලාවටම පිළිගැන්වීම"],
-    image: "https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    id: "birthdays",
-    titleEn: "Birthdays & Private Parties",
-    titleSi: "උපන්දින හා පෞද්ගලික සාද",
-    tagEn: "Lively & Vibrant",
-    tagSi: "විනෝදජනක",
-    descEn: "Clattering kottu stations, crispy bites, fiery sizzlers, and customizable buffet options tailored to your guest count.",
-    descSi: "උණු උණු චීස් කොත්තු, රසවත් බයිට්ස්, සිස්ලර්ස් සහ මිතුරන් සමඟ විනෝද විය හැකි නම්‍යශීලී පැකේජ.",
-    featuresEn: ["Live Kottu clattering on-site", "Specialty bites & chaser setups", "Flexible minimums from 25 pax"],
-    featuresSi: ["සජීවීව ක්ලැටර් වන කොත්තු කුටිය", "විශේෂිත බයිට්ස් සහ සෝස් සැකසුම්", "අවම 25 දෙනෙකුගේ සිට ඇණවුම්"],
-    image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    id: "corporate",
-    titleEn: "Corporate Events & Outdoor",
-    titleSi: "ආයතනික හා එළිමහන් සාද",
-    tagEn: "Corporate Standard",
-    tagSi: "වෘත්තීය ප්‍රමිතිය",
-    descEn: "Punctual corporate luncheons, conference catering, executive pack deliveries, and full outdoor canopy meal stations.",
-    descSi: "කාර්යාල සම්මන්ත්‍රණ, වාර්ෂික හමුවීම් සහ එළිමහන් සාද සඳහා නියමිත වේලාවට ලබාදෙන වෘත්තීය කේටරින් සේවාව.",
-    featuresEn: ["Punctual timing guaranteed", "Invoice & corporate payment options", "Full logistical setup & teardown"],
-    featuresSi: ["100% නියමිත වේලාවට භාරදීම", "ආයතනික ඉන්වොයිස් පහසුකම්", "සම්පූර්ණ ප්‍රවාහන හා උපකරණ පහසුකම්"],
-    image: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80",
-  },
-];
+import { useCateringOccasions, CateringOccasionItem } from "@/services/cateringService";
 
 export default function ModernCateringGrid() {
   const { language } = useLanguage();
+  const { occasions } = useCateringOccasions();
 
-  const getWhatsAppLink = (pillar: CateringPillar) => {
+  const getWhatsAppLink = (pillar: CateringOccasionItem) => {
+    if (pillar.whatsappPrefill) {
+      return `https://wa.me/${RESTAURANT_INFO.whatsappNumber}?text=${encodeURIComponent(pillar.whatsappPrefill)}`;
+    }
     const text =
       language === "si"
         ? `ආයුබෝවන් Madara Restaurant! මම "${pillar.titleSi}" සඳහා කේටරින් පැකේජ සහ මිල ගණන් පිළිබඳව සම්බන්ධ වීමට කැමැත්තෙමි.`
@@ -102,7 +43,7 @@ export default function ModernCateringGrid() {
             <h2 className="text-3xl sm:text-4xl font-bold text-stone-900 font-serif tracking-tight">
               {language === "si" ? "ප්‍රධාන කේටරින් " : "Catering For Every "}
               <span className="text-gradient-gold">
-                {language === "si" ? "අංශ 4" : "Occasion"}
+                {language === "si" ? `අංශ ${occasions.length || 4}` : "Occasion"}
               </span>
             </h2>
           </div>
@@ -116,9 +57,9 @@ export default function ModernCateringGrid() {
           </Link>
         </div>
 
-        {/* 4 Pillar Grid */}
+        {/* Dynamic Pillar Grid (Mapped from Firestore 'catering_occasions') */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-          {PILLARS.map((pillar) => (
+          {occasions.map((pillar) => (
             <div
               key={pillar.id}
               className="bg-white rounded-3xl overflow-hidden border border-stone-200/80 shadow-sm hover:shadow-xl hover:border-amber-400/40 transition-all duration-300 flex flex-col group"
