@@ -4,19 +4,22 @@ import MenuCatalogClient from "./MenuCatalogClient";
 import { RESTAURANT_INFO } from "@/data/restaurantData";
 
 export const metadata: Metadata = {
-  title: "Food Menu & Catering Prices | Madara Restaurant Homagama",
+  title: "Food Menu, BYOB Bites & Catering Prices | Madara Restaurant Homagama",
   description:
-    "Explore rice, kottu, seafood, sizzlers, and catering packages at Madara Restaurant Homagama. View transparent prices and portion sizes. Order or dine in now!",
+    "Explore dine-in & takeaway food menu at Madara Restaurant Homagama. Fried rice, cheese kottu, seafood, Mongolian wok, BYOB bites & event catering packages with transparent prices.",
   keywords: [
     "Madara Menu Homagama",
     "Restaurant Menu Homagama",
+    "BYOB Restaurant Homagama",
+    "BYOB Bites Homagama",
     "Catering Menu Homagama",
     "Mongolian Wok Homagama",
     "Cheese Kottu Homagama",
+    "Best Fried Rice Homagama",
     "Jaffna Crab Curry Homagama",
-    "Fried Rice Homagama",
     "Food Delivery Homagama",
     "Madara Restaurant Prices",
+    "Athurugiriya Road Food",
   ],
   alternates: {
     canonical: "https://madararestaurant.com/menu/",

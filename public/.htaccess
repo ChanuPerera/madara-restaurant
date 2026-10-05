@@ -7,11 +7,16 @@
   RewriteEngine On
   RewriteBase /
 
-  # Redirect HTTP to HTTPS
-  RewriteCond %{HTTPS} off
-  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  # Step A: Force WWW to Non-WWW (handles both HTTP and HTTPS in a single 301 hop)
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
-  # Redirect trailing slash requests to clean index
+  # Step B: Force HTTP to HTTPS (handles direct Apache and Cloudflare/proxy headers)
+  RewriteCond %{HTTPS} off [OR]
+  RewriteCond %{HTTP:X-Forwarded-Proto} =http
+  RewriteRule ^(.*)$ https://madararestaurant.com/$1 [R=301,L]
+
+  # Step C: Redirect trailing slash requests to clean index for Next.js static export
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME}/index.html -f
   RewriteRule ^(.*)$ $1/index.html [L]
@@ -63,6 +68,8 @@
 
 # 4. Security Headers
 <IfModule mod_headers.c>
+  # Enforce HSTS (Strict-Transport-Security) for 1 year
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
   Header set X-Content-Type-Options "nosniff"
   Header set X-Frame-Options "SAMEORIGIN"
   Header set X-XSS-Protection "1; mode=block"

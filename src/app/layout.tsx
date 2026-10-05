@@ -32,25 +32,33 @@ const cinzel = localFont({
 
 export const metadata: Metadata = {
   title: {
-    default: "Madara Restaurant & Catering Homagama | Event Catering",
+    default: "Madara Restaurant Homagama | Multi-Cuisine Dine-in, BYOB & Catering",
     template: "%s | Madara Restaurant Homagama",
   },
   description:
-    "Homagama's premier catering service for Weddings, Dane, Funerals, and Parties. Enjoy live Mongolian wok, BBQ, and dine-in. Book your catering menu today!",
+    "Visit Homagama's top multi-cuisine restaurant on Athurugiriya Road. Dine-in, BYOB with zero corkage, takeaway, and Sri Lankan, Chinese & Mongolian wok food. Event catering specialist.",
   keywords: [
     "Madara Restaurant",
+    "Homagama Restaurant",
+    "Restaurants in Homagama",
+    "Homagama Restaurants",
+    "BYOB Restaurant Homagama",
+    "Homagama BYOB Places",
+    "Restaurants near Homagama",
+    "Athurugiriya Road Restaurant",
+    "Restaurants near Athurugiriya",
+    "Family Restaurant Homagama",
+    "Mongolian Wok Station Homagama",
+    "Best Fried Rice Homagama",
+    "Cheese Kottu Homagama",
+    "Food Delivery Homagama",
     "Madara Catering Homagama",
     "Wedding Catering Homagama",
     "Alms Giving Catering Sri Lanka",
     "Dane Catering Homagama",
-    "Bana and Dane Food Catering",
     "Funeral Catering Homagama",
     "Birthday Catering Packages Homagama",
     "Corporate Event Catering Homagama",
-    "Live Action Kitchen Sri Lanka",
-    "Mongolian Wok Station Homagama",
-    "Athurugiriya Road Restaurant",
-    "Food Delivery Homagama",
   ],
   authors: [{ name: "Madara Restaurant & Catering Team" }],
   creator: "Madara Restaurant",
@@ -64,9 +72,9 @@ export const metadata: Metadata = {
     apple: "/icon.svg",
   },
   openGraph: {
-    title: "Madara Restaurant & Catering Homagama | Event Catering Specialist",
+    title: "Madara Restaurant Homagama | Multi-Cuisine Dine-in, BYOB & Catering",
     description:
-      "Homagama's premier catering service for Weddings, Dane, Funerals, and Parties. Live Action Stations, Dine-in & BYOB. Call 0704535815.",
+      "Homagama's top dining & event catering destination on Athurugiriya Road. Live Mongolian wok, BBQ, BYOB with zero corkage, and full-service event catering. Call 0704535815.",
     url: "https://madararestaurant.com/",
     siteName: "Madara Restaurant & Catering",
     images: [
@@ -74,7 +82,7 @@ export const metadata: Metadata = {
         url: "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&h=630&q=80",
         width: 1200,
         height: 630,
-        alt: "Madara Restaurant & Catering Homagama Events",
+        alt: "Madara Restaurant & Catering Homagama",
       },
     ],
     locale: "en_LK",
@@ -82,9 +90,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Madara Restaurant & Catering Homagama | Event Catering Specialist",
+    title: "Madara Restaurant Homagama | Multi-Cuisine Dine-in, BYOB & Catering",
     description:
-      "Homagama's premier catering service for Weddings, Dane, Funerals, and Parties. Live Action Stations, Dine-in & BYOB. Call 0704535815.",
+      "Homagama's top dining & event catering destination on Athurugiriya Road. Live Mongolian wok, BBQ, BYOB with zero corkage, and full-service event catering.",
     images: [
       "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&h=630&q=80",
     ],
@@ -156,6 +164,47 @@ export default function RootLayout({
           postalCode: "10200",
           addressCountry: "LK",
         },
+        areaServed: [
+          {
+            "@type": "AdministrativeArea",
+            name: "Homagama",
+          },
+          {
+            "@type": "AdministrativeArea",
+            name: "Athurugiriya",
+          },
+          {
+            "@type": "AdministrativeArea",
+            name: "Western Province",
+          },
+        ],
+        amenityFeature: [
+          {
+            "@type": "LocationFeatureSpecification",
+            name: "BYOB (Bring Your Own Bottle) Allowed",
+            value: true,
+          },
+          {
+            "@type": "LocationFeatureSpecification",
+            name: "Zero Corkage Fee",
+            value: true,
+          },
+          {
+            "@type": "LocationFeatureSpecification",
+            name: "Dine-In Seating",
+            value: true,
+          },
+          {
+            "@type": "LocationFeatureSpecification",
+            name: "Takeaway & Delivery",
+            value: true,
+          },
+          {
+            "@type": "LocationFeatureSpecification",
+            name: "Live Cooking Kitchens",
+            value: true,
+          },
+        ],
         geo: {
           "@type": "GeoCoordinates",
           latitude: 6.8436,
