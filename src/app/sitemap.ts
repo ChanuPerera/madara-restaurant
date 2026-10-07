@@ -40,12 +40,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 0.8,
     },
-    {
-      url: `${baseUrl}/catering-menu/`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
   ];
 
   // Collect all unique dish & package IDs (Firebase live + static fallback)

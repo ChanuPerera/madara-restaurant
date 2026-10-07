@@ -17,7 +17,7 @@ export default function FloatingCareersButton() {
 
   return (
     <Link
-      href="/careers"
+      href="/careers/"
       className="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2.5 px-5 py-3 rounded-full bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:to-orange-400 text-stone-950 font-extrabold text-xs sm:text-sm tracking-wide shadow-[0_10px_30px_-5px_rgba(245,158,11,0.5)] border-2 border-amber-200/80 transition-all hover:scale-105 active:scale-95 group select-none cursor-pointer"
       title={
         language === "si"

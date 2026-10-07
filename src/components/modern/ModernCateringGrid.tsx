@@ -49,7 +49,7 @@ export default function ModernCateringGrid() {
           </div>
           
           <Link
-            href="/catering"
+            href="/catering/"
             className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-stone-900 hover:text-amber-600 transition-colors group"
           >
             <span>{language === "si" ? "සියලුම පැකේජ බලන්න" : "View All Catering Packages"}</span>
@@ -138,13 +138,13 @@ export default function ModernCateringGrid() {
             </p>
             <div className="pt-3 flex flex-wrap items-center justify-center gap-3">
               <Link
-                href="/catering"
+                href="/catering/"
                 className="px-6 py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md"
               >
                 {language === "si" ? "කේටරින් මෙනු පොත බලන්න" : "Open Catering Menu Book"}
               </Link>
               <Link
-                href="/about"
+                href="/about/"
                 className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold text-xs uppercase tracking-wider transition-all"
               >
                 {language === "si" ? "අප ගැන වැඩිදුර තොරතුරු" : "Learn About Us"}

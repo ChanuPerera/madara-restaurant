@@ -123,7 +123,7 @@ export default function CateringShowcase() {
             {/* Action Buttons */}
             <div className="pt-3 flex flex-wrap items-center gap-4">
               <Link
-                href="/catering"
+                href="/catering/"
                 className="btn-primary px-7 py-4 rounded-xl text-sm sm:text-base font-bold flex items-center gap-2.5 shadow-glow-orange group transition-all duration-300 transform hover:-translate-y-0.5"
               >
                 <span>{t("catering.discoverMenuBtn")}</span>

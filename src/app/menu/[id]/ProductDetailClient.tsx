@@ -72,7 +72,7 @@ export default function ProductDetailClient({
     if (typeof window !== "undefined" && window.history.length > 1) {
       router.back();
     } else {
-      router.push("/menu");
+      router.push("/menu/");
     }
   };
 
@@ -220,7 +220,7 @@ export default function ProductDetailClient({
     const currentUrl =
       typeof window !== "undefined"
         ? window.location.href
-        : `https://madararestaurant.com/menu/${currentDish?.id || item.id}`;
+        : `https://madararestaurant.com/menu/${currentDish?.id || item.id}/`;
     const portionText = selectedPortion ? ` - ${selectedPortion.label}` : "";
     const availText = !isAvailable
       ? " [Note: Inquiring on next batch availability]"
@@ -265,7 +265,7 @@ export default function ProductDetailClient({
             </Link>
             <span className="text-stone-300">/</span>
             <Link
-              href="/menu"
+              href="/menu/"
               onClick={handleBackToMenu}
               className="text-stone-600 hover:text-amber-600 transition-colors cursor-pointer"
             >
@@ -640,7 +640,7 @@ export default function ProductDetailClient({
                 </h2>
               </div>
               <Link
-                href="/menu"
+                href="/menu/"
                 className="text-xs font-bold text-amber-700 hover:underline flex items-center gap-1"
               >
                 <span>
@@ -685,7 +685,7 @@ export default function ProductDetailClient({
                 return (
                   <Link
                     key={relItem.id}
-                    href={`/menu/${relItem.id}`}
+                    href={`/menu/${relItem.id}/`}
                     className="group bg-white border border-stone-200 hover:border-amber-400 rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
                   >
                     <div className="relative h-40 w-full bg-stone-100 overflow-hidden">

@@ -77,7 +77,7 @@ export default function ModernMenuSection() {
             return (
               <Link
                 key={item.id}
-                href={`/menu/${item.id}`}
+                href={`/menu/${item.id}/`}
                 onClick={() => {
                   try {
                     sessionStorage.setItem("madara_menu_state", JSON.stringify({
@@ -137,7 +137,7 @@ export default function ModernMenuSection() {
         {/* View Full Menu CTA */}
         <div className="mt-12 text-center">
           <Link
-            href="/menu"
+            href="/menu/"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-stone-900 hover:bg-stone-800 text-white text-xs sm:text-sm font-bold shadow-md transition-all hover:scale-105"
           >
             <span>{language === "si" ? "සියලුම ආපනශාලා ආහාර මෙනුව බලන්න" : "View Full Menu Catalog"}</span>

@@ -25,11 +25,11 @@ export default function Footer() {
   const [isSitemapOpen, setIsSitemapOpen] = useState(false);
 
   const quickLinks = [
-    { name: language === "si" ? "කේටරින් මෙනුව" : "Catering Menu", href: "/catering-menu" },
+    { name: language === "si" ? "කේටරින් මෙනුව" : "Catering Menu", href: "/catering/" },
     { name: t("nav.menu"), href: "/#menu" },
     { name: t("nav.partners"), href: "/#partners" },
     { name: t("nav.gallery"), href: "/#gallery" },
-    { name: t("nav.careers"), href: "/careers" },
+    { name: t("nav.careers"), href: "/careers/" },
     { name: t("nav.contact"), href: "/#contact" },
   ];
 
@@ -130,7 +130,7 @@ export default function Footer() {
               </a>
 
               <Link
-                href="/careers"
+                href="/careers/"
                 className="px-4 py-2.5 rounded-xl text-xs font-bold bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center gap-1.5 inline-flex"
               >
                 <Briefcase className="w-4 h-4" />
@@ -231,7 +231,7 @@ export default function Footer() {
           <div className="flex items-center gap-3 text-[11px]">
             <span>191/B/1, Athurugiriya Road, Homagama</span>
             <span>•</span>
-            <Link href="/careers" className="text-madara-amber hover:underline">
+            <Link href="/careers/" className="text-madara-amber hover:underline">
               {t("nav.careers")}
             </Link>
             <span>•</span>

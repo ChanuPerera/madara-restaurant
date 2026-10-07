@@ -342,7 +342,7 @@ export default function MenuCatalogClient() {
                   <Link
                     key={item.id}
                     id={`menu-item-${item.id}`}
-                    href={`/menu/${item.id}`}
+                    href={`/menu/${item.id}/`}
                     onClick={() => saveCatalogState(item.id)}
                     className={`group bg-white border ${
                       isHighlighted

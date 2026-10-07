@@ -83,7 +83,7 @@ const HERO_MENU_ITEMS: MenuItem[] = [
     plateImage: HeroImg3.src,
     categoryEn: "Banquet Catering",
     categorySi: "කේටරින් සේවාව",
-    href: "/catering-menu",
+    href: "/catering/",
   },
   {
     id: "corporate_meals",
@@ -99,7 +99,7 @@ const HERO_MENU_ITEMS: MenuItem[] = [
     plateImage: HeroImg4.src,
     categoryEn: "Corporate Service",
     categorySi: "ආයතනික සේවාවන්",
-    href: "/catering-menu",
+    href: "/catering/",
   },
   {
     id: "food_delivery",
@@ -210,7 +210,7 @@ export default function ModernHero() {
               </a>
 
               <Link
-                href="/catering-menu"
+                href="/catering/"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold shadow-md transition-all hover:scale-105 active:scale-95"
               >
                 <span>Catering Menu</span>

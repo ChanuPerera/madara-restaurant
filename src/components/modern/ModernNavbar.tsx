@@ -31,10 +31,10 @@ export default function ModernNavbar() {
   }, []);
 
   const navLinks = [
-    { href: "/menu", labelEn: "Menu", labelSi: "මෙනුව" },
-    { href: "/catering", labelEn: "Catering Menu", labelSi: "කේටරින් මෙනුව" },
-    { href: "/careers", labelEn: "Careers", labelSi: "රැකියා", isCareer: true },
-    { href: "/about", labelEn: "About Us", labelSi: "අප ගැන" },
+    { href: "/menu/", labelEn: "Menu", labelSi: "මෙනුව" },
+    { href: "/catering/", labelEn: "Catering Menu", labelSi: "කේටරින් මෙනුව" },
+    { href: "/careers/", labelEn: "Careers", labelSi: "රැකියා", isCareer: true },
+    { href: "/about/", labelEn: "About Us", labelSi: "අප ගැන" },
   ];
 
   const isActive = (href: string) => {

@@ -111,7 +111,7 @@ export default function SitemapDrawer({ isOpen, onClose }: SitemapDrawerProps) {
         sinhalaTitle: "කේටරින් පැකේජ සහ ත්‍රිමාණ මෙනු පොත",
         description: "Explore weddings, alms giving, bana, birthdays, and custom corporate feast packages.",
         sinhalaDescription: "විවාහ, දානමය පිංකම්, උපන්දින සහ ආයතනික උත්සව සඳහා විශේෂිත කේටරින් පැකේජ.",
-        href: "/catering",
+        href: "/catering/",
         badge: "Catering",
       },
       {
@@ -121,7 +121,7 @@ export default function SitemapDrawer({ isOpen, onClose }: SitemapDrawerProps) {
         sinhalaTitle: "ආපනශාලා මෙනුව (Dine-in / Takeaway)",
         description: "Browse 60+ dishes: Basmathi fried rice, cheese kottu, seafood, and chef specials.",
         sinhalaDescription: "බස්මති ෆ්‍රයිඩ් රයිස්, චීස් කොත්තු, සීෆුඩ් ඇතුළු ප්‍රණීත ආහාර වර්ග 60+ ක්.",
-        href: "/menu",
+        href: "/menu/",
         badge: "Dine-in",
       },
       {
@@ -131,7 +131,7 @@ export default function SitemapDrawer({ isOpen, onClose }: SitemapDrawerProps) {
         sinhalaTitle: "ත්‍රිමාණ අන්තර්ක්‍රියාකාරී කේටරින් පොත",
         description: "Realistic page-flipping digital menu book with itemized curry lists and prices.",
         sinhalaDescription: "සැබෑ පොතක පිටු පෙරලන්නාක් මෙන් කියවිය හැකි ඩිජිටල් කේටරින් මෙනු පොත.",
-        href: "/catering-menu",
+        href: "/catering/#menu-book",
         badge: "3D Flipbook",
       },
       {
@@ -141,7 +141,7 @@ export default function SitemapDrawer({ isOpen, onClose }: SitemapDrawerProps) {
         sinhalaTitle: "රැකියා අවස්ථා (ඇබෑර්තු 5+ ක්)",
         description: "Join the Madara culinary team: Head Chef, Commis, Stewards, Captains & Cleaners.",
         sinhalaDescription: "අපගේ කණ්ඩායමට එක්වන්න: ප්‍රධාන සූපවේදීන්, සේවක මහත්වරුන් සහ උපස්ථායකයින්.",
-        href: "/careers",
+        href: "/careers/",
         badge: "Hiring",
       },
       {
@@ -151,7 +151,7 @@ export default function SitemapDrawer({ isOpen, onClose }: SitemapDrawerProps) {
         sinhalaTitle: "අප පිළිබඳව සහ අපගේ ඉතිහාසය",
         description: "Learn about our hygiene standards, event execution pedigree, and culinary passion.",
         sinhalaDescription: "අපගේ උසස් සනීපාරක්ෂක ප්‍රමිතීන්, ආහාර පිළියෙල කිරීම සහ අත්දැකීම්.",
-        href: "/about",
+        href: "/about/",
         badge: "About",
       },
     ];
@@ -164,7 +164,7 @@ export default function SitemapDrawer({ isOpen, onClose }: SitemapDrawerProps) {
         sinhalaTitle: "විවාහ සහ දෙවැනි ගමන උත්සව කේටරින්",
         description: "Grand buffet spreads with chafing dishes, executive stewards, and welcome drinks.",
         sinhalaDescription: "විවාහ මංගල්‍යය සහ දෙවැනි ගමන උත්සව සඳහා විශේෂ සුඛෝපභෝගී බුෆේ සත්කාරය.",
-        href: "/catering#menu-book",
+        href: "/catering/#menu-book",
         badge: "Weddings",
       },
       {
@@ -174,7 +174,7 @@ export default function SitemapDrawer({ isOpen, onClose }: SitemapDrawerProps) {
         sinhalaTitle: "දානමය පිංකම් සහ බණ දේශනා සඳහා සත්කාරය",
         description: "Prepared with extreme cleanliness and devotion for Maha Sangha and commemorative alms.",
         sinhalaDescription: "මහා සංඝරත්නය උදෙසා පිරිනමන දානය සහ බණ පිංකම් සඳහා පිරිසිදුව පිළියෙල කළ මෙනු.",
-        href: "/catering#menu-book",
+        href: "/catering/#menu-book",
         badge: "Sacred",
       },
       {
@@ -184,7 +184,7 @@ export default function SitemapDrawer({ isOpen, onClose }: SitemapDrawerProps) {
         sinhalaTitle: "උපන්දින සහ පෞද්ගලික සාද සංග්‍රහ",
         description: "Vibrant party catering with egg fried rice, devilled chicken, and dessert stations.",
         sinhalaDescription: "උපන්දින සහ සාද සඳහා සකස් කළ විචිත්‍රවත් මෙනු සහ අතුරුපස කුටි.",
-        href: "/catering#menu-book",
+        href: "/catering/#menu-book",
         badge: "Parties",
       },
       {
@@ -194,7 +194,7 @@ export default function SitemapDrawer({ isOpen, onClose }: SitemapDrawerProps) {
         sinhalaTitle: "ආයතනික විධායක දිවා භෝජන සංග්‍රහ",
         description: "Punctual, professional catering for annual general meetings, seminars, and conferences.",
         sinhalaDescription: "සම්මන්ත්‍රණ සහ ආයතනික රැස්වීම් සඳහා නියමිත වේලාවට සපයන උසස් සේවාව.",
-        href: "/catering#menu-book",
+        href: "/catering/#menu-book",
         badge: "Corporate",
       },
       {
@@ -204,7 +204,7 @@ export default function SitemapDrawer({ isOpen, onClose }: SitemapDrawerProps) {
         sinhalaTitle: "අවමංගල්‍ය උත්සව ආහාර සැපයීම",
         description: "Dignified, prompt, and comforting catering for memorial wakes and gatherings.",
         sinhalaDescription: "අවමංගල්‍ය අවස්ථාවන් සඳහා ගෞරවනීය හා කඩිනම් ආහාර සැපයුම් සේවාව.",
-        href: "/catering#menu-book",
+        href: "/catering/#menu-book",
         badge: "Memorial",
       },
       {
@@ -214,7 +214,7 @@ export default function SitemapDrawer({ isOpen, onClose }: SitemapDrawerProps) {
         sinhalaTitle: "සාම්ප්‍රදායික මල බත මෙනු",
         description: "Authentic Katta Karawala, wattakka, dhal curry, and comforting rice preparations.",
         sinhalaDescription: "කටිට කරවල, වට්ටක්කා, පරිප්පු සමඟ ගමේ රසයෙන් පිරි මල බත සංග්‍රහය.",
-        href: "/catering#menu-book",
+        href: "/catering/#menu-book",
         badge: "Traditional",
       },
       {
@@ -224,7 +224,7 @@ export default function SitemapDrawer({ isOpen, onClose }: SitemapDrawerProps) {
         sinhalaTitle: "සජීවී මොන්ගෝලියන් වොක් සහ BBQ කුටි",
         description: "Live chefs preparing stir-fried noodles, sizzling BBQ skewers, and hot hoppers.",
         sinhalaDescription: "අමුත්තන් ඉදිරියෙහිම පිළියෙල කෙරෙන සජීවී හොපර්ස්, මොන්ගෝලියන් සහ BBQ ස්ටේෂන්.",
-        href: "/catering#addons",
+        href: "/catering/#addons",
         badge: "Live Station",
       },
     ];
@@ -237,7 +237,7 @@ export default function SitemapDrawer({ isOpen, onClose }: SitemapDrawerProps) {
         sinhalaTitle: "සියලුම කෑම වර්ග (All Dishes)",
         description: "View entire restaurant menu catalog with portions and prices.",
         sinhalaDescription: "ආපනශාලාවේ සියලුම ආහාර වර්ග, කොටස් සහ මිල ගණන් පිරික්සන්න.",
-        href: "/menu",
+        href: "/menu/",
         badge: "All Dishes",
       },
       {
@@ -247,7 +247,7 @@ export default function SitemapDrawer({ isOpen, onClose }: SitemapDrawerProps) {
         sinhalaTitle: "බස්මති ෆ්‍රයිඩ් රයිස් විශේෂාංග",
         description: "Steamed fragrant basmathi tossed with vegetable, egg, chicken, seafood, or mix.",
         sinhalaDescription: "එළවළු, බිත්තර, චිකන්, සීෆුඩ් සහ මික්ස් බස්මති ෆ්‍රයිඩ් රයිස් වර්ග.",
-        href: "/menu?category=rice",
+        href: "/menu/?category=rice",
         badge: "Rice",
       },
       {
@@ -257,7 +257,7 @@ export default function SitemapDrawer({ isOpen, onClose }: SitemapDrawerProps) {
         sinhalaTitle: "විශේෂිත කොත්තු සහ චීස් කොත්තු",
         description: "Freshly chopped godamba roti with spices, chicken, seafood, dolphin, and rich cheese.",
         sinhalaDescription: "චිකන්, සීෆුඩ්, ඩොල්ෆින් සහ උණු කළ චීස් මුසු කළ රසවත් කොත්තු වර්ග.",
-        href: "/menu?category=kottu",
+        href: "/menu/?category=kottu",
         badge: "Kottu",
       },
       {
@@ -267,7 +267,7 @@ export default function SitemapDrawer({ isOpen, onClose }: SitemapDrawerProps) {
         sinhalaTitle: "විශේෂ කෑම වර්ග, ඩෙවිල් සහ සයිඩ් ඩිෂ්",
         description: "Devilled chicken, hot butter cuttlefish, chopsuey, and fresh salads.",
         sinhalaDescription: "හොට් බටර් දැල්ලන්, චිකන් ඩෙවිල්, චොප්සි සහ සලාද වර්ග.",
-        href: "/menu?category=other",
+        href: "/menu/?category=other",
         badge: "Sides & Mains",
       },
     ];
@@ -280,7 +280,7 @@ export default function SitemapDrawer({ isOpen, onClose }: SitemapDrawerProps) {
       sinhalaTitle: dish.sinhalaName || dish.name,
       description: `${dish.portion} • ${dish.description.slice(0, 75)}...`,
       sinhalaDescription: `${dish.portion} • ${dish.sinhalaName || dish.name}`,
-      href: `/menu/${dish.id}`,
+      href: `/menu/${dish.id}/`,
       badge: dish.category.toUpperCase(),
     }));
 

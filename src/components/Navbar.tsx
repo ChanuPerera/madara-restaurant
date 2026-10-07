@@ -52,11 +52,11 @@ export default function Navbar() {
   }, [mobileMenuOpen]);
 
   const navLinks = [
-    { name: language === "si" ? "කේටරින් මෙනුව" : "Catering Menu", href: "/catering-menu", icon: ChefHat },
+    { name: language === "si" ? "කේටරින් මෙනුව" : "Catering Menu", href: "/catering/", icon: ChefHat },
     { name: t("nav.menu"), href: "/#menu", icon: UtensilsCrossed },
     { name: t("nav.partners"), href: "/#partners", icon: Sparkles },
     { name: t("nav.gallery"), href: "/#gallery", icon: ImageIcon },
-    { name: t("nav.careers"), href: "/careers", icon: User, isCareer: true },
+    { name: t("nav.careers"), href: "/careers/", icon: User, isCareer: true },
     { name: t("nav.contact"), href: "/#contact", icon: MapPin },
   ];
 
