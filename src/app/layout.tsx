@@ -108,6 +108,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  other: {
+    google: "notranslate",
+  },
 };
 
 import FloatingCareersButton from "@/components/FloatingCareersButton";
@@ -291,9 +294,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${quicksand.variable} ${cinzel.variable} ${quicksand.className}`}
+      translate="no"
+      className={`${quicksand.variable} ${cinzel.variable} ${quicksand.className} notranslate`}
     >
       <head>
+        <meta name="google" content="notranslate" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData) }}
