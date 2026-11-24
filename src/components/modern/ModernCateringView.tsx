@@ -6,7 +6,7 @@ import ModernNavbar from "@/components/modern/ModernNavbar";
 import ModernFooter from "@/components/modern/ModernFooter";
 import CateringMenuBook from "@/components/modern/CateringMenuBook";
 import OrLogo from "@/assets/orlogo-01.png";
-import { RESTAURANT_INFO } from "@/data/restaurantData";
+import { RESTAURANT_INFO, CATERING_PACKAGES, CATERING_CATEGORIES } from "@/data/restaurantData";
 import { useLanguage } from "@/context/LanguageContext";
 import { 
   BookOpen,
@@ -21,13 +21,22 @@ import {
   GlassWater,
   IceCream,
   UtensilsCrossed,
-  CheckCircle2
+  CheckCircle2,
+  ArrowRight,
+  ChevronRight,
+  Utensils
 } from "lucide-react";
 import { useCateringEnhancements, CateringEnhancementItem } from "@/services/cateringService";
 
 export default function ModernCateringView() {
   const { language } = useLanguage();
   const { enhancements } = useCateringEnhancements();
+  const [selectedPackageCategory, setSelectedPackageCategory] = useState<string>("all");
+
+  const filteredPackages =
+    selectedPackageCategory === "all"
+      ? CATERING_PACKAGES
+      : CATERING_PACKAGES.filter((p) => p.categoryId === selectedPackageCategory);
 
   const generateGeneralCateringWhatsAppUrl = () => {
     const text =
@@ -163,6 +172,142 @@ export default function ModernCateringView() {
 
         {/* 3D Interactive Flipbook */}
         <CateringMenuBook />
+      </section>
+
+      {/* Crawlable Catering Packages Directory with Direct Links */}
+      <section id="catering-packages" className="py-16 bg-white border-t border-stone-200/80">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <span className="text-xs font-extrabold text-amber-600 uppercase tracking-widest flex items-center justify-center gap-1.5">
+              <Utensils className="w-4 h-4 text-amber-500" />
+              <span>{language === "si" ? "සියලුම කේටරින් පැකේජ" : "All Catering Packages"}</span>
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900">
+              {language === "si" ? "පැකේජ විස්තර හා මෙනු ලැයිස්තුව" : "Explore Curated Event Packages"}
+            </h2>
+            <p className="text-xs sm:text-sm text-stone-500 max-w-lg mx-auto">
+              {language === "si"
+                ? "ඔබගේ උත්සවයට ගැළපෙන කේටරින් පැකේජය තෝරා සම්පූර්ණ ව්‍යංජන ලැයිස්තුව සහ මිල ගණන් පිරික්සන්න."
+                : "Select a package below to view itemized curry selections, portion details, and custom event inquiries."}
+            </p>
+
+            {/* Category Filter Chips */}
+            <div className="flex items-center gap-2 justify-center flex-wrap pt-4">
+              <button
+                type="button"
+                onClick={() => setSelectedPackageCategory("all")}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border ${
+                  selectedPackageCategory === "all"
+                    ? "bg-amber-600 text-white border-amber-600 shadow-xs"
+                    : "bg-white text-stone-700 border-stone-300 hover:bg-stone-50"
+                }`}
+              >
+                {language === "si" ? "සියල්ල (All)" : "All Packages"}
+                <span className="ml-1.5 text-[10px] opacity-80">({CATERING_PACKAGES.length})</span>
+              </button>
+              {CATERING_CATEGORIES.map((cat) => {
+                const count = CATERING_PACKAGES.filter((p) => p.categoryId === cat.id).length;
+                if (count === 0) return null;
+                const isSelected = selectedPackageCategory === cat.id;
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => setSelectedPackageCategory(cat.id)}
+                    className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border ${
+                      isSelected
+                        ? "bg-amber-600 text-white border-amber-600 shadow-xs"
+                        : "bg-white text-stone-700 border-stone-300 hover:bg-stone-50"
+                    }`}
+                  >
+                    <span>{language === "si" && cat.sinhalaName ? cat.sinhalaName : cat.name}</span>
+                    <span className="ml-1.5 text-[10px] opacity-80">({count})</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Package Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+            {filteredPackages.map((pkg) => {
+              const displayName = language === "si" && pkg.sinhalaName ? pkg.sinhalaName : pkg.packageName;
+              return (
+                <div
+                  key={pkg.id}
+                  className="bg-[#FAF8F5] rounded-3xl p-6 sm:p-7 border border-stone-200/90 hover:border-amber-400 shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-5 group"
+                >
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="bg-amber-100 text-amber-900 border border-amber-200 text-[11px] font-bold px-3 py-0.5 rounded-full">
+                        {pkg.categoryName}
+                      </span>
+                      {pkg.minGuests && (
+                        <span className="text-[11px] text-stone-500 font-medium">
+                          Min {pkg.minGuests} Guests
+                        </span>
+                      )}
+                    </div>
+
+                    <div>
+                      <h3 className="text-xl font-serif font-bold text-stone-900 group-hover:text-amber-700 transition-colors">
+                        {displayName}
+                      </h3>
+                      <p className="text-xs text-stone-600 mt-1 line-clamp-2 leading-relaxed">
+                        {pkg.tagline}
+                      </p>
+                    </div>
+
+                    <div className="py-2 border-y border-stone-200/60 flex items-baseline justify-between">
+                      <span className="text-xs text-stone-500 font-medium">
+                        {language === "si" ? "මිල ගණන්" : "Price"}
+                      </span>
+                      <span className="text-lg font-serif font-bold text-amber-700">
+                        {pkg.priceDisplay}
+                      </span>
+                    </div>
+
+                    <div className="space-y-2">
+                      <span className="text-[11px] font-bold text-stone-800 uppercase tracking-wider block">
+                        {language === "si" ? "විශේෂාංග:" : "Inclusions:"}
+                      </span>
+                      <ul className="space-y-1.5 text-xs text-stone-700">
+                        {pkg.highlights.slice(0, 4).map((h, hIdx) => (
+                          <li key={hIdx} className="flex items-start gap-2">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 flex-shrink-0 mt-0.5" />
+                            <span className="line-clamp-1">{h}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="pt-3 border-t border-stone-200/70 flex items-center justify-between gap-3">
+                    <Link
+                      href={`/menu/${pkg.id}/`}
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-700 hover:text-amber-800 hover:underline"
+                    >
+                      <span>{language === "si" ? "සම්පූර්ණ මෙනුව බලන්න" : "View Full Details"}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+
+                    <a
+                      href={`https://wa.me/${RESTAURANT_INFO.whatsappNumber}?text=${encodeURIComponent(
+                        `Hi Madara Restaurant, I would like to inquire about ${pkg.packageName} (${pkg.priceDisplay}).`
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs font-bold text-stone-600 hover:text-green-600 flex items-center gap-1 transition-colors"
+                    >
+                      <MessageCircle className="w-3.5 h-3.5 text-green-600" />
+                      <span>Inquire</span>
+                    </a>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </section>
 
       {/* Visual Add-Ons Section: Mapped dynamically from Firestore 'catering_enhancements' */}

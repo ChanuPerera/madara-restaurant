@@ -282,6 +282,7 @@ export default function MenuCatalogClient() {
         {/* Dynamic Category Filter Chips & Live Indicator */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
           <div className="flex items-center gap-2 justify-center flex-wrap">
+            {/* Dynamic Category Filter Chips */}
             {MENU_CATEGORIES.map((cat) => {
               const isSelected = selectedCategory === cat.id;
               const count = cat.id === "all" ? liveMenuItems.length : liveMenuItems.filter(i => i.category === cat.id).length;
@@ -302,6 +303,18 @@ export default function MenuCatalogClient() {
                 </button>
               );
             })}
+
+            {/* Direct Link to Catering Packages */}
+            <Link
+              href="/catering/#catering-packages"
+              className="px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-amber-300 bg-amber-50 text-amber-900 hover:bg-amber-100 flex items-center gap-1.5 shadow-2xs"
+            >
+              <UtensilsCrossed className="w-3.5 h-3.5 text-amber-700" />
+              <span>{language === "si" ? "කේටරින් පැකේජ" : "Catering Packages"}</span>
+              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-amber-200/80 text-amber-900">
+                11
+              </span>
+            </Link>
           </div>
           {isLive && (
             <div className="flex justify-center mt-3">
